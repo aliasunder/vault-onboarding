@@ -22,7 +22,7 @@ vault-onboarding/
     generated-skills-guide.md        #   Skill parameterization
     progressive-adoption.md          #   Adoption tiers, evolution paths
     setup-verification.md            #   Per-client verification
-  assets/                            # 17 template files
+  assets/                            # 19 asset files (15 templates + 4 skills)
     templates/memory/                #   5 About Me/ templates
     templates/instructions/          #   7 client-specific instruction templates
     templates/protocol.md            #   Genericized session protocol
