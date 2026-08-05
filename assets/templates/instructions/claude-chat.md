@@ -7,13 +7,13 @@
 
 {{COMM_PREFS}}
 
+{{#IF_VAULT_CORTEX}}
 ## Vault
 
-I use an Obsidian vault at `{{VAULT_PATH}}` for notes, memory, and project
-management.
+I use an Obsidian vault for notes, memory, and project management, accessible
+via vault-cortex MCP tools.
 
 {{#IF_MEMORY}}
-{{#IF_VAULT_CORTEX}}
 ## Memory
 
 My preferences, principles, and opinions are stored in `{{MEMORY_FOLDER}}/`
@@ -24,11 +24,12 @@ propose an entry for the right file and wait for my approval.
 
 Use vault-cortex MCP tools for memory: `vault_get_memory`,
 `vault_memory_recall`, `vault_update_memory`.
-{{/IF_VAULT_CORTEX}}
 {{/IF_MEMORY}}
 
 {{#IF_PROTOCOL}}
 ## Session Protocol
 
-For full session start/end sequences, read `PROTOCOL.md` in my vault.
+For full session start/end sequences, read `PROTOCOL.md` in my vault via
+`vault_read_note`.
 {{/IF_PROTOCOL}}
+{{/IF_VAULT_CORTEX}}
