@@ -26,6 +26,7 @@ Preferences and context are in `{{MEMORY_FOLDER}}/` files. Key files:
 - **Principles.md** — values, decision heuristics
 - **Opinions.md** — evolving views on tools and methods
 - **Agents.md** — how AI should work with me
+- **Routines.md** — current commitments, upcoming plans (living policy)
 
 {{#IF_VAULT_CORTEX}}
 Use vault-cortex MCP tools: `vault_get_memory`, `vault_memory_recall`.

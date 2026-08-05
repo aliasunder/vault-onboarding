@@ -44,8 +44,8 @@ them, not after):
   sequences, board conventions, full vs lightweight protocol, tool-layer
   adaptation. **Read before Phase 6 (Protocol).**
 - `references/client-instructions.md` — Per-client loading matrix, injection vs
-  fetch, generation guide per client, sync markers, paste formatting. **Read
-  before Phase 7 (Client Setup).**
+  fetch, generation guide per client, paste formatting. **Read before Phase 7
+  (Client Setup).**
 - `references/generated-skills-guide.md` — Trigger-skill pattern,
   parameterization, standalone vs vault-cortex adaptation, skill placement per
   client. **Read during Phase 6 (Protocol) when generating skills.**
@@ -340,7 +340,12 @@ time, review your tasks, and write a handoff log when they're done."
    - `{{MEMORY_FOLDER}}` — "About Me" (or skip memory sections if Phase 4 = no)
    - `{{SESSION_LOG_FOLDER}}` — "sessions" (or per-project path)
    - `{{TASKS_PATH}}` — path to TASKS.md (or skip board sections if Phase 5 = no)
-   - `{{PROTOCOL_LEVEL}}` — "full" or "lightweight"
+   - Step number variables (`{{MEMORY_STEP_NUMBER}}`,
+     `{{EXTENSIONS_STEP_NUMBER}}`, `{{SUMMARY_STEP_NUMBER}}`,
+     `{{END_EXTENSIONS_STEP}}`, `{{MEMORY_REVIEW_STEP}}`,
+     `{{COMPLETION_STEP}}`) — compute sequential step numbers based on which
+     optional sections are enabled. Steps that are removed by conditionals
+     shift the numbering down.
 3. Remove conditional sections based on what was scaffolded:
    - No memory → remove memory-grounding steps from Session Start and memory-
      review steps from Session End
@@ -593,7 +598,13 @@ Variables used across templates, listed for reference:
 | `{{MEMORY_FOLDER}}` | "About Me" | Protocol, skills, instructions |
 | `{{SESSION_LOG_FOLDER}}` | "sessions" | Protocol, skills, instructions |
 | `{{TASKS_PATH}}` | Vault root or per-project | Protocol, skills, instructions |
-| `{{PROTOCOL_LEVEL}}` | Phase 6 choice | Protocol template |
+| `{{PROTOCOL_LEVEL}}` | Phase 6 choice | Checkpoint |
+| `{{MEMORY_STEP_NUMBER}}` | Computed (Phase 6) | Protocol template |
+| `{{EXTENSIONS_STEP_NUMBER}}` | Computed (Phase 6) | Protocol template |
+| `{{SUMMARY_STEP_NUMBER}}` | Computed (Phase 6) | Protocol template |
+| `{{END_EXTENSIONS_STEP}}` | Computed (Phase 6) | Protocol template |
+| `{{MEMORY_REVIEW_STEP}}` | Computed (Phase 6) | Protocol template |
+| `{{COMPLETION_STEP}}` | Computed (Phase 6) | Protocol template |
 | `{{COMM_PREFS}}` | Phase 1 | Instructions |
 | `{{VAULT_CONVENTIONS}}` | Phase 3 | Instructions |
 | `{{HAS_MEMORY}}` | Phase 4 decision | Conditional sections |

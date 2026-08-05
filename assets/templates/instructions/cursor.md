@@ -22,7 +22,8 @@ artifacts.
 
 Preferences stored in `{{VAULT_PATH}}/{{MEMORY_FOLDER}}/`. Read scope callouts
 before adding entries. Key files: Me.md (identity), Principles.md (values),
-Opinions.md (views), Agents.md (AI directives).
+Opinions.md (views), Agents.md (AI directives), Routines.md (current-state,
+living policy).
 {{/IF_MEMORY}}
 
 {{#IF_BOARDS}}
