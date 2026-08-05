@@ -1,0 +1,91 @@
+name: Auto Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: "!endsWith(github.actor, '[bot]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+
+      - name: Extract version from tag
+        id: tag
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate version matches tag
+        env:
+          TAG_VERSION: ${{ steps.tag.outputs.version }}
+        run: |
+          PKG_VERSION=$(jq -r '.version' package.json)
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Version mismatch! Tag is v$TAG_VERSION but package.json has $PKG_VERSION"
+            exit 1
+          fi
+          echo "Version matches v$TAG_VERSION"
+
+  release:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Extract version from tag
+        id: tag
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate release notes
+        run: bash .github/scripts/generate-notes.sh "$GITHUB_REF_NAME" > /tmp/release-notes.md
+
+      - name: Build artifact
+        run: |
+          echo "Building vault-onboarding.zip..."
+          zip -r vault-onboarding.zip SKILL.md references/ assets/ README.md LICENSE
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" vault-onboarding.zip \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file /tmp/release-notes.md
+
+      - name: Update changelog
+        env:
+          VERSION: ${{ steps.tag.outputs.version }}
+        run: bash .github/scripts/update-changelog.sh "$VERSION" /tmp/release-notes.md
+
+      - name: Commit changelog update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git stash
+          git checkout main
+          git stash pop
+          git add CHANGELOG.md
+          git diff --cached --quiet && exit 0
+          git commit -m "docs: update CHANGELOG.md for $GITHUB_REF_NAME"
+          git push origin main
