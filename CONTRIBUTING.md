@@ -20,7 +20,7 @@ Run `/release patch` (or `minor` / `major`). This bumps the version locally, com
 | Workflow | File | Trigger | What it does |
 |----------|------|---------|-------------|
 | Manual Release | `manual_release.yml` | `workflow_dispatch` (Actions UI) | Bumps version in `package.json` → commits → tags → builds `.zip` → creates GitHub release |
-| Auto Release | `auto_release.yml` | `v*` tag push | Validates `package.json` version matches the tag → builds `.zip` → creates GitHub release |
+| Auto Release | `auto_release.yml` | `v*` tag push | Validates `package.json` version matches the tag → builds `.zip` → creates GitHub release → updates changelog |
 
 **Version validation**: Auto Release checks that `package.json` version matches the tag. If it doesn't match, it fails with a clear error.
 
