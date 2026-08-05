@@ -45,7 +45,7 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 
 ## Development Guidelines
 
-- No build system or package manager — skills are markdown files
+- No build system or package manager — skills are markdown files (`package.json` exists only for version tracking)
 - All template files use `{{VARIABLE}}` markers for substitution
 - Generated skills are triggers, not copies — they say "follow the protocol in your instruction file"
 - The SKILL.md itself uses only native file tools (Read, Write, Bash) — vault-cortex MCP tools only appear in GENERATED artifacts
