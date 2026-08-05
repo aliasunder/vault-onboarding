@@ -529,11 +529,21 @@ Last updated: {{LAST_UPDATED}}
 - Existing structure: {{EXISTING_STRUCTURE}}
 
 ### Decisions
-- Organization (Phase 3): {{OPTED_IN_OR_SKIPPED}}
-- Memory (Phase 4): {{OPTED_IN_OR_SKIPPED}}
-- Tasks (Phase 5): {{OPTED_IN_OR_SKIPPED}}
-- Protocol (Phase 6): {{OPTED_IN_OR_SKIPPED}}
-- Protocol level: {{FULL_OR_LIGHTWEIGHT}}
+- Organization (Phase 3): {{PHASE_3_DECISION}}
+- Memory (Phase 4): {{PHASE_4_DECISION}}
+- Tasks (Phase 5): {{PHASE_5_DECISION}}
+- Protocol (Phase 6): {{PHASE_6_DECISION}}
+- Protocol level: {{PROTOCOL_LEVEL}}
+
+### Phase 3 Details
+- Projects: {{HAS_PROJECTS}}
+- People folder: {{HAS_PEOPLE}}
+- Reference folder: {{HAS_REFERENCE}}
+- Tag style: {{TAG_STYLE}}
+- Link style: {{LINK_STYLE}}
+
+### Phase 7 Details
+- Files generated: {{FILES_GENERATED}}
 ```
 
 **Resume logic:** When resuming, read the checkpoint, greet the user with a
@@ -588,3 +598,10 @@ Variables used across templates, listed for reference:
 | `{{TAG_TAXONOMY}}` | Phase 3 | Instructions |
 | `{{LINK_STYLE}}` | Phase 3 | Instructions |
 | `{{FRONTMATTER_SCHEMA}}` | Phase 3 | Instructions |
+| `{{VAULT_STRUCTURE_MAP}}` | Phases 2–3 | Instructions |
+| `{{PROTOCOL_BODY}}` | Phase 6 | Claude Code + Cowork instructions |
+| `{{KANBAN_FRONTMATTER}}` | Phase 5 (plugin detection) | Tasks board template |
+| `{{PROJECT_NAME}}` | Per-project | Claude Code project template |
+| `{{PROJECT_DESCRIPTION}}` | Per-project | Claude Code project template |
+| `{{KEY_DOCS_LIST}}` | Per-project | Claude Code project template |
+| `{{FILE_MAP_ROWS}}` | Per-project | Claude Code project template |

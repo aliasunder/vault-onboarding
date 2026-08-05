@@ -18,11 +18,6 @@ management.
 My preferences, principles, and opinions are stored in `{{MEMORY_FOLDER}}/`
 files in my vault. When I ask you to remember something, propose an entry for
 the right file and wait for my approval.
-
-{{#IF_VAULT_CORTEX}}
-Use vault-cortex MCP tools to read and search memory: `vault_get_memory`,
-`vault_memory_recall`, `vault_update_memory`.
-{{/IF_VAULT_CORTEX}}
 {{/IF_MEMORY}}
 
 {{#IF_PROTOCOL}}
