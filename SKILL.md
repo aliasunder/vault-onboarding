@@ -405,14 +405,21 @@ Conditionally included (only if the component was scaffolded):
 
 Read the appropriate template from `assets/templates/instructions/`:
 
-| Client | Template | Output location |
-|---|---|---|
-| Claude Code | `claude-code-global.md` + `claude-code-project.md` | `~/.claude/CLAUDE.md` (global) + per-project template |
-| Cowork | `cowork-global.md` | Paste block for Global Instructions |
-| claude.ai chat | `claude-chat.md` | Paste block for Custom Instructions |
-| Perplexity | `perplexity.md` | Paste block for Project Instructions |
-| Cursor | `cursor.md` | `~/.cursor/rules/` or `.cursorrules` |
-| Copilot | `copilot.md` | `.github/copilot-instructions.md` |
+| Client | Template | Output location | Requires vault-cortex? |
+|---|---|---|---|
+| Claude Code | `claude-code-global.md` + `claude-code-project.md` | `~/.claude/CLAUDE.md` (global) + per-project template | No — has local file access |
+| Cowork | `cowork-global.md` | Paste block for Global Instructions | No — bound folder has file access |
+| claude.ai chat | `claude-chat.md` | Paste block for Custom Instructions | **Yes** — no file access without it |
+| Perplexity | `perplexity.md` | Paste block for Project Instructions | No — Perplexity Computer has local file access |
+| Cursor | `cursor.md` | `~/.cursor/rules/` or `.cursorrules` | No — has local file access |
+| Copilot | `copilot.md` | `.github/copilot-instructions.md` | No — has local file access |
+
+**Vault-cortex gate for claude.ai chat:** claude.ai chat has no local file
+access — without vault-cortex, agents on this surface cannot read or write
+vault files. If vault-cortex is not available, **skip claude.ai chat** and
+tell the user why: "claude.ai chat requires vault-cortex to interact with
+your vault. Install vault-cortex to enable this surface, or skip it for
+now."
 
 For each template:
 1. Read the template file.
@@ -428,9 +435,9 @@ For each template:
 - **Only Claude Code local expands @-imports.** Every other surface needs the
   text physically present in the instruction file.
 
-For paste-only clients (Cowork Global Instructions, claude.ai Custom
-Instructions, Perplexity), format the output as a clearly-marked paste block
-with instructions on where to paste it.
+For paste-only clients with vault-cortex (Cowork Global Instructions,
+claude.ai Custom Instructions, Perplexity), format the output as a
+clearly-marked paste block with instructions on where to paste it.
 
 **Save to checkpoint** after this phase.
 
