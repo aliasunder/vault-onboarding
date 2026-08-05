@@ -177,7 +177,7 @@ Each task is a markdown checkbox item:
 - [ ] Short task description ➕ 2026-01-15
 - [/] In-progress task ➕ 2026-01-15
 - [ ] High-priority task ⏫ ➕ 2026-01-15
-- [ ] Scheduled + due ➕ 2026-01-15 ⏳ 2026-01-20 📅  2026-01-25
+- [ ] Scheduled + due ➕ 2026-01-15 ⏳ 2026-01-20 📅 2026-01-25
 - [x] Completed task ➕ 2026-01-15 ✅ 2026-01-20
 ```
 

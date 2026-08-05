@@ -10,6 +10,7 @@ related:
   - "[[About Me/Principles]]"
   - "[[About Me/Me]]"
   - "[[About Me/Agents]]"
+  - "[[About Me/Routines]]"
 ---
 
 # Opinions

@@ -9,6 +9,8 @@ tags:
 related:
   - "[[About Me/Me]]"
   - "[[About Me/Agents]]"
+  - "[[About Me/Principles]]"
+  - "[[About Me/Opinions]]"
 ---
 
 # Routines
