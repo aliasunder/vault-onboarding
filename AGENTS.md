@@ -34,7 +34,7 @@ vault-onboarding/
       remember.md
       project-role.md
   scripts/
-    validate-structure.py            # Structural coherence checks (run by CI)
+    validate-structure.ts            # Structural coherence checks (run by CI)
   .github/workflows/validate.yml     # Runs the structural checks on PR + push
 ```
 
