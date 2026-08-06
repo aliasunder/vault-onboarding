@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Structural validation for the vault-onboarding skill.
  *
