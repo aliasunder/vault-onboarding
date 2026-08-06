@@ -39,7 +39,7 @@ Use vault-cortex MCP tools: `vault_get_memory`, `vault_memory_recall`,
 
 5 lanes: Active / Up Next / Waiting On / Someday / Done.
 Checkboxes: `[ ]` todo, `[/]` in-progress, `[x]` done, `[-]` cancelled.
-Dates: `➕` created, `📅` due, `⏳` scheduled, `🛫` start, `✅` done.
+Dates: `➕` created, `📅` due, `⏳` scheduled, `🛫` start, `✅` done, `❌` cancelled.
 Priority: `🔺` highest, `⏫` high, `🔼` medium, `🔽` low, `⏬` lowest.
 
 {{#IF_VAULT_CORTEX}}

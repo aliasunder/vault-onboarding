@@ -160,7 +160,7 @@ created: 2026-01-15T10:00:00-05:00
 | Property | Type | Notes |
 |---|---|---|
 | `title` | string | Human-readable title |
-| `type` | string | Note classification (`session-log`, `reference`, `person`, `task-note`, `profile`, `protocol`) |
+| `type` | string | Note classification (`session-log`, `reference`, `person`, `task-note`, `task-board`, `profile`, `protocol`) |
 | `tags` | list | Lowercase-hyphenated |
 | `created` | string | ISO 8601 with timezone offset, stamped once at creation |
 

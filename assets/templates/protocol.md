@@ -87,7 +87,7 @@ Output a brief summary (10–15 lines):
 {{#IF_MEMORY}}
 - Memory sections loaded
 {{/IF_MEMORY}}
-- Suggested focus (priority-first if tasks have priority markers)
+- Suggested focus{{#IF_BOARDS}} (priority-first if tasks have priority markers){{/IF_BOARDS}}
 
 Ask whether to proceed with the suggestion or redirect.
 

@@ -55,7 +55,7 @@ entries.
 Task boards use 5 lanes: Active / Up Next / Waiting On / Someday / Done.
 Cards use checkbox statuses (`[ ]` todo, `[/]` in-progress, `[x]` done,
 `[-]` cancelled) with emoji date signifiers (`➕` created, `📅` due, `⏳`
-scheduled, `🛫` start, `✅` done).
+scheduled, `🛫` start, `✅` done, `❌` cancelled).
 
 {{#IF_VAULT_CORTEX}}
 Use `vault_list_tasks` for structured data and `vault_update_task` for atomic

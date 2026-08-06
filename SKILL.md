@@ -305,8 +305,10 @@ Explain each briefly:
 - **Someday** — ideas and low-priority items
 - **Done** — completed work (agents move tasks here automatically)
 
-If the Kanban plugin is installed (detected in Phase 2), add Kanban frontmatter
-so the board renders as a visual board in Obsidian.
+If the Kanban plugin is installed (detected in the pre-scan), substitute
+`{{KANBAN_FRONTMATTER}}` with `kanban-plugin: board` so the board renders as a
+visual board in Obsidian. If the plugin is not installed, remove the marker
+line from the frontmatter.
 
 **If no:** skip. No task board, no board reconciliation in the protocol.
 
@@ -381,9 +383,11 @@ Create a `sessions/` folder at the vault root for session logs. If per-project
 folders were scaffolded (Phase 3), note that project-scoped logs go in each
 project's `sessions/` subfolder.
 
-**If no:** skip protocol, skills, and sessions folder entirely. Instruction
-files still carry identity and preferences — agents just won't follow a
-structured session ritual.
+**If no:** skip the protocol, the session skills (session-start, session-end,
+project-role), and the sessions folder. The **remember** skill is
+memory-gated, not protocol-gated — if memory was enabled (Phase 4), still
+generate it here. Instruction files still carry identity and preferences —
+agents just won't follow a structured session ritual.
 
 **Save to checkpoint** after this phase.
 
@@ -449,9 +453,9 @@ For each template:
 - **Only Claude Code local expands @-imports.** Every other surface needs the
   text physically present in the instruction file.
 
-For paste-only clients with vault-cortex (Cowork Global Instructions,
-claude.ai Custom Instructions, Perplexity), format the output as a
-clearly-marked paste block with instructions on where to paste it.
+For paste-only clients (Cowork Global Instructions, claude.ai Custom
+Instructions, Perplexity), format the output as a clearly-marked paste block
+with instructions on where to paste it.
 
 **Save to checkpoint** after this phase.
 
@@ -503,69 +507,12 @@ If they might want to re-run or extend later, keep it. Otherwise, remove it.
 
 ## Checkpoint System
 
-The checkpoint file (`onboarding-progress.md` in the vault root) tracks:
-
-```markdown
----
-title: Onboarding Progress
-type: onboarding-checkpoint
-created: {{CREATED_TIMESTAMP}}
----
-
-# Onboarding Progress
-
-## Status
-Current phase: {{CURRENT_PHASE}}
-Started: {{START_DATE}}
-Last updated: {{LAST_UPDATED}}
-
-## Completed Phases
-- [x] Phase 0: Calibration
-- [ ] Phase 1: Identity
-- [ ] Phase 2: Vault Setup
-- [ ] Phase 3: Organization
-- [ ] Phase 4: Memory
-- [ ] Phase 5: Tasks
-- [ ] Phase 6: Protocol
-- [ ] Phase 7: Client Setup
-- [ ] Phase 8: Verification
-
-## Saved Answers
-
-### Phase 0
-- Clients: {{CLIENTS_LIST}}
-- Domain: {{DOMAIN}}
-- Frustration: {{FRUSTRATION}}
-- Technical comfort: {{COMFORT_LEVEL}}
-
-### Phase 1
-- Name: {{USER_NAME}}
-- Timezone: {{USER_TIMEZONE}}
-- Communication preferences: {{COMM_PREFS}}
-- Principles: {{PRINCIPLES}}
-- Additional context: {{ADDITIONAL_CONTEXT}}
-
-### Phase 2
-- Vault path: {{VAULT_PATH}}
-- Existing structure: {{EXISTING_STRUCTURE}}
-
-### Decisions
-- Organization (Phase 3): {{PHASE_3_DECISION}}
-- Memory (Phase 4): {{PHASE_4_DECISION}}
-- Tasks (Phase 5): {{PHASE_5_DECISION}}
-- Protocol (Phase 6): {{PHASE_6_DECISION}}
-- Protocol level: {{PROTOCOL_LEVEL}}
-
-### Phase 3 Details
-- Projects: {{HAS_PROJECTS}}
-- People folder: {{HAS_PEOPLE}}
-- Reference folder: {{HAS_REFERENCE}}
-- Tag style: {{TAG_STYLE}}
-- Link style: {{LINK_STYLE}}
-
-### Phase 7 Details
-- Files generated: {{FILES_GENERATED}}
-```
+The checkpoint file (`onboarding-progress.md` in the vault root) tracks the
+current phase, a completed-phases checklist, and the saved answers from each
+phase. The canonical template is `assets/templates/onboarding-progress.md` —
+read it, substitute the `{{VARIABLE}}` markers with the answers collected so
+far (leave markers for phases not yet reached), and rewrite it at every save
+point.
 
 **First write:** the checkpoint can only be written once a vault or folder
 path exists. During Phases 0–1 (before Phase 2 establishes the path), hold
@@ -605,7 +552,10 @@ works without it — vault-cortex enhances the experience."
 `{{#IF_X}}...{{/IF_X}}` (keep the block only when condition X holds) and
 `{{^IF_X}}...{{/IF_X}}` (inverted — keep only when X does NOT hold). When
 processing a template, keep or drop each block per its condition and always
-strip the marker lines themselves from the output. Conditions used:
+strip the marker lines themselves from the output. Markers may also appear
+inline within a single line (e.g. in generated skill descriptions) — apply
+the same keep/drop rule to the enclosed span and strip the markers, keeping
+the rest of the line intact. Conditions used:
 
 | Condition | True when |
 |---|---|
@@ -620,13 +570,13 @@ Variables used across templates, listed for reference:
 
 | Variable | Source | Used in |
 |---|---|---|
-| `{{USER_NAME}}` | Phase 1 | Instructions, memory seeds |
-| `{{USER_TIMEZONE}}` | Phase 1 | Instructions, protocol |
-| `{{VAULT_PATH}}` | Phase 2 | Instructions, skills |
-| `{{CREATED_TIMESTAMP}}` | Current time | Memory files, protocol, checkpoint |
+| `{{USER_NAME}}` | Phase 1 | Instructions, checkpoint, memory seeds |
+| `{{USER_TIMEZONE}}` | Phase 1 | Instructions, checkpoint |
+| `{{VAULT_PATH}}` | Phase 2 | Instructions, checkpoint |
+| `{{CREATED_TIMESTAMP}}` | Current time | Memory files, protocol, tasks board, checkpoint |
 | `{{MEMORY_FOLDER}}` | "About Me" | Protocol, skills, instructions |
-| `{{SESSION_LOG_FOLDER}}` | "sessions" | Protocol, skills, instructions |
-| `{{TASKS_PATH}}` | Vault root or per-project | Protocol, skills, instructions |
+| `{{SESSION_LOG_FOLDER}}` | "sessions" | Protocol |
+| `{{TASKS_PATH}}` | Vault root or per-project | Protocol, instructions |
 | `{{PROTOCOL_LEVEL}}` | Phase 6 choice | Checkpoint |
 | `{{MEMORY_STEP_NUMBER}}` | Computed (Phase 6) | Protocol template |
 | `{{EXTENSIONS_STEP_NUMBER}}` | Computed (Phase 6) | Protocol template |
@@ -634,13 +584,12 @@ Variables used across templates, listed for reference:
 | `{{END_EXTENSIONS_STEP}}` | Computed (Phase 6) | Protocol template |
 | `{{MEMORY_REVIEW_STEP}}` | Computed (Phase 6) | Protocol template |
 | `{{COMPLETION_STEP}}` | Computed (Phase 6) | Protocol template |
-| `{{COMM_PREFS}}` | Phase 1 | Instructions |
+| `{{COMM_PREFS}}` | Phase 1 | Instructions, checkpoint |
 | `{{VAULT_CONVENTIONS}}` | Phase 3 | Instructions |
 | `{{CLIENTS_LIST}}` | Phase 0 | Checkpoint, Phase 7 loop |
-| `{{DOMAIN}}` | Phase 0 | Memory section suggestions |
-| `{{TAG_TAXONOMY}}` | Phase 3 | Instructions |
-| `{{LINK_STYLE}}` | Phase 3 | Instructions |
-| `{{FRONTMATTER_SCHEMA}}` | Phase 3 | Instructions |
+| `{{DOMAIN}}` | Phase 0 | Checkpoint, memory section suggestions |
+| `{{TAG_STYLE}}` | Phase 3 | Checkpoint |
+| `{{LINK_STYLE}}` | Phase 3 | Checkpoint |
 | `{{VAULT_STRUCTURE_MAP}}` | Phases 2–3 | Instructions |
 | `{{PROTOCOL_BODY}}` | Phase 6 | Claude Code + Cowork instructions |
 | `{{KANBAN_FRONTMATTER}}` | Phase 5 (plugin detection) | Tasks board template |
