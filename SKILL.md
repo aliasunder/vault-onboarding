@@ -337,6 +337,8 @@ time, review your tasks, and write a handoff log when they're done."
 
 1. Read `assets/templates/protocol.md`.
 2. Substitute variables:
+   - `{{CREATED_TIMESTAMP}}` — current ISO 8601 timestamp in the user's
+     timezone
    - `{{MEMORY_FOLDER}}` — "About Me" (or skip memory sections if Phase 4 = no)
    - `{{SESSION_LOG_FOLDER}}` — "sessions" (or per-project path)
    - `{{TASKS_PATH}}` — path to TASKS.md (or skip board sections if Phase 5 = no)
@@ -351,8 +353,10 @@ time, review your tasks, and write a handoff log when they're done."
      review steps from Session End
    - No boards → remove task-listing from Session Start and board-reconciliation
      from Session End
-   - Lightweight → remove extension points, standards reconciliation, directives
-     reconciliation
+   - Lightweight → remove extension points, the board-reconciliation step from
+     Session End, and the memory-review step from Session End (boards and
+     memory still work — they're just not automatically reconciled or reviewed
+     at session end; memory entries flow through the remember skill instead)
 4. Write to the vault root as `PROTOCOL.md`.
 
 **Generate skills:**
@@ -416,7 +420,7 @@ Read the appropriate template from `assets/templates/instructions/`:
 | Cowork | `cowork-global.md` | Paste block for Global Instructions | No — bound folder has file access |
 | claude.ai chat | `claude-chat.md` | Paste block for Custom Instructions | **Yes** — no file access without it |
 | Perplexity | `perplexity.md` | Paste block for Project Instructions | No — Perplexity Computer has local file access |
-| Cursor | `cursor.md` | `~/.cursor/rules/` or `.cursorrules` | No — has local file access |
+| Cursor | `cursor.md` | Project `.cursor/rules/` or `.cursorrules` | No — has local file access |
 | Copilot | `copilot.md` | `.github/copilot-instructions.md` | No — has local file access |
 
 **Vault-cortex gate for claude.ai chat:** claude.ai chat has no local file
@@ -432,7 +436,12 @@ For each template:
    structure.
 3. Remove conditional sections for components not enabled.
 4. Write the file to disk OR present as a paste-ready block with placement
-   instructions (depending on the client's loading contract).
+   instructions (depending on the client's loading contract). **Before writing
+   to disk, check whether the target file already exists** (e.g. an existing
+   `~/.claude/CLAUDE.md`, `.cursorrules`, or
+   `.github/copilot-instructions.md`). If it does, never overwrite — show the
+   user the new sections and merge them into the existing file with their
+   approval.
 
 **Two load-bearing principles:**
 - **Injection over fetch.** Physical text in an injected file beats "go read
@@ -558,6 +567,11 @@ Last updated: {{LAST_UPDATED}}
 - Files generated: {{FILES_GENERATED}}
 ```
 
+**First write:** the checkpoint can only be written once a vault or folder
+path exists. During Phases 0–1 (before Phase 2 establishes the path), hold
+answers in the conversation; write the checkpoint — including the Phase 0–1
+answers — at the first save point after Phase 2.
+
 **Resume logic:** When resuming, read the checkpoint, greet the user with a
 summary of where they left off, and continue from the next incomplete phase.
 Don't re-ask questions whose answers are already saved.
@@ -587,6 +601,21 @@ works without it — vault-cortex enhances the experience."
 
 ## Variable Reference
 
+**Conditional blocks:** templates mark optional sections with
+`{{#IF_X}}...{{/IF_X}}` (keep the block only when condition X holds) and
+`{{^IF_X}}...{{/IF_X}}` (inverted — keep only when X does NOT hold). When
+processing a template, keep or drop each block per its condition and always
+strip the marker lines themselves from the output. Conditions used:
+
+| Condition | True when |
+|---|---|
+| `IF_MEMORY` | Memory enabled (Phase 4 = yes) |
+| `IF_BOARDS` | Task boards enabled (Phase 5 = yes) |
+| `IF_PROTOCOL` | Protocol enabled (Phase 6 = yes) |
+| `IF_FULL_PROTOCOL` | Full protocol chosen (Phase 6 = full) |
+| `IF_VAULT_CORTEX` | vault-cortex detected |
+| `IF_VAULT_CONVENTIONS` | Vault conventions established (Phase 3 = yes) |
+
 Variables used across templates, listed for reference:
 
 | Variable | Source | Used in |
@@ -607,10 +636,6 @@ Variables used across templates, listed for reference:
 | `{{COMPLETION_STEP}}` | Computed (Phase 6) | Protocol template |
 | `{{COMM_PREFS}}` | Phase 1 | Instructions |
 | `{{VAULT_CONVENTIONS}}` | Phase 3 | Instructions |
-| `{{HAS_MEMORY}}` | Phase 4 decision | Conditional sections |
-| `{{HAS_BOARDS}}` | Phase 5 decision | Conditional sections |
-| `{{HAS_PROTOCOL}}` | Phase 6 decision | Conditional sections |
-| `{{HAS_VAULT_CORTEX}}` | Detection | Tool references in generated artifacts |
 | `{{CLIENTS_LIST}}` | Phase 0 | Checkpoint, Phase 7 loop |
 | `{{DOMAIN}}` | Phase 0 | Memory section suggestions |
 | `{{TAG_TAXONOMY}}` | Phase 3 | Instructions |

@@ -117,10 +117,10 @@ multiple same-day sessions). Check what exists before choosing the letter.
 ```yaml
 ---
 title: "Descriptive topic title"
-date: {{DATE_PLACEHOLDER}}
-created: {{TIMESTAMP_PLACEHOLDER}}
+date: 2026-01-15
+created: 2026-01-15T15:30:00-05:00
 type: session-log
-agent: {{AGENT_PLACEHOLDER}}
+agent: claude-code
 tags: [session-log]
 ---
 ```

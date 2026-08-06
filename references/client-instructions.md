@@ -68,8 +68,10 @@ Per-project files carry:
 - `{{VAULT_PATH}}` — vault location
 - `{{PROTOCOL_BODY}}` — full protocol text (not a pointer)
 - `{{VAULT_CONVENTIONS}}` — tags, linking, frontmatter, escapes
-- `{{MEMORY_SECTION}}` — memory system description (conditional)
-- `{{BOARD_SECTION}}` — task board conventions (conditional)
+- `{{#IF_MEMORY}}` block — memory system description (kept only when memory
+  is enabled)
+- `{{#IF_BOARDS}}` block — task board conventions (kept only when boards are
+  enabled)
 
 ### Cowork (Claude Desktop)
 
@@ -91,6 +93,11 @@ This carries per-project content: role, extensions, session pointer, file map.
 - Global Instructions is the only reliable global injection surface
 
 ### claude.ai / mobile chat
+
+**Requires vault-cortex.** claude.ai chat has no local file access — without
+vault-cortex the agent cannot read or write vault files, so this surface is
+skipped during onboarding (Phase 7's vault-cortex gate). The guidance below
+assumes vault-cortex is connected.
 
 **Custom Instructions:** paste block in claude.ai settings
 

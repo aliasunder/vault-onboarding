@@ -47,11 +47,12 @@ sections and tool references are included.
 - Summarize and recommend focus
 
 **Conditional:**
-- List open tasks (if boards enabled — `{{HAS_BOARDS}}`)
-- Ground in memory (if memory enabled — `{{HAS_MEMORY}}`)
-- Run extensions (if full protocol — `{{PROTOCOL_LEVEL}}` = full)
+- List open tasks (if boards enabled — `{{#IF_BOARDS}}` block)
+- Ground in memory (if memory enabled — `{{#IF_MEMORY}}` block)
+- Run extensions (if full protocol — `{{#IF_FULL_PROTOCOL}}` block)
 
-**Tool references adapt to `{{HAS_VAULT_CORTEX}}`:**
+**Tool references adapt via `{{#IF_VAULT_CORTEX}}` / `{{^IF_VAULT_CORTEX}}`
+blocks:**
 - With: `vault_list_tasks`, `vault_get_memory`, `vault_memory_recall`
 - Without: direct file reads, grep for tasks
 
@@ -68,6 +69,11 @@ sections and tool references are included.
 - Output completion summary
 
 **Tool references adapt similarly.**
+
+**Lightweight note:** memory review at session end is full-protocol-only.
+When generating session-end for a lightweight protocol, treat the template's
+`{{#IF_MEMORY}}` blocks as false even if memory is enabled — memory entries
+flow through the remember skill instead.
 
 ### remember
 
