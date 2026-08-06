@@ -1,0 +1,14 @@
+name: Validate skill structure
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run structural checks
+        run: python3 scripts/validate-structure.py
