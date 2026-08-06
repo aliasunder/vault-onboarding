@@ -15,6 +15,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const SKILL_DIR = join(ROOT, "skills", "vault-onboarding");
 const errors: string[] = [];
 
 function check(label: string, ok: boolean, detail = ""): void {
@@ -40,10 +41,10 @@ const read = (path: string): string => readFileSync(path, "utf8");
 const rel = (path: string): string => relative(ROOT, path);
 const isFile = (path: string): boolean => existsSync(path) && statSync(path).isFile();
 
-const assetFiles = mdFilesUnder(join(ROOT, "assets"));
+const assetFiles = mdFilesUnder(join(SKILL_DIR, "assets"));
 
 // 1. SKILL.md frontmatter carries the Agent Skills required keys.
-const skillText = read(join(ROOT, "SKILL.md"));
+const skillText = read(join(SKILL_DIR, "SKILL.md"));
 const frontmatter = skillText.match(/^---\n([\s\S]*?)\n---\n/);
 check(
   "SKILL.md frontmatter has name + description",
@@ -53,7 +54,7 @@ check(
 
 // 2. Marker well-formedness: every line's {{ and }} counts agree.
 const occurrences = (text: string, token: string): number => text.split(token).length - 1;
-for (const path of [...assetFiles, join(ROOT, "SKILL.md")]) {
+for (const path of [...assetFiles, join(SKILL_DIR, "SKILL.md")]) {
   const badLines = read(path)
     .split("\n")
     .flatMap((line, index) =>
@@ -94,9 +95,9 @@ for (const path of assetFiles) {
 
 // 4. Internal path references in SKILL.md and references/ resolve on disk.
 const PATH_REF = /`((?:references|assets)\/[A-Za-z0-9_\-./]+\.md)`/g;
-for (const path of [join(ROOT, "SKILL.md"), ...mdFilesUnder(join(ROOT, "references"))]) {
+for (const path of [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR, "references"))]) {
   const refs = [...read(path).matchAll(PATH_REF)].map((match) => match[1]);
-  const missing = [...new Set(refs.filter((ref) => !isFile(join(ROOT, ref))))].sort();
+  const missing = [...new Set(refs.filter((ref) => !isFile(join(SKILL_DIR, ref))))].sort();
   check(
     `internal paths resolve: ${rel(path)}`,
     missing.length === 0,
@@ -134,7 +135,7 @@ const EXPECTED_COUNTS: Record<string, number> = {
   "assets/skills": 4,
 };
 for (const [folder, expected] of Object.entries(EXPECTED_COUNTS)) {
-  const actual = readdirSync(join(ROOT, folder)).filter((name) => name.endsWith(".md")).length;
+  const actual = readdirSync(join(SKILL_DIR, folder)).filter((name) => name.endsWith(".md")).length;
   check(`${folder} holds ${expected} files`, actual === expected, `found ${actual}`);
 }
 for (const single of [
@@ -142,7 +143,7 @@ for (const single of [
   "assets/templates/tasks-board.md",
   "assets/templates/onboarding-progress.md",
 ]) {
-  check(`${single} exists`, isFile(join(ROOT, single)), "missing");
+  check(`${single} exists`, isFile(join(SKILL_DIR, single)), "missing");
 }
 
 if (errors.length > 0) {

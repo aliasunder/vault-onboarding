@@ -13,26 +13,28 @@ Distribution: `npx skills add aliasunder/vault-onboarding`.
 ```
 vault-onboarding/
   README.md
-  SKILL.md                           # Interview flow + generation orchestration
-  references/                        # 7 best-practice reference files (loaded on demand)
-    vault-organization.md            #   Folder taxonomy, tags, linking, schemas
-    memory-system.md                 #   Three-layer model, entry policies, growth
-    protocol-guide.md                #   Session protocol, board conventions
-    client-instructions.md           #   Per-client loading matrix
-    generated-skills-guide.md        #   Skill parameterization
-    progressive-adoption.md          #   Adoption tiers, evolution paths
-    setup-verification.md            #   Per-client verification
-  assets/                            # 19 asset files (15 templates + 4 skills)
-    templates/memory/                #   5 About Me/ templates
-    templates/instructions/          #   7 client-specific instruction templates
-    templates/protocol.md            #   Genericized session protocol
-    templates/tasks-board.md         #   5-lane Kanban
-    templates/onboarding-progress.md #   Checkpoint file
-    skills/                          #   4 generated skill templates
-      session-start.md
-      session-end.md
-      remember.md
-      project-role.md
+  skills/vault-onboarding/             # The installable skill payload — everything under
+                                       # here (and only this) ships via `npx skills add`
+    SKILL.md                           # Interview flow + generation orchestration
+    references/                        # 7 best-practice reference files (loaded on demand)
+      vault-organization.md            #   Folder taxonomy, tags, linking, schemas
+      memory-system.md                 #   Three-layer model, entry policies, growth
+      protocol-guide.md                #   Session protocol, board conventions
+      client-instructions.md           #   Per-client loading matrix
+      generated-skills-guide.md        #   Skill parameterization
+      progressive-adoption.md          #   Adoption tiers, evolution paths
+      setup-verification.md            #   Per-client verification
+    assets/                            # 19 asset files (15 templates + 4 skills)
+      templates/memory/                #   5 About Me/ templates
+      templates/instructions/          #   7 client-specific instruction templates
+      templates/protocol.md            #   Genericized session protocol
+      templates/tasks-board.md         #   5-lane Kanban
+      templates/onboarding-progress.md #   Checkpoint file
+      skills/                          #   4 generated skill templates
+        session-start.md
+        session-end.md
+        remember.md
+        project-role.md
   scripts/
     validate-structure.ts            # Structural coherence checks (run by CI)
     render-social-preview.ts         # Renders social-preview.svg → .png via Puppeteer
@@ -43,7 +45,7 @@ vault-onboarding/
 
 ## Skill Architecture
 
-The skill follows the Agent Skills standard (`agentskills.io`). SKILL.md has YAML frontmatter with `name` and `description`, plus the interview flow and generation orchestration in the body.
+The skill follows the Agent Skills standard (`agentskills.io`) and lives entirely under `skills/vault-onboarding/` — the directory the skills CLI discovers and installs, keeping repo tooling (`scripts/`, `.github/`, package files) out of the installed payload. SKILL.md has YAML frontmatter with `name` and `description`, plus the interview flow and generation orchestration in the body.
 
 Reference files (`references/*.md`) are loaded on demand — only when the agent enters a phase that needs them. This keeps the core SKILL.md lean while having deep guidance available.
 
@@ -62,8 +64,8 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 `.github/social-preview.svg` is the source; the committed `.png` is its
 1280×640 render, uploaded manually under GitHub Settings → Social preview
 (re-upload after changing the PNG — not automated). The card lives in
-`.github/` deliberately — `assets/` is the skill's installable template
-payload and must stay free of repo branding. Update the SVG when feature
+`.github/` deliberately — `skills/vault-onboarding/` is the installable
+skill payload and must stay free of repo branding. Update the SVG when feature
 categories change (the feature line is rendered in the image), then
 regenerate the PNG.
 
@@ -78,6 +80,6 @@ tile, glow nodes) with an inverted violet-primary palette.
 
 ## Adding a reference file
 
-1. Create `references/my-reference.md`
+1. Create `skills/vault-onboarding/references/my-reference.md`
 2. Add a pointer in SKILL.md's "How This Skill Works" section with path, description, and bold trigger condition
 3. Reference from the appropriate interview phase
