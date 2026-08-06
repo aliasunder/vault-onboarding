@@ -39,7 +39,7 @@
   <text x="540" y="300" font-family="JetBrains Mono" font-weight="600"
         font-size="60" fill="#f0f6fc">Vault Onboarding</text>
   <text x="544" y="348" font-family="DejaVu Sans"
-        font-size="27" fill="#8b949e">AI agent onboarding for Obsidian vaults</text>
+        font-size="27" fill="#8b949e">AI agent onboarding skill for Obsidian vaults</text>
 
   <!-- Violet pulse accent -->
   <rect x="544" y="372" width="180" height="4" rx="2" fill="#a78bfa" filter="url(#glow)" opacity="0.9"/>
