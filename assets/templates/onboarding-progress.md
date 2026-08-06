@@ -1,6 +1,8 @@
 ---
 title: Onboarding Progress
 type: onboarding-checkpoint
+tags:
+  - onboarding
 created: {{CREATED_TIMESTAMP}}
 ---
 

@@ -32,3 +32,9 @@ living policy).
 Task board: `{{TASKS_PATH}}`. Lanes: Active / Up Next / Waiting On / Someday /
 Done.
 {{/IF_BOARDS}}
+
+{{#IF_PROTOCOL}}
+## Session Protocol
+
+For session start/end sequences, read `PROTOCOL.md` in the vault.
+{{/IF_PROTOCOL}}

@@ -63,17 +63,18 @@ blocks:**
 - Update Last Session pointer
 
 **Conditional:**
-- Reconcile task boards (if boards enabled)
+- Reconcile task boards (if boards enabled AND full protocol)
 - Review memory for new entries (if memory enabled AND full protocol)
 - Run extensions (if full protocol)
 - Output completion summary
 
 **Tool references adapt similarly.**
 
-**Lightweight note:** memory review at session end is full-protocol-only.
-When generating session-end for a lightweight protocol, treat the template's
-`{{#IF_MEMORY}}` blocks as false even if memory is enabled — memory entries
-flow through the remember skill instead.
+**Lightweight note:** memory review and board reconciliation at session end
+are full-protocol-only. When generating session-end for a lightweight
+protocol, treat the template's `{{#IF_MEMORY}}` and `{{#IF_BOARDS}}` blocks
+as false even if memory or boards are enabled — memory entries flow through
+the remember skill instead, and boards are not auto-reconciled at session end.
 
 ### remember
 

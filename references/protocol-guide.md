@@ -154,7 +154,8 @@ time, and are comfortable with a structured workflow.
 ### Lightweight protocol
 
 Simplified version:
-- Session start reads the last log and summarizes
+- Session start reads the last log, still lists tasks and grounds memory if
+  those components are enabled, and summarizes
 - Session end writes a log and updates the pointer
 - No extension points
 - No board reconciliation (boards still work, they're just not automatically

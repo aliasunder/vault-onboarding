@@ -5,10 +5,15 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Run structural checks
         run: python3 scripts/validate-structure.py

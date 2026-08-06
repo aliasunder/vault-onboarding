@@ -51,7 +51,6 @@ carries:
 - Session protocol (physical text)
 - Vault conventions
 - Memory system description (if enabled)
-- `@AGENTS.md` import for repo-specific conventions (when in a code repo)
 
 **Project file:** `CLAUDE.md` or `CLAUDE.local.md` in the project root
 
@@ -131,6 +130,7 @@ project. Carries:
 - Communication preferences
 - Project-specific conventions
 - Vault structure reference
+- Session protocol pointer (if protocol enabled)
 
 Cursor's rules system is file-based, so this is a write-to-disk operation,
 not a paste.

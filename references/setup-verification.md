@@ -12,7 +12,8 @@ Before checking individual clients, verify the vault structure:
 - [ ] TASKS.md exists (if boards enabled) with 5 lanes
 - [ ] PROTOCOL.md exists (if protocol enabled) with all relevant sections
 - [ ] sessions/ folder exists (if protocol enabled)
-- [ ] Generated skills are in place (if protocol enabled)
+- [ ] Generated skills are in place (session skills if protocol enabled;
+      remember if memory enabled)
 - [ ] Onboarding checkpoint file status is current
 
 ## Claude Code Verification

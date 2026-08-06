@@ -22,7 +22,7 @@ Three memory layers, one vault:
 |---|---|---|
 | **Semantic** — "who I am" | Durable facts, preferences, opinions, principles, agent directives | `{{MEMORY_FOLDER}}/` |
 | **Episodic** — "what happened" | Session logs | `{{SESSION_LOG_FOLDER}}/` |
-| **Working** — "what's current" | Project state | Instruction files + task boards |
+| **Working** — "what's current" | Project state | Instruction files{{#IF_BOARDS}} + task boards{{/IF_BOARDS}} |
 
 Know which layer you are reading from or writing to — don't mix them.
 {{/IF_MEMORY}}

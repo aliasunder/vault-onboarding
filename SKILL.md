@@ -68,13 +68,14 @@ them, not after):
 
 ## Before You Start
 
-1. **Check for an existing checkpoint.** Look for `onboarding-progress.md` in
-   the vault root. If it exists, read it — it contains completed phases and
-   saved answers. Resume from where the user left off.
-
-2. **Detect the vault.** Check whether the user's working directory is inside an
+1. **Detect the vault.** Check whether the user's working directory is inside an
    Obsidian vault (look for `.obsidian/` in any ancestor directory). If not, ask
    where their vault is or whether to create one.
+
+2. **Check for an existing checkpoint.** Once the vault (or folder) is located,
+   look for `onboarding-progress.md` in its root. If it exists, read it — it
+   contains completed phases and saved answers. Resume from where the user left
+   off.
 
 3. **Detect existing structure.** If the vault exists, scan for:
    - `About Me/` folder (memory files)
@@ -295,7 +296,9 @@ or a board per project?"
 **If yes:**
 
 Read `assets/templates/tasks-board.md`. Create TASKS.md at the vault root
-(or per-project if chosen).
+(or per-project if chosen). If a TASKS.md already exists at the target
+location (from the pre-scan), don't create a new one — offer to add any
+missing lanes to the existing board instead.
 
 The board uses 5 lanes: **Active / Up Next / Waiting On / Someday / Done**.
 Explain each briefly:
@@ -358,8 +361,12 @@ time, review your tasks, and write a handoff log when they're done."
    - Lightweight → remove extension points, the board-reconciliation step from
      Session End, and the memory-review step from Session End (boards and
      memory still work — they're just not automatically reconciled or reviewed
-     at session end; memory entries flow through the remember skill instead)
-4. Write to the vault root as `PROTOCOL.md`.
+     at session end; memory entries flow through the remember skill instead).
+     Also remove the board and memory lines from the completion-summary block —
+     they report steps that no longer run.
+4. Write to the vault root as `PROTOCOL.md`. If a PROTOCOL.md already exists
+   (from the pre-scan), never overwrite — show the differences and merge with
+   the user's approval.
 
 **Generate skills:**
 
