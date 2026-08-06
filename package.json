@@ -1,6 +1,7 @@
 {
   "name": "vault-onboarding",
   "version": "0.1.0",
+  "type": "module",
   "description": "Bootstrap an agent collaboration system into an Obsidian vault — memory, protocols, task boards, and per-client instruction files via a conversational interview",
   "keywords": [
     "agent-skills",
