@@ -2,7 +2,7 @@
 
 Bootstrap an agent collaboration system into an Obsidian vault — memory, protocols, task boards, and per-client instruction files via a conversational interview.
 
-> **In development — not yet released.** The implementation is complete and under review, but hasn't shipped or been install-tested yet. See [Status](#status).
+> **In development — not yet released.** The implementation is merged and in validation; a first GitHub release follows once testing passes. See [Status](#status).
 
 Works with Claude Code, Cowork, claude.ai, Perplexity, Cursor, GitHub Copilot, and [many more](https://skills.sh).
 
@@ -46,9 +46,9 @@ Works without [vault-cortex](https://github.com/aliasunder/vault-cortex) using n
 
 ## Status
 
-vault-onboarding is in active development and not yet released. The full implementation — interview flow, reference files, asset templates, generated skills — is complete and under review in [PR #1](https://github.com/aliasunder/vault-onboarding/pull/1). Until it merges, `npx skills add` has nothing to install.
+vault-onboarding is in active development and not yet released. The full implementation — interview flow, reference files, asset templates, generated skills — is merged ([PR #1](https://github.com/aliasunder/vault-onboarding/pull/1)) and now in validation. The install command works, but treat it as pre-release until testing passes and a first GitHub release is cut.
 
-**Built (in review)**
+**Built**
 
 - 9-phase branching interview with checkpoint/resume
 - 7 reference files loaded on demand (vault organization, memory system, protocol, client instructions, generated skills, progressive adoption, setup verification)
@@ -58,8 +58,9 @@ vault-onboarding is in active development and not yet released. The full impleme
 
 **Before release**
 
-- Install testing (`npx skills add`) once the implementation merges — the CLI installs straight from GitHub, so this works the moment SKILL.md is on main
+- Install testing (`npx skills add aliasunder/vault-onboarding`) — the CLI installs straight from GitHub, so the command works now; validation confirms the installed skill triggers and behaves
 - Interview-path testing — technical and non-technical users, existing vault vs fresh, standalone vs vault-cortex
+- First GitHub release once validation passes
 
 ## License
 

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1280" height="640" viewBox="0 0 1280 640" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#10151d"/>
+    </linearGradient>
+    <linearGradient id="tileGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#161b22"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- Icon: guided onboarding path — winding route, optional branch, completed destination -->
+  <g transform="translate(70,104) scale(1.08)">
+    <rect x="24" y="24" width="352" height="352" rx="76" fill="url(#tileGrad)"/>
+    <rect x="25" y="25" width="350" height="350" rx="75" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.22"/>
+    <g filter="url(#glow)" stroke-linecap="round">
+      <line x1="112" y1="300" x2="172" y2="222" stroke="#a78bfa" stroke-width="8" opacity="0.85"/>
+      <line x1="172" y1="222" x2="248" y2="252" stroke="#a78bfa" stroke-width="8" opacity="0.85"/>
+      <line x1="248" y1="252" x2="288" y2="142" stroke="#a78bfa" stroke-width="8" opacity="0.85"/>
+      <line x1="172" y1="222" x2="122" y2="142" stroke="#00e5ff" stroke-width="6" opacity="0.8"/>
+      <circle cx="112" cy="300" r="13" fill="#a78bfa"/>
+      <circle cx="172" cy="222" r="13" fill="#a78bfa"/>
+      <circle cx="248" cy="252" r="13" fill="#a78bfa"/>
+      <circle cx="122" cy="142" r="12" fill="#00e5ff"/>
+      <circle cx="288" cy="142" r="25" fill="#00e5ff"/>
+      <polyline points="277,142 285,150 300,130" fill="none" stroke="#0d1117" stroke-width="8"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="540" y="300" font-family="JetBrains Mono" font-weight="600"
+        font-size="60" fill="#f0f6fc">Vault Onboarding</text>
+  <text x="544" y="348" font-family="DejaVu Sans"
+        font-size="27" fill="#8b949e">AI agent onboarding skill for Obsidian vaults</text>
+
+  <!-- Violet pulse accent -->
+  <rect x="544" y="372" width="180" height="4" rx="2" fill="#a78bfa" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Feature line -->
+  <text x="544" y="430" font-family="DejaVu Sans"
+        font-size="19" fill="#58a6ff">memory &#183; protocols &#183; task boards &#183; generated skills &#183; client instructions</text>
+</svg>
