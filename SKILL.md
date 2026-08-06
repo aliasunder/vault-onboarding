@@ -597,3 +597,19 @@ Variables used across templates, listed for reference:
 | `{{PROJECT_DESCRIPTION}}` | Per-project | Claude Code project template |
 | `{{KEY_DOCS_LIST}}` | Per-project | Claude Code project template |
 | `{{FILE_MAP_ROWS}}` | Per-project | Claude Code project template |
+| `{{CURRENT_PHASE}}` | Progress tracking | Checkpoint |
+| `{{START_DATE}}` | First checkpoint write | Checkpoint |
+| `{{LAST_UPDATED}}` | Each save point | Checkpoint |
+| `{{FRUSTRATION}}` | Phase 0 | Checkpoint |
+| `{{COMFORT_LEVEL}}` | Phase 0 | Checkpoint |
+| `{{PRINCIPLES}}` | Phase 1 | Checkpoint |
+| `{{ADDITIONAL_CONTEXT}}` | Phase 1 | Checkpoint |
+| `{{EXISTING_STRUCTURE}}` | Phase 2 | Checkpoint |
+| `{{PHASE_3_DECISION}}` | Phase 3 opt-in choice | Checkpoint |
+| `{{PHASE_4_DECISION}}` | Phase 4 opt-in choice | Checkpoint |
+| `{{PHASE_5_DECISION}}` | Phase 5 opt-in choice | Checkpoint |
+| `{{PHASE_6_DECISION}}` | Phase 6 opt-in choice | Checkpoint |
+| `{{HAS_PROJECTS}}` | Phase 3 | Checkpoint |
+| `{{HAS_PEOPLE}}` | Phase 3 | Checkpoint |
+| `{{HAS_REFERENCE}}` | Phase 3 | Checkpoint |
+| `{{FILES_GENERATED}}` | Phases 4–7 output | Checkpoint |
