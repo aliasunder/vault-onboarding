@@ -51,7 +51,7 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 
 ## Development Guidelines
 
-- No build step — the skill itself is pure markdown and installs with no dependencies; `devDependencies` cover repo tooling only, and `scripts/` is runtime-agnostic TypeScript run directly (`npm run validate` uses bun locally; CI runs the same file with Node 24's type stripping)
+- No build step — the skill itself is pure markdown and installs with no dependencies; `devDependencies` cover repo tooling only (bun-managed, `bun.lock`), and `scripts/` is runtime-agnostic TypeScript run directly (`bun run validate` locally; CI runs the same file with Node 24's type stripping)
 - All template files use `{{VARIABLE}}` markers for substitution
 - Generated skills are triggers, not copies — they say "follow the protocol in your instruction file"
 - The SKILL.md itself uses only native file tools (Read, Write, Bash) — vault-cortex MCP tools only appear in GENERATED artifacts
@@ -67,13 +67,14 @@ payload and must stay free of repo branding. Update the SVG when feature
 categories change (the feature line is rendered in the image), then
 regenerate the PNG.
 
-**Regenerating `social-preview.png`:** Run `npm run render:social-preview`.
+**Regenerating `social-preview.png`:** Run `bun run render:social-preview`.
 The script uses Puppeteer's pinned Chrome for Testing build with embedded
 JetBrains Mono SemiBold (wordmark) and DejaVu Sans (body text) `@font-face`
-for deterministic rendering regardless of host system fonts. `npm ci` skips
-the browser download (the `puppeteer.skipDownload` key in `package.json`);
-the npm script installs it on demand. Design family: matches vault-cortex's
-card (dark tile, glow nodes) with an inverted violet-primary palette.
+for deterministic rendering regardless of host system fonts. No browser
+downloads at install time — `bun install` skips postinstall scripts and the
+`puppeteer.skipDownload` key covers npm installs; the script installs the
+pinned browser on demand. Design family: matches vault-cortex's card (dark
+tile, glow nodes) with an inverted violet-primary palette.
 
 ## Adding a reference file
 
