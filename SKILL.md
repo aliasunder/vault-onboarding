@@ -421,11 +421,17 @@ Read the appropriate template from `assets/templates/instructions/`:
 | Client | Template | Output location | Requires vault-cortex? |
 |---|---|---|---|
 | Claude Code | `claude-code-global.md` + `claude-code-project.md` | `~/.claude/CLAUDE.md` (global) + per-project template | No — has local file access |
-| Cowork | `cowork-global.md` | Paste block for Global Instructions | No — bound folder has file access |
+| Cowork | `cowork-global.md` + `claude-code-project.md` (reused) | Paste block for Global Instructions + `CLAUDE.md` in each bound project folder | No — bound folder has file access |
 | claude.ai chat | `claude-chat.md` | Paste block for Custom Instructions | **Yes** — no file access without it |
 | Perplexity | `perplexity.md` | Paste block for Project Instructions | No — Perplexity Computer has local file access |
 | Cursor | `cursor.md` | Project `.cursor/rules/` or `.cursorrules` | No — has local file access |
 | Copilot | `copilot.md` | `.github/copilot-instructions.md` | No — has local file access |
+
+**Cowork project files:** Cowork also reads a `CLAUDE.md` at the root of each
+bound folder — the same contract as Claude Code's per-project file. Reuse
+`claude-code-project.md` for it: generate one per project folder the user
+names, and note in the paste-block instructions that the global paste and the
+per-folder files work together.
 
 **Vault-cortex gate for claude.ai chat:** claude.ai chat has no local file
 access — without vault-cortex, agents on this surface cannot read or write
