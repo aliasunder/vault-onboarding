@@ -116,7 +116,7 @@ during onboarding (Phase 6) and is baked into the generated skill text.
 ### With vault-cortex
 
 Skills reference MCP tools:
-```
+```text
 vault_read_note     — read notes and session logs
 vault_list_tasks    — list tasks with structured data
 vault_update_task   — complete tasks atomically
@@ -132,7 +132,7 @@ are deferred.
 ### Without vault-cortex
 
 Skills reference native file tools:
-```
+```text
 Read                — read notes and session logs
 Write               — create session logs
 Bash (grep)         — search for content

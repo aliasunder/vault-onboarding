@@ -13,6 +13,10 @@
 I use an Obsidian vault for notes, memory, and project management, accessible
 via vault-cortex MCP tools.
 
+**Path**: {{VAULT_PATH}}
+
+{{VAULT_STRUCTURE_MAP}}
+
 {{#IF_MEMORY}}
 ## Memory
 

@@ -61,4 +61,8 @@ scheduled, `🛫` start, `✅` done, `❌` cancelled).
 Use `vault_list_tasks` for structured data and `vault_update_task` for atomic
 completion.
 {{/IF_VAULT_CORTEX}}
+{{^IF_VAULT_CORTEX}}
+Read and edit `{{TASKS_PATH}}` directly: check the box, append the `✅` done
+date, and move the card to the Done lane in the same edit.
+{{/IF_VAULT_CORTEX}}
 {{/IF_BOARDS}}

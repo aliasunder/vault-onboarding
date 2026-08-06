@@ -427,12 +427,20 @@ Read the appropriate template from `assets/templates/instructions/`:
 
 | Client | Template | Output location | Requires vault-cortex? |
 |---|---|---|---|
-| Claude Code | `claude-code-global.md` + `claude-code-project.md` | `~/.claude/CLAUDE.md` (global) + per-project template | No — has local file access |
+| Claude Code | `claude-code-global.md` + `claude-code-project.md` | Local: `~/.claude/CLAUDE.md` (global) + per-project template. Cloud: repo-root `CLAUDE.md` (see surface check) | No — has local file access |
 | Cowork | `cowork-global.md` + `claude-code-project.md` (reused) | Paste block for Global Instructions + `CLAUDE.md` in each bound project folder | No — bound folder has file access |
 | claude.ai chat | `claude-chat.md` | Paste block for Custom Instructions | **Yes** — no file access without it |
 | Perplexity | `perplexity.md` | Paste block for Project Instructions | No — Perplexity Computer has local file access |
 | Cursor | `cursor.md` | Project `.cursor/rules/` or `.cursorrules` | No — has local file access |
 | Copilot | `copilot.md` | `.github/copilot-instructions.md` | No — has local file access |
+
+**Claude Code surface check:** ask whether they use Claude Code locally
+(CLI or IDE on their own machine), in the cloud (claude.ai/code web
+sessions), or both. Local: generate `~/.claude/CLAUDE.md` from the global
+template plus the per-project template. Cloud: there is no persistent
+`~/.claude/` — generate a repository-root `CLAUDE.md` from the project
+template with the global content folded in, one per repo they work in, and
+note it must be committed for cloud sessions to see it. Both: do both.
 
 **Cowork project files:** Cowork also reads a `CLAUDE.md` at the root of each
 bound folder — the same contract as Claude Code's per-project file. Reuse
@@ -445,12 +453,20 @@ access — without vault-cortex, agents on this surface cannot read or write
 vault files. If vault-cortex is not available, **skip claude.ai chat** and
 tell the user why: "claude.ai chat requires vault-cortex to interact with
 your vault. Install vault-cortex to enable this surface, or skip it for
-now."
+now." Record the skip in the checkpoint (client marked skipped, with the
+reason) and exclude skipped clients from Phase 8's verification walkthrough
+— a client that was intentionally skipped must not resurface as a setup
+step to verify.
 
 For each template:
 1. Read the template file.
 2. Substitute all `{{VARIABLE}}` markers with the user's answers and scaffolded
-   structure.
+   structure. **Substitution safety:** user answers are literal text — strip
+   or escape any `{{` / `}}` sequences they contain, keep YAML frontmatter
+   values on one line (quote values containing `:` or leading special
+   characters), and validate anything used as a path component (no `/`,
+   `..`, or leading dots — replace with hyphens). An answer must never
+   introduce new template markers, break frontmatter, or change a write path.
 3. Remove conditional sections for components not enabled.
 4. Write the file to disk OR present as a paste-ready block with placement
    instructions (depending on the client's loading contract). **Before writing
@@ -504,11 +520,19 @@ Based on what they adopted, show what they can add later:
 - Tier 2 (+ boards) → add protocol for full continuity
 - Tier 3 (full system) → add vault-cortex for remote access and search
 
-**Recommend companion tools:**
+**Install companion tools:**
 
-- The `obsidian-vault` skill for Obsidian formatting safety:
-  `npx skills add aliasunder/obsidian-vault`
-- vault-cortex for remote vault access and semantic search (if not already
+- **obsidian-vault skill** (Obsidian formatting safety — frontmatter,
+  wikilinks, plugin syntax). The generated system writes Obsidian-flavored
+  markdown constantly, so treat this as part of setup, not an optional extra:
+  1. Check whether it's already installed (`~/.claude/skills/obsidian-vault/`
+     for Claude Code, or the client's skill location per
+     `references/generated-skills-guide.md`).
+  2. If missing and this client can run shell commands, offer to run
+     `npx skills add aliasunder/obsidian-vault` now.
+  3. If the client can't run commands, print the command with instructions on
+     where to run it, or use the client's skill-upload path where supported.
+- **vault-cortex** for remote vault access and semantic search (if not already
   installed): mention it as an enhancement, not a requirement
 
 **Clean up:**
@@ -552,8 +576,8 @@ vault-cortex availability:
 - **Without vault-cortex:** Generated protocol references native file tools
   (Read, Write, grep). Generated skills use direct file reads and appends.
 
-Detection: check if `vault_read_note` is available in the current session's
-tool list. If not, ask the user: "Do you have vault-cortex installed? It adds
+Detection: check whether the vault-cortex MCP server's tools appear in the
+current session's tool list. If they don't, ask the user: "Do you have vault-cortex installed? It adds
 remote access, search, and semantic memory recall to your vault. Everything
 works without it — vault-cortex enhances the experience."
 

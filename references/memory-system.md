@@ -78,7 +78,7 @@ The "(newest first)" suffix is a convention signal — entries within a section
 are sorted by date, newest at the top.
 
 **Dated bullets:** Every entry is a single line starting with
-`- **YYYY-MM-DD**: `. The date is the day the entry was recorded (not when the
+`- **YYYY-MM-DD**:` followed by a space. The date is the day the entry was recorded (not when the
 fact became true). Entries are facts, not conversation — write in third person
 or as declarative statements.
 

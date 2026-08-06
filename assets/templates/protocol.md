@@ -120,7 +120,7 @@ title: "Descriptive topic title"
 date: 2026-01-15
 created: 2026-01-15T15:30:00-05:00
 type: session-log
-agent: claude-code
+agent: claude-code            # the client writing this log — e.g. claude-code, cowork, cursor, perplexity
 tags: [session-log]
 ---
 ```
@@ -181,7 +181,7 @@ the user can correct.
 
 ### {{COMPLETION_STEP}}. Output completion summary
 
-```
+```text
 Session end complete:
 - Session log: {{SESSION_LOG_FOLDER}}/YYYY-MM-DD-session-log-X.md
 {{#IF_BOARDS}}

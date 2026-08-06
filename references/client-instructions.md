@@ -165,7 +165,7 @@ configured" placeholders.
 
 For paste-only surfaces (Cowork, claude.ai, Perplexity), format output as:
 
-```
+```text
 ═══════════════════════════════════════════
 PASTE THE FOLLOWING INTO [location]:
 ═══════════════════════════════════════════

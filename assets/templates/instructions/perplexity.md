@@ -44,4 +44,10 @@ Someday / Done.
 ## Session Protocol
 
 For session start/end sequences, read `PROTOCOL.md` in the vault.
+
+## Last Session
+
+_Session-end updates this pointer so the next session can find the latest log._
+
+Last session: none yet
 {{/IF_PROTOCOL}}

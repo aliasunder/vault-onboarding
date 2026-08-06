@@ -2,8 +2,8 @@
 name: session-end
 description: >
   Execute the session-end protocol — write session log,
-  {{#IF_BOARDS}}reconcile task board, {{/IF_BOARDS}}update pointers{{#IF_MEMORY}},
-  review memory for updates{{/IF_MEMORY}}. Use when asked to "end session",
+  {{#IF_FULL_PROTOCOL}}{{#IF_BOARDS}}reconcile task board, {{/IF_BOARDS}}{{/IF_FULL_PROTOCOL}}update pointers{{#IF_FULL_PROTOCOL}}{{#IF_MEMORY}},
+  review memory for updates{{/IF_MEMORY}}{{/IF_FULL_PROTOCOL}}. Use when asked to "end session",
   "wrap up", "close out", or at the natural end of a work session.
   NOT for: mid-session saves, quick notes, or standalone memory updates.
 ---
@@ -35,6 +35,7 @@ This skill is a trigger, not a copy.
 - Writing the session log to the wrong folder — route by where the work
   happened (project-scoped, vault-level, or ad-hoc).
 - Skipping the completion summary — the user needs to see what ran.
+{{#IF_FULL_PROTOCOL}}
 {{#IF_BOARDS}}
 - Just checking the checkbox without moving the task to Done — completing a
   task = checkbox `[x]` + `✅` date + move to Done lane.
@@ -56,4 +57,5 @@ This skill is a trigger, not a copy.
   `entry-policy: living`: expired entries get deleted, outcomes go to Recent
   past.
 {{/IF_MEMORY}}
+{{/IF_FULL_PROTOCOL}}
 - Exceeding 15 rows in the session history table without deleting the oldest.

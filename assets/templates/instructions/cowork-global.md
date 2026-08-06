@@ -32,6 +32,11 @@ entries. Entries are dated bullets, newest first, ISO dates.
 Use vault-cortex MCP tools: `vault_get_memory`, `vault_memory_recall`,
 `vault_update_memory`, `vault_list_memory_files`.
 {{/IF_VAULT_CORTEX}}
+{{^IF_VAULT_CORTEX}}
+Read and write the memory files directly in the bound vault folder. Before
+proposing a new entry, search the target file for an existing entry that
+already covers it.
+{{/IF_VAULT_CORTEX}}
 {{/IF_MEMORY}}
 
 {{#IF_BOARDS}}
@@ -44,6 +49,10 @@ Priority: `🔺` highest, `⏫` high, `🔼` medium, `🔽` low, `⏬` lowest.
 
 {{#IF_VAULT_CORTEX}}
 Use `vault_list_tasks` and `vault_update_task` for structured operations.
+{{/IF_VAULT_CORTEX}}
+{{^IF_VAULT_CORTEX}}
+Read and edit `{{TASKS_PATH}}` directly: check the box, append the `✅` done
+date, and move the card to the Done lane in the same edit.
 {{/IF_VAULT_CORTEX}}
 {{/IF_BOARDS}}
 

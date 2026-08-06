@@ -18,7 +18,12 @@ Before checking individual clients, verify the vault structure:
 
 ## Claude Code Verification
 
-### Global instruction file
+Branch on the surface(s) chosen in Phase 7: local Claude Code uses
+`~/.claude/CLAUDE.md`; cloud Claude Code (claude.ai/code) has no persistent
+home directory — verify the committed repository-root `CLAUDE.md` instead,
+by asking in a cloud session.
+
+### Global instruction file (local)
 
 1. Check that `~/.claude/CLAUDE.md` exists
 2. Open a new Claude Code session in any directory
@@ -52,6 +57,11 @@ Before checking individual clients, verify the vault structure:
 
 ### Skills
 
+Claude Code only — other clients load skills differently. For non-Claude
+clients, verify per the placement contract in
+`references/generated-skills-guide.md` (e.g. uploaded or conversationally
+created skills on Perplexity) instead of checking these paths.
+
 1. Check that skills exist at `~/.claude/skills/` or `~/.agents/skills/`
 2. Start a new session and say "start a session" — the session-start skill
    should activate
@@ -84,6 +94,10 @@ Cowork does NOT expand `@path` imports. If the instruction file contains
 physically present in the file.
 
 ## claude.ai / Mobile Chat Verification
+
+Skip this section entirely if claude.ai chat was skipped during Phase 7
+(vault-cortex unavailable) — an intentionally skipped client has nothing to
+verify.
 
 1. Open claude.ai settings → Custom Instructions
 2. Verify the instruction content is pasted
