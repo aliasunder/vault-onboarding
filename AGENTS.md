@@ -35,8 +35,10 @@ vault-onboarding/
       project-role.md
   scripts/
     validate-structure.ts            # Structural coherence checks (run by CI)
+    render-social-preview.ts         # Renders social-preview.svg → .png via Puppeteer
   .github/workflows/validate.yml     # Runs the structural checks on PR + push
   .github/social-preview.svg + .png  # Repo social card (SVG source + committed render)
+  .github/fonts/                     # Fonts embedded by the render script
 ```
 
 ## Skill Architecture
@@ -49,7 +51,7 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 
 ## Development Guidelines
 
-- No build system or package manager — skills are markdown files (`package.json` exists only for version tracking)
+- No build step — the skill itself is pure markdown and installs with no dependencies; `devDependencies` cover repo tooling only, and `scripts/` is runtime-agnostic TypeScript run directly (`npm run validate` uses bun locally; CI runs the same file with Node 24's type stripping)
 - All template files use `{{VARIABLE}}` markers for substitution
 - Generated skills are triggers, not copies — they say "follow the protocol in your instruction file"
 - The SKILL.md itself uses only native file tools (Read, Write, Bash) — vault-cortex MCP tools only appear in GENERATED artifacts
@@ -57,16 +59,21 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 
 ## Social preview card
 
-`.github/social-preview.svg` is the source; the committed `.png` is its 1280×640
-render. The card lives in `.github/` deliberately — `assets/` is the skill's
-template payload and must stay free of repo branding. To regenerate after an SVG
-edit: render at 1280×640 with JetBrains Mono SemiBold (wordmark) and DejaVu Sans
-(body text) embedded — vault-cortex's `npm run render:social-preview` pipeline is
-the reference implementation, since this repo intentionally has no npm
-dependencies — then `optipng -o7 -strip all`. After changing the PNG, re-upload
-it under GitHub Settings → Social preview (not automated). Design family:
-matches vault-cortex's card (dark tile, glow nodes) with an inverted
-violet-primary palette.
+`.github/social-preview.svg` is the source; the committed `.png` is its
+1280×640 render, uploaded manually under GitHub Settings → Social preview
+(re-upload after changing the PNG — not automated). The card lives in
+`.github/` deliberately — `assets/` is the skill's installable template
+payload and must stay free of repo branding. Update the SVG when feature
+categories change (the feature line is rendered in the image), then
+regenerate the PNG.
+
+**Regenerating `social-preview.png`:** Run `npm run render:social-preview`.
+The script uses Puppeteer's pinned Chrome for Testing build with embedded
+JetBrains Mono SemiBold (wordmark) and DejaVu Sans (body text) `@font-face`
+for deterministic rendering regardless of host system fonts. `npm ci` skips
+the browser download (the `puppeteer.skipDownload` key in `package.json`);
+the npm script installs it on demand. Design family: matches vault-cortex's
+card (dark tile, glow nodes) with an inverted violet-primary palette.
 
 ## Adding a reference file
 

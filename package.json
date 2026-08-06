@@ -2,6 +2,16 @@
   "name": "vault-onboarding",
   "version": "0.1.0",
   "type": "module",
+  "scripts": {
+    "render:social-preview": "puppeteer browsers install chrome && node scripts/render-social-preview.ts",
+    "validate": "bun scripts/validate-structure.ts"
+  },
+  "devDependencies": {
+    "puppeteer": "25.4.0"
+  },
+  "puppeteer": {
+    "skipDownload": true
+  },
   "description": "Bootstrap an agent collaboration system into an Obsidian vault — memory, protocols, task boards, and per-client instruction files via a conversational interview",
   "keywords": [
     "agent-skills",
