@@ -36,6 +36,7 @@ vault-onboarding/
   scripts/
     validate-structure.ts            # Structural coherence checks (run by CI)
   .github/workflows/validate.yml     # Runs the structural checks on PR + push
+  .github/social-preview.svg + .png  # Repo social card (SVG source + committed render)
 ```
 
 ## Skill Architecture
@@ -53,6 +54,19 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 - Generated skills are triggers, not copies — they say "follow the protocol in your instruction file"
 - The SKILL.md itself uses only native file tools (Read, Write, Bash) — vault-cortex MCP tools only appear in GENERATED artifacts
 - Interview questions use plain language accessible to non-technical users
+
+## Social preview card
+
+`.github/social-preview.svg` is the source; the committed `.png` is its 1280×640
+render. The card lives in `.github/` deliberately — `assets/` is the skill's
+template payload and must stay free of repo branding. To regenerate after an SVG
+edit: render at 1280×640 with JetBrains Mono SemiBold (wordmark) and DejaVu Sans
+(body text) embedded — vault-cortex's `npm run render:social-preview` pipeline is
+the reference implementation, since this repo intentionally has no npm
+dependencies — then `optipng -o7 -strip all`. After changing the PNG, re-upload
+it under GitHub Settings → Social preview (not automated). Design family:
+matches vault-cortex's card (dark tile, glow nodes) with an inverted
+violet-primary palette.
 
 ## Adding a reference file
 
