@@ -58,9 +58,9 @@ vault-onboarding is in active development and not yet released. The full impleme
 
 **Before release**
 
-- Install testing (`npx skills add`) once the implementation merges
+- Install testing (`npx skills add`) once the implementation merges — the CLI installs straight from GitHub, so this works the moment SKILL.md is on main
 - Interview-path testing — technical and non-technical users, existing vault vs fresh, standalone vs vault-cortex
-- Registry listing verification
+- Confirm the skill appears on the [skills.sh](https://skills.sh) directory after release (its indexing process is undocumented)
 
 ## License
 
