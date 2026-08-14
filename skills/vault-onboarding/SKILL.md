@@ -27,7 +27,7 @@ say yes to.
 Setting up a task-management-and-memory system is normally exhausting, time
 consuming, and prone to failure. The person finishing this onboarding should
 feel the opposite: relief. The system is already working when the interview
-ends — not a pile of homework. Three rules serve this:
+ends — not a pile of homework. Five rules serve this:
 
 1. **Do, don't instruct.** Anything you can do yourself with the access you
    have — write files, create the project, seed memory, save skills — you do.
