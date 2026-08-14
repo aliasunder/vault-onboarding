@@ -58,7 +58,12 @@ ends — not a pile of homework. Three rules serve this:
    mid-paragraph where they read as filler. Always leave room for "or tell
    me in your own words." The per-question examples in Phases 0–1 below are
    the floor, not the ceiling — adapt them to what the user has already
-   said.
+   said. **Each question also carries its why** — one line on what answering
+   it enables, delivered with the question ("I'll generate an instruction
+   file for each tool you pick", "these become standing instructions every
+   AI tool follows"). A user who knows what a question unlocks answers with
+   intent instead of obligation — and knows what to come back and change
+   later.
    **Calibrate every explanation to the technical comfort inferred in
    Phase 0.** For a non-technical user, the explanation itself must carry no
    jargon: not "frontmatter" but "the label section at the top of the
@@ -146,7 +151,9 @@ Offer common options: Claude Code, Claude Desktop (Cowork), claude.ai chat,
 Perplexity, Cursor, GitHub Copilot. Let them add others. Record the full list —
 Phase 7 generates an instruction file for each.
 
-**Question 2:** "What kind of work do you primarily do?"
+**Question 2:** "What kind of work do you primarily do? (This shapes what I
+suggest — folders, memory files, examples — so the setup fits your actual
+work.)"
 
 Offer examples with the question: software or technical projects · writing
 or creative work · school or research · running a business · job searching ·
@@ -155,7 +162,7 @@ academic, business, personal knowledge management. This influences which
 memory file sections to suggest and what examples to use.
 
 **Question 3:** "What frustrates you most about working with AI across
-sessions?"
+sessions? (I'll aim each part of the setup at whatever you name here.)"
 
 Offer examples with the question: having to re-explain everything each time ·
 losing track of what I was working on · decisions and context disappearing ·
@@ -183,13 +190,15 @@ to disk at the Phase 2 checkpoint gate.
 These answers feed instruction files regardless of what else is enabled. They
 also seed memory files if the user opts into memory later.
 
-**Question 1:** "What's your name, and what timezone are you in?"
+**Question 1:** "What's your name, and what timezone are you in? (So agents
+address you properly and get dates and times right.)"
 
 You may pre-fill these from the environment (username, system timezone), but
 always **confirm** them with the user ("I have you as X in timezone Y —
 right?") — never silently infer identity.
 
-**Question 2:** "What matters most to you in how AI works with you?"
+**Question 2:** "What matters most to you in how AI works with you? (These
+become standing instructions every AI tool you use will follow.)"
 
 Offer examples with the question: keep it short and to the point · explain
 things in detail · just handle things, ask only when unsure · always check
@@ -199,7 +208,8 @@ level (just do it vs ask first), verification preferences (trust me vs show
 your work). These become directives in instruction files.
 
 **Question 3** (optional): "What principles do you hold firm when making
-decisions or managing work?"
+decisions or managing work? (Agents check these before making judgment calls
+on your behalf.)"
 
 Offer examples with the question: nothing goes out to other people without
 my review · anything written in my name should sound like me, not AI ·
@@ -208,7 +218,8 @@ speed. Skip if the user seems eager to move on. These seed the Principles
 memory file if opted in.
 
 **Question 4** (optional): "Anything else about yourself that would help agents
-serve you well?"
+serve you well? (Whatever you share gets remembered — you'll never have to
+explain it again.)"
 
 Offer examples with the question — this is the most open-ended ask of the
 interview, so it needs them most: how you like to start tasks (e.g. "break
@@ -256,7 +267,9 @@ on disk. Do not ask any Phase 3 question until the checkpoint shows Phases
 Present this phase as: "Before we set up the components you want, let's
 organize where things will live in your vault."
 
-**Question 1:** "Do you work on multiple projects or areas of focus?"
+**Question 1:** "Do you work on multiple projects or areas of focus? (If so,
+each gets its own folder with its own task board and session history — so
+work on one never gets tangled up with another.)"
 
 If yes: scaffold a project template folder structure. Explain the pattern —
 each project gets its own folder with subdirectories for sessions, reference
@@ -275,13 +288,18 @@ Projects/
 If they'll have task boards (decided in Phase 5), per-project TASKS.md goes
 here too.
 
-**Question 2:** "Do you want a place for notes about people you work with?"
+**Question 2:** "Do you want a place for notes about people you work with?
+(Mention someone once — 'my manager Sam', 'the recruiter from Tuesday' — and
+agents will know who they are in every future session: their role, your
+history with them, what matters to them.)"
 
 If yes: create `People/` with a template note showing the schema (name, role,
 organization, context, related links).
 
 **Question 3:** "Do you keep reference material that agents should be able to
-consult?"
+consult? (Standing facts you'd otherwise repeat — your tools and setup, house
+rules, decisions you've made and why. Answer once, and agents look it up
+forever instead of asking you again.)"
 
 If yes: create `Reference/` and explain the living-note pattern — notes that
 stay current vs point-in-time decisions.
@@ -405,7 +423,9 @@ Phase 4 complete.
 ### Phase 5: Task Management (optional)
 
 **Question:** "Do you want a place to keep track of what you're working on,
-what's coming up, and what's done?"
+what's coming up, and what's done? (Agents keep it updated as you work —
+finished things get checked off and new tasks get captured without you
+maintaining a list.)"
 
 If they work on projects (Phase 3): "Would you like one board for everything,
 or a board per project?"
