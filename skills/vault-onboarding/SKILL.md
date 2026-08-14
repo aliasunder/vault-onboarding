@@ -22,6 +22,25 @@ Every component is optional. The user decides what gets created. Your role is to
 explain what each component does, ask if they want it, and build only what they
 say yes to.
 
+## The North Star: A Burden Lifted
+
+Setting up a task-management-and-memory system is normally exhausting, time
+consuming, and prone to failure. The person finishing this onboarding should
+feel the opposite: relief. The system is already working when the interview
+ends — not a pile of homework. Three rules serve this:
+
+1. **Do, don't instruct.** Anything you can do yourself with the access you
+   have — write files, create the project, seed memory, save skills — you do.
+   Never hand the user a to-do list for work you could have done.
+2. **User-side actions are guided live moments, not a list at the end.**
+   Pasting into a settings screen or clicking Install in Obsidian is the
+   user's to do — so walk them through it one client at a time, right when it
+   comes up, and confirm it worked before moving on.
+3. **End with the system running, not described.** The final moments of
+   onboarding demonstrate the payoff (see Phase 8's live demo): the user
+   watches continuity work once, and learns that from now on, starting a
+   session takes one phrase.
+
 ## How This Skill Works
 
 This skill runs a branching interview across 9 phases. Phases 0, 1, 2, 7, and 8
@@ -224,17 +243,34 @@ If yes: create `Reference/` and explain the living-note pattern — notes that
 stay current vs point-in-time decisions.
 
 **Question 4** (only if Question 1 = yes): "Want to set up your first real
-project now?"
+project now? Tell me about something you're actually working on."
 
 Don't leave the user with only a template — a scaffold nobody instantiates
 is a system nobody uses, and if Phase 5 later chooses per-project boards, no
-project means **zero live task boards**. If yes: copy the template structure
-to `Projects/<their name>/`, fill its README with the project's purpose and
-the extension-point stubs (Agent Role, Session Start/End Extensions,
-Response Style), and create its TASKS.md; Phase 7 then generates per-project
-instructions for it. If the user defers, record the deferral — Phase 8's
-completion checklist must surface "no project created" as a warning, not
-silence.
+project means **zero live task boards**. If yes:
+
+1. Copy the template structure to `Projects/<their name>/`.
+2. Create the project's **hub file** — the agent-facing note carrying the
+   project's purpose, the extension-point stubs (Agent Role, Session
+   Start/End Extensions, Response Style), and later the Last Session
+   pointer. **Resolve its name once, by what mechanically loads it:**
+   - Client mix includes Claude Code or Cowork → `CLAUDE.md` (auto-injected
+     when an agent lands in the folder — injection over fetch, for free)
+   - No Claude surface but other file-reading agents (Cursor, Copilot,
+     Codex-style tools) → `AGENTS.md` (the cross-tool convention)
+   - No file-reading client at all → a folder note named after the project
+     (the Obsidian-native pattern; README.md if the user prefers)
+   Use the resolved name consistently everywhere a project hub file is
+   referenced — Phase 7's per-project generation, the protocol's extension
+   points, and the project-role skill all target this same file.
+3. Create its TASKS.md — and **seed it with real first tasks**: the user
+   just told you what they're working on, so capture 2–3 actual cards from
+   their answer (with `➕` dates). An empty board is homework; a board that
+   already holds their real work is a burden lifted.
+
+Phase 7 then generates per-project instructions for it. If the user defers,
+record the deferral — Phase 8's completion checklist must surface "no
+project created" as a warning, not silence.
 
 **Vault conventions** — establish during this phase:
 
@@ -556,6 +592,13 @@ Obsidian Sync, stays editable from any surface (including via vault-cortex),
 and is the source of truth to re-paste from when anything changes. See
 "Persisting paste blocks" in `references/client-instructions.md`.
 
+**Deliver one client at a time, as guided live moments** — not a wall of
+paste blocks at the end. For each client: present its block, tell the user
+exactly where to paste it, wait for them to do it, and verify it took (the
+per-client checks in `references/setup-verification.md`) before moving to
+the next client. A stack of unpasted blocks is homework; a sequence of
+thirty-second guided steps, each confirmed working, is a burden lifted.
+
 **Checkpoint gate:** rewrite the checkpoint with this phase's output —
 including the `Reference/` instruction notes written — and read it back. Do
 not start Phase 8 until the file on disk shows Phase 7 complete.
@@ -622,6 +665,20 @@ Based on what they adopted, show what they can add later:
 scaffolded and the plugins aren't installed yet, run the walkthrough in
 `references/setup-verification.md` → "Obsidian app setup" now (Kanban,
 Tasks, optionally Dataview).
+
+**Run the system once — the live demo:**
+
+Before wrapping up, demonstrate the payoff instead of describing it. Run an
+abbreviated session-start against the fresh vault, out loud: read the hub
+file; if boards were scaffolded, list the open tasks on their board (the
+real ones seeded in Phase 3); if memory was enabled, glance at the memory
+files seeded from their own interview answers; then produce the short
+session-start summary the protocol specifies. With no boards and no memory,
+the demo is just hub file + summary — it still lands. Close with the
+punchline: "That's what every session starts like now — you just say 'start
+session'." The user should watch continuity work once before the
+conversation ends; that moment, not the file list, is what makes the setup
+feel like a burden lifted rather than a system to learn.
 
 **Clean up:**
 

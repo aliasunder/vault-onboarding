@@ -55,10 +55,12 @@ need to be exhaustive.
 
 ### 3. Inject into the instruction file
 
-Find the project's instruction file:
+Find the project's hub file — the single per-project instruction file whose
+name was resolved during onboarding:
 - Claude Code: project `CLAUDE.md` or `CLAUDE.local.md`
 - Cowork: the bound folder's `CLAUDE.md`
-- Other clients: the project-scoped instruction file
+- Other clients: the project's `AGENTS.md`, or its folder note if no
+  file-reading client was set up
 
 Look for the `## Agent Role` stub (created by onboarding with an HTML comment
 placeholder). Replace the stub content with the composed role.
