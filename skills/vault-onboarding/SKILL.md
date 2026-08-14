@@ -50,6 +50,12 @@ ends — not a pile of homework. Three rules serve this:
    `kanban-plugin: board` (the Kanban plugin renders any note with that
    frontmatter as a visual board). A system whose parts the user can name
    is one they'll trust and extend; unexplained artifacts read as clutter.
+   **Calibrate every explanation to the technical comfort inferred in
+   Phase 0.** For a non-technical user, the explanation itself must carry no
+   jargon: not "frontmatter" but "the label section at the top of the
+   note"; not "auto-injected" but "Claude reads this file automatically
+   when it works in this folder." The bar: someone who has never opened a
+   terminal should finish onboarding able to say what each piece is for.
 
 ## How This Skill Works
 
@@ -147,7 +153,10 @@ answer to frame why each component exists when you present it.
 **Infer technical comfort** from vocabulary. Mentions of CLI, MCP, YAML,
 terminal, git = technical. "I just use the app", "I type in the chat" =
 non-technical. Never ask "are you technical?" directly — it's off-putting and
-unreliable. Adjust your language for the rest of the interview accordingly.
+unreliable. Adjust your language for the rest of the interview accordingly —
+not just the questions, but every file explanation (North Star rule 4), the
+Phase 8 recap, and the completion checklist. The whole experience must be
+approachable to someone who has never used a terminal or written markdown.
 
 **Checkpoint:** hold this phase's answers in-conversation — the checkpoint
 file cannot exist until Phase 2 establishes the vault path. They are written
