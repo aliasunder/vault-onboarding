@@ -178,3 +178,40 @@ END OF PASTE BLOCK
 ```
 
 Tell the user exactly where to paste and what to expect after pasting.
+
+## Persisting Paste Blocks
+
+Paste surfaces have no history: once the chat that produced a block is gone,
+so is the source. Every paste block is therefore ALSO written into the
+user's vault as a reference note — the chat delivery is a convenience copy,
+the vault note is the record.
+
+**Convention:**
+- Path: `Reference/<client>-instructions.md` (e.g.
+  `Reference/perplexity-instructions.md`,
+  `Reference/cowork-global-instructions.md`)
+- Frontmatter: `type: reference`, tags `[reference, agent-config, <client>]`
+- Lead line naming the exact paste destination, e.g. "Copy/paste source for
+  Perplexity → Project Settings → Project Instructions"
+- Body: the paste block content verbatim
+
+**Why it matters:** the vault note gets versioning via Obsidian Sync, is
+editable from any surface (including remotely via vault-cortex), and is the
+source of truth to re-paste from when anything changes. When the user later
+edits conventions or the protocol, they update the vault note and re-paste —
+no regeneration from scratch.
+
+## vault-cortex Is Per-Client
+
+vault-cortex is connected per surface — a working connection in the
+onboarding session says nothing about the user's other clients. During Phase
+7, record for each selected client whether vault-cortex is connected there
+(ask the user; it cannot be detected remotely):
+
+- **claude.ai chat:** required (the Phase 7 gate — skip the surface if
+  absent)
+- **Cowork, Perplexity, Cursor, Claude Code:** enhancement — instruction
+  blocks reference `vault_*` tools only when the connection is confirmed for
+  that client; otherwise reference native file tools
+- **Wanted but not set up:** give the user setup pointers for that surface
+  instead of assuming

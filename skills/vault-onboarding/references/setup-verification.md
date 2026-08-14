@@ -138,6 +138,35 @@ If the full instruction content exceeds the character limit:
    - Pass: references conventions from the instructions file
    - Fail: check file path and that it's committed
 
+## Obsidian App Setup
+
+Run this walkthrough whenever boards or plugin-dependent features were
+scaffolded and the plugins aren't installed — which is ALWAYS the case for a
+newly created vault (a fresh `.obsidian/` has no community plugins, so
+"plugin not detected" is expected, not a reason to skip Kanban features).
+Skip only for folder-only setups with no Obsidian.
+
+Walk the user through, in the Obsidian app:
+
+1. Open **Settings → Community plugins**. If Restricted mode is enabled,
+   turn it off (it's off by default in current Obsidian, so this step often
+   isn't needed).
+2. Click **Browse**, then install and enable:
+   - **Kanban** — renders TASKS.md as a visual board with drag-and-drop
+     lanes. Without it, boards are plain markdown headings and checkboxes
+     (still functional for agents, just not visual).
+   - **Tasks** — makes the `➕ 📅 ✅` date and priority metadata on cards
+     queryable (due-date views, "what did I finish this week").
+   - **Dataview** (optional) — enables query blocks in dashboards and hub
+     notes; mention it, don't push it.
+3. Reopen TASKS.md — it should now render as a board. If it doesn't, check
+   its frontmatter contains `kanban-plugin: board`.
+
+The generated boards keep `kanban-plugin: board` in their frontmatter even
+when the plugin isn't installed yet — the key is inert until the plugin
+exists, and stripping it would mean boards never render as Kanban even after
+installation.
+
 ## Troubleshooting
 
 ### Agent doesn't know my name
@@ -163,8 +192,10 @@ If the full instruction content exceeds the character limit:
 
 ### Task board not rendering as Kanban
 
-- Check that the Obsidian Kanban plugin is installed
-- Verify TASKS.md has `kanban-plugin: board` in its frontmatter
+- Check that the Obsidian Kanban plugin is installed and enabled — see
+  "Obsidian App Setup" above (new vaults never have it preinstalled)
+- Verify TASKS.md has `kanban-plugin: board` in its frontmatter — generated
+  boards keep it even before the plugin is installed; if it's missing, add it
 - The board renders as a visual Kanban only in Obsidian with the plugin
 
 ### Protocol seems incomplete

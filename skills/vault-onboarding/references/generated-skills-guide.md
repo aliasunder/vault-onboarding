@@ -143,14 +143,22 @@ The logic is the same — only the tool names change.
 
 ## Skill Placement
 
-Where generated skills are placed depends on the client:
+**Vault copy first, always:** every generated skill is written into the
+user's vault (`Setup/skills/<name>.md` or the folder the user prefers)
+regardless of client. The vault copy survives the session, syncs, and is the
+source to re-deliver from if a client's copy is lost or a new client is
+added later.
+
+Then deliver to each client the user selected:
 
 | Client | Skill location | Method |
 |---|---|---|
 | Claude Code | `~/.claude/skills/<name>/SKILL.md` | Write to disk |
 | Agent Skills standard | `~/.agents/skills/<name>/SKILL.md` | Write to disk |
+| Perplexity | Personal skill library | Save via the client's own skill-save path (an agent running in Perplexity can save directly). `npx skills add` does NOT apply; for third-party skills, the user adds a release zip from the skill's GitHub releases |
+| claude.ai / Claude Desktop | Uploaded skill | Emit the skill as an uploadable file and point the user at the skills upload surface |
 | Cowork | Output content for user to add | Display to user |
-| Other clients | Output content with instructions | Display to user |
+| No skill mechanism | That client's instruction block | Fold the skill's trigger behavior into the instruction file generated in Phase 7 |
 
 For Claude Code users, check if `~/.claude/skills/` exists. If not, check
 `~/.agents/skills/`. Create the directory structure if needed.
@@ -158,6 +166,12 @@ For Claude Code users, check if `~/.claude/skills/` exists. If not, check
 Skills installed via `npx skills add` go to `~/.agents/skills/`. Skills
 created locally go to `~/.claude/skills/`. Both locations work — Claude Code
 scans both.
+
+**Delivery verification:** delivery is complete only when the onboarding
+checkpoint records each skill with its destination per client (or an
+explicit skip reason). A skill that was generated but never reached a client
+— with nothing recorded — is a dropped deliverable, and the Phase 8
+completion checklist must surface it.
 
 ## Pitfall Documentation
 

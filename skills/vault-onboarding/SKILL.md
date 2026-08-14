@@ -120,7 +120,9 @@ terminal, git = technical. "I just use the app", "I type in the chat" =
 non-technical. Never ask "are you technical?" directly — it's off-putting and
 unreliable. Adjust your language for the rest of the interview accordingly.
 
-**Save to checkpoint** after this phase.
+**Checkpoint:** hold this phase's answers in-conversation — the checkpoint
+file cannot exist until Phase 2 establishes the vault path. They are written
+to disk at the Phase 2 checkpoint gate.
 
 ---
 
@@ -130,6 +132,10 @@ These answers feed instruction files regardless of what else is enabled. They
 also seed memory files if the user opts into memory later.
 
 **Question 1:** "What's your name, and what timezone are you in?"
+
+You may pre-fill these from the environment (username, system timezone), but
+always **confirm** them with the user ("I have you as X in timezone Y —
+right?") — never silently infer identity.
 
 **Question 2:** "What matters most to you in how AI works with you?"
 
@@ -149,7 +155,8 @@ serve you well?"
 Open-ended catch-all. Common answers: domain expertise, work schedule, pet
 peeves, accessibility needs.
 
-**Save to checkpoint** after this phase.
+**Checkpoint:** hold this phase's answers in-conversation — they are written
+to disk at the Phase 2 checkpoint gate.
 
 ---
 
@@ -172,7 +179,10 @@ Establish WHERE things go. Not what gets created — that's Phases 3–6.
 
 Record the vault/folder path. All subsequent phases write relative to this.
 
-**Save to checkpoint** after this phase.
+**Checkpoint gate:** the path now exists — write `onboarding-progress.md`
+NOW, including the held Phase 0–1 answers, and read it back to confirm it's
+on disk. Do not ask any Phase 3 question until the checkpoint shows Phases
+0–2 complete.
 
 ---
 
@@ -213,6 +223,19 @@ consult?"
 If yes: create `Reference/` and explain the living-note pattern — notes that
 stay current vs point-in-time decisions.
 
+**Question 4** (only if Question 1 = yes): "Want to set up your first real
+project now?"
+
+Don't leave the user with only a template — a scaffold nobody instantiates
+is a system nobody uses, and if Phase 5 later chooses per-project boards, no
+project means **zero live task boards**. If yes: copy the template structure
+to `Projects/<their name>/`, fill its README with the project's purpose and
+the extension-point stubs (Agent Role, Session Start/End Extensions,
+Response Style), and create its TASKS.md; Phase 7 then generates per-project
+instructions for it. If the user defers, record the deferral — Phase 8's
+completion checklist must surface "no project created" as a warning, not
+silence.
+
 **Vault conventions** — establish during this phase:
 
 - **Tags:** Recommend frontmatter tags, lowercase-hyphenated. Suggest a starter
@@ -228,7 +251,9 @@ stay current vs point-in-time decisions.
 
 Record all conventions — they go into generated instruction files.
 
-**Save to checkpoint** after this phase.
+**Checkpoint gate:** rewrite the checkpoint with this phase's answers and
+read it back. Do not ask a Phase 4 question until the file on disk shows
+Phase 3 complete.
 
 ---
 
@@ -281,7 +306,9 @@ skill generation).
 and preferences from Phase 1 — agents know who you are, they just don't have
 persistent memory across sessions.
 
-**Save to checkpoint** after this phase.
+**Checkpoint gate:** rewrite the checkpoint with this phase's answers and
+read it back. Do not ask a Phase 5 question until the file on disk shows
+Phase 4 complete.
 
 ---
 
@@ -308,14 +335,26 @@ Explain each briefly:
 - **Someday** — ideas and low-priority items
 - **Done** — completed work (agents move tasks here automatically)
 
-If the Kanban plugin is installed (detected in the pre-scan), substitute
-`{{KANBAN_FRONTMATTER}}` with `kanban-plugin: board` so the board renders as a
-visual board in Obsidian. If the plugin is not installed, remove the marker
-line from the frontmatter.
+**Kanban frontmatter:** substitute `{{KANBAN_FRONTMATTER}}` with
+`kanban-plugin: board` whenever the user is using Obsidian — whether the
+Kanban plugin was detected OR the vault is newly created (a new vault never
+has plugins yet, and the frontmatter is inert until the plugin is installed;
+stripping it would mean boards never render as Kanban even after the user
+installs it). Remove the marker line ONLY when the user chose a folder-only
+setup with no Obsidian.
+
+**Plugin walkthrough:** if boards are enabled and the Kanban or Tasks plugin
+is not detected, walk the user through installing them now — see the
+"Obsidian app setup" section of `references/setup-verification.md`. Do not
+defer this to a footnote: without the Kanban plugin the board renders as
+plain markdown, and without Tasks the date/priority metadata isn't
+queryable. Skip only for folder-only setups.
 
 **If no:** skip. No task board, no board reconciliation in the protocol.
 
-**Save to checkpoint** after this phase.
+**Checkpoint gate:** rewrite the checkpoint with this phase's answers and
+read it back. Do not ask a Phase 6 question until the file on disk shows
+Phase 5 complete.
 
 ---
 
@@ -368,23 +407,34 @@ time, review your tasks, and write a handoff log when they're done."
    (from the pre-scan), never overwrite — show the differences and merge with
    the user's approval.
 
-**Generate skills:**
-
-Read the skill templates from `assets/skills/`. For each applicable skill:
-
-1. Read the template.
-2. Substitute variables based on what was scaffolded.
-3. Determine placement:
-   - Claude Code users: write to `~/.claude/skills/<name>/SKILL.md` (confirm
-     the path exists or create it)
-   - Other clients: output the skill content and explain where to place it or
-     how to use it
+**Generate and DELIVER skills:**
 
 Skills to generate:
 - **session-start** (always if protocol enabled)
 - **session-end** (always if protocol enabled)
 - **remember** (only if memory enabled — Phase 4)
 - **project-role** (only if full protocol — helps define per-project agent roles)
+
+For each applicable skill:
+
+1. Read the template from `assets/skills/`.
+2. Substitute variables based on what was scaffolded.
+3. **Write the finished skill into the vault** — `Setup/skills/<name>.md`
+   (or a folder the user prefers). This always happens, regardless of
+   client: the vault copy survives the session, syncs, and is the source to
+   re-deliver from.
+4. **Deliver to each client from Phase 0** per the Skill Placement table in
+   `references/generated-skills-guide.md` (Claude Code: write to disk;
+   Perplexity: save to the user's skill library; claude.ai / Claude Desktop:
+   emit as uploadable skill files; clients with no skill mechanism: fold the
+   trigger behavior into that client's instruction block in Phase 7).
+
+**Delivery is not optional and not silent.** Generation is complete only
+when the checkpoint's files-generated list records every skill with its
+delivery destination per client — or an explicit reason it was skipped. An
+announced-but-undelivered skill is exactly the failure this rule exists to
+prevent: if you are interrupted mid-generation, the checkpoint tells the
+resumed session what still needs delivering.
 
 Create a `sessions/` folder at the vault root for session logs. If per-project
 folders were scaffolded (Phase 3), note that project-scoped logs go in each
@@ -396,7 +446,9 @@ memory-gated, not protocol-gated — if memory was enabled (Phase 4), still
 generate it here. Instruction files still carry identity and preferences —
 agents just won't follow a structured session ritual.
 
-**Save to checkpoint** after this phase.
+**Checkpoint gate:** rewrite the checkpoint with this phase's answers —
+including each generated skill's delivery destinations — and read it back.
+Do not start Phase 7 until the file on disk shows Phase 6 complete.
 
 ---
 
@@ -433,6 +485,16 @@ Read the appropriate template from `assets/templates/instructions/`:
 | Perplexity | `perplexity.md` | Paste block for Project Instructions | No — Perplexity Computer has local file access |
 | Cursor | `cursor.md` | Project `.cursor/rules/` or `.cursorrules` | No — has local file access |
 | Copilot | `copilot.md` | `.github/copilot-instructions.md` | No — has local file access |
+
+**vault-cortex is a per-client connection:** detecting vault-cortex in THIS
+session says nothing about the user's other clients — each surface
+(claude.ai, Cowork, Perplexity, Cursor) connects to it separately. For each
+selected client, ask whether vault-cortex is connected there and record the
+answer in the checkpoint. claude.ai chat requires it (see the gate below);
+for other clients it's an enhancement. Where it's wanted but not set up,
+point the user at the vault-cortex setup docs for that surface — never
+assume, and never emit `vault_*` tool references in an instruction block for
+a client whose connection isn't confirmed.
 
 **Claude Code surface check:** ask whether they use Claude Code locally
 (CLI or IDE on their own machine), in the cloud (claude.ai/code web
@@ -484,9 +546,19 @@ For each template:
 
 For paste-only clients (Cowork Global Instructions, claude.ai Custom
 Instructions, Perplexity), format the output as a clearly-marked paste block
-with instructions on where to paste it.
+with instructions on where to paste it — AND **always write the block into
+the vault as `Reference/<client>-instructions.md`** (frontmatter: `type:
+reference`, tags `[reference, agent-config, <client>]`, with a lead line
+naming exactly where it gets pasted, e.g. "Copy/paste source for Perplexity
+→ Project Settings → Project Instructions"). The chat delivery is a
+convenience copy; the vault note is the record — it gets versioning via
+Obsidian Sync, stays editable from any surface (including via vault-cortex),
+and is the source of truth to re-paste from when anything changes. See
+"Persisting paste blocks" in `references/client-instructions.md`.
 
-**Save to checkpoint** after this phase.
+**Checkpoint gate:** rewrite the checkpoint with this phase's output —
+including the `Reference/` instruction notes written — and read it back. Do
+not start Phase 8 until the file on disk shows Phase 7 complete.
 
 ---
 
@@ -524,21 +596,58 @@ Based on what they adopted, show what they can add later:
 
 - **obsidian-vault skill** (Obsidian formatting safety — frontmatter,
   wikilinks, plugin syntax). The generated system writes Obsidian-flavored
-  markdown constantly, so treat this as part of setup, not an optional extra:
-  1. Check whether it's already installed (`~/.claude/skills/obsidian-vault/`
-     for Claude Code, or the client's skill location per
-     `references/generated-skills-guide.md`).
-  2. If missing and this client can run shell commands, offer to run
-     `npx skills add aliasunder/obsidian-vault` now.
-  3. If the client can't run commands, print the command with instructions on
-     where to run it, or use the client's skill-upload path where supported.
-- **vault-cortex** for remote vault access and semantic search (if not already
-  installed): mention it as an enhancement, not a requirement
+  markdown constantly, so treat this as part of setup, not an optional extra.
+  The check is **per client**: for EACH client selected in Phase 0, check
+  that client's own skill mechanism and offer the matching install path
+  (Skill Placement table in `references/generated-skills-guide.md`):
+  - Claude Code: check `~/.claude/skills/obsidian-vault/` and
+    `~/.agents/skills/obsidian-vault/`; if missing, offer to run
+    `npx skills add aliasunder/obsidian-vault`.
+  - Perplexity: check the user's skill library; if missing, save it there
+    (`npx skills add` does not apply — deliver via the client's own save
+    path, or point at the release zip from the skill's GitHub releases).
+  - claude.ai / Claude Desktop: offer as an uploadable skill.
+  - Clients with no skill support: inline the formatting-safety essentials
+    into that client's instruction block instead.
+
+  **Never conclude "installed" from a different client's location** — a copy
+  under `~/.claude/skills/` covers Claude Code only, and clients the user
+  excluded in Phase 0 don't count as coverage.
+- **vault-cortex** for remote vault access and semantic search — per-client
+  status was recorded in Phase 7; here, resolve any client where it's wanted
+  but not yet set up (setup pointers, not assumptions). An enhancement, not
+  a requirement — except for claude.ai chat, which requires it.
+
+**Obsidian app setup:** if boards or plugin-dependent features were
+scaffolded and the plugins aren't installed yet, run the walkthrough in
+`references/setup-verification.md` → "Obsidian app setup" now (Kanban,
+Tasks, optionally Dataview).
 
 **Clean up:**
 
 Ask whether to keep or remove the `onboarding-progress.md` checkpoint file.
 If they might want to re-run or extend later, keep it. Otherwise, remove it.
+
+**Output the completion checklist** (always the last step — nothing above it
+counts as done until it appears here). Every line is mandatory; a ✗ or
+"skipped" requires the reason. This is what makes a silently dropped step
+visible:
+
+```text
+Onboarding complete:
+- Checkpoint: <✓ saved at every phase gate / ✗ + reason>
+- Vault structure: <folders + conventions created>
+- Memory: <files created + seeded, or "not enabled">
+- Task boards: <boards created, or "not enabled">
+- First project: <name, or "⚠ none created — per-project boards inert until one exists">
+- Protocol: <full / lightweight / none>
+- Skills: <each skill × client destination, vault copy path, or skip reason>
+- Instruction files: <per client: written path or pasted + Reference/ note path>
+- vault-cortex: <per client: connected / setup pointer given / not wanted>
+- obsidian-vault skill: <per client: installed / delivered / inlined / skipped + reason>
+- Obsidian plugins: <installed / walkthrough given / N/A folder-only>
+- Checkpoint file: <kept / removed>
+```
 
 ---
 
@@ -548,17 +657,32 @@ The checkpoint file (`onboarding-progress.md` in the vault root) tracks the
 current phase, a completed-phases checklist, and the saved answers from each
 phase. The canonical template is `assets/templates/onboarding-progress.md` —
 read it, substitute the `{{VARIABLE}}` markers with the answers collected so
-far (leave markers for phases not yet reached), and rewrite it at every save
-point.
+far (leave markers for phases not yet reached), and rewrite it at every gate.
 
-**First write:** the checkpoint can only be written once a vault or folder
-path exists. During Phases 0–1 (before Phase 2 establishes the path), hold
-answers in the conversation; write the checkpoint — including the Phase 0–1
-answers — at the first save point after Phase 2.
+**The gate rule: a phase is not complete until the checkpoint on disk says
+so.** At the end of every phase (from Phase 2 onward): rewrite the checkpoint
+with everything collected so far, read it back to confirm it exists and lists
+the phase as complete, and only then ask the next phase's first question. If
+the read-back fails, stop and fix the write before proceeding — an interview
+that runs ahead of its checkpoint is un-resumable.
+
+**Why this is a hard rule, not bookkeeping:** onboarding sessions are long.
+They get interrupted ("I need to stop"), and chat clients compact long
+conversations — in-conversation answers are NOT durable state. Never present
+"everything so far is in this conversation" as a resume plan; the checkpoint
+file is the resume plan. A user who pauses mid-interview must find their
+answers on disk, not in a thread that may be compacted or lost.
+
+**First write (the only boundary):** the checkpoint can only be written once
+a vault or folder path exists. During Phases 0–1, hold answers in the
+conversation; the moment Phase 2 establishes the path, write the checkpoint
+— including the held Phase 0–1 answers — before asking any Phase 3 question.
 
 **Resume logic:** When resuming, read the checkpoint, greet the user with a
 summary of where they left off, and continue from the next incomplete phase.
-Don't re-ask questions whose answers are already saved.
+Don't re-ask questions whose answers are already saved. Check the
+files-generated list for anything recorded as pending delivery (e.g. skills
+generated but not yet delivered to a client) and finish it.
 
 ---
 
@@ -580,6 +704,10 @@ Detection: check whether the vault-cortex MCP server's tools appear in the
 current session's tool list. If they don't, ask the user: "Do you have vault-cortex installed? It adds
 remote access, search, and semantic memory recall to your vault. Everything
 works without it — vault-cortex enhances the experience."
+
+Detection here covers the CURRENT surface only. Connection status for the
+user's other clients is collected per client in Phase 7 — never generalize
+this session's detection to instruction files for other surfaces.
 
 ---
 
@@ -650,3 +778,6 @@ Variables used across templates, listed for reference:
 | `{{HAS_PEOPLE}}` | Phase 3 | Checkpoint |
 | `{{HAS_REFERENCE}}` | Phase 3 | Checkpoint |
 | `{{FILES_GENERATED}}` | Phases 4–7 output | Checkpoint |
+| `{{SKILLS_DELIVERED}}` | Phase 6 delivery (skill × client destination, or skip reason) | Checkpoint |
+| `{{INSTRUCTIONS_PERSISTED}}` | Phase 7 (`Reference/<client>-instructions.md` paths) | Checkpoint |
+| `{{VAULT_CORTEX_CLIENTS}}` | Phase 7 (per-client connection status) | Checkpoint |
