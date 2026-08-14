@@ -50,6 +50,15 @@ ends — not a pile of homework. Three rules serve this:
    `kanban-plugin: board` (the Kanban plugin renders any note with that
    frontmatter as a visual board). A system whose parts the user can name
    is one they'll trust and extend; unexplained artifacts read as clutter.
+5. **No bare questions.** A question followed by an empty text box hands all
+   the effort to the user — overwhelming, especially for open-ended asks.
+   Every question ships with 2–4 example answers, presented *prominently
+   with the question itself*: as selectable options where the client
+   renders them, or as a visible "for example: …" line — never buried
+   mid-paragraph where they read as filler. Always leave room for "or tell
+   me in your own words." The per-question examples in Phases 0–1 below are
+   the floor, not the ceiling — adapt them to what the user has already
+   said.
    **Calibrate every explanation to the technical comfort inferred in
    Phase 0.** For a non-technical user, the explanation itself must carry no
    jargon: not "frontmatter" but "the label section at the top of the
@@ -139,16 +148,21 @@ Phase 7 generates an instruction file for each.
 
 **Question 2:** "What kind of work do you primarily do?"
 
-Listen for domain signals: engineering, creative, academic, business, personal
-knowledge management. This influences which memory file sections to suggest and
-what examples to use.
+Offer examples with the question: software or technical projects · writing
+or creative work · school or research · running a business · job searching ·
+just organizing my life. Listen for domain signals: engineering, creative,
+academic, business, personal knowledge management. This influences which
+memory file sections to suggest and what examples to use.
 
 **Question 3:** "What frustrates you most about working with AI across
 sessions?"
 
-This is diagnostic — it reveals pain points the system addresses (lack of
-memory, no continuity, repeated context-setting, lost decisions). Use their
-answer to frame why each component exists when you present it.
+Offer examples with the question: having to re-explain everything each time ·
+losing track of what I was working on · decisions and context disappearing ·
+starting from scratch every session · all of the above. This is diagnostic —
+it reveals pain points the system addresses (lack of memory, no continuity,
+repeated context-setting, lost decisions). Use their answer to frame why
+each component exists when you present it.
 
 **Infer technical comfort** from vocabulary. Mentions of CLI, MCP, YAML,
 terminal, git = technical. "I just use the app", "I type in the chat" =
@@ -177,21 +191,32 @@ right?") — never silently infer identity.
 
 **Question 2:** "What matters most to you in how AI works with you?"
 
-Listen for: communication style (concise vs detailed), autonomy level (just do
-it vs ask first), verification preferences (trust me vs show your work). These
-become directives in instruction files.
+Offer examples with the question: keep it short and to the point · explain
+things in detail · just handle things, ask only when unsure · always check
+with me before acting · show your reasoning and evidence · just give me
+results. Listen for: communication style (concise vs detailed), autonomy
+level (just do it vs ask first), verification preferences (trust me vs show
+your work). These become directives in instruction files.
 
 **Question 3** (optional): "What principles do you hold firm when making
 decisions or managing work?"
 
-Skip if the user seems eager to move on. These seed the Principles memory file
-if opted in.
+Offer examples with the question: nothing goes out to other people without
+my review · anything written in my name should sound like me, not AI ·
+privacy first — keep personal things out of shared docs · quality over
+speed. Skip if the user seems eager to move on. These seed the Principles
+memory file if opted in.
 
 **Question 4** (optional): "Anything else about yourself that would help agents
 serve you well?"
 
-Open-ended catch-all. Common answers: domain expertise, work schedule, pet
-peeves, accessibility needs.
+Offer examples with the question — this is the most open-ended ask of the
+interview, so it needs them most: how you like to start tasks (e.g. "break
+big things into small steps for me") · schedule or energy patterns ("I work
+best in the morning") · accessibility or working-style needs (ADHD,
+dyslexia, screen readers) · pet peeves ("don't use bullet points for
+everything"). Open-ended catch-all — anything they volunteer here routes to
+the best-fit memory file in Phase 4.
 
 **Checkpoint:** hold this phase's answers in-conversation — they are written
 to disk at the Phase 2 checkpoint gate.
