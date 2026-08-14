@@ -255,11 +255,18 @@ project means **zero live task boards**. If yes:
    Start/End Extensions, Response Style), and later the Last Session
    pointer. **Resolve its name once, by what mechanically loads it:**
    - Client mix includes Claude Code or Cowork → `CLAUDE.md` (auto-injected
-     when an agent lands in the folder — injection over fetch, for free)
-   - No Claude surface but other file-reading agents (Cursor, Copilot,
-     Codex-style tools) → `AGENTS.md` (the cross-tool convention)
-   - No file-reading client at all → a folder note named after the project
-     (the Obsidian-native pattern; README.md if the user prefers)
+     when an agent lands in the folder — injection over fetch, for free.
+     Claude Code also auto-loads `AGENTS.md` natively, so with a mixed
+     agent lineup `AGENTS.md` covers everything with one file)
+   - Otherwise → `AGENTS.md` (the cross-tool convention; auto-loaded by
+     Cursor, Copilot, Codex-style tools and Claude Code alike). This
+     includes clients with file access but no auto-load, like Perplexity —
+     the file is still agent-facing there; the generated protocol's
+     session-start step is what directs the read instead of injection.
+   - A folder note named after the project (the Obsidian-native pattern) is
+     a fine user-preference alternative when no client auto-loads anything —
+     but default to `AGENTS.md` so any client added later finds it by
+     convention.
    Use the resolved name consistently everywhere a project hub file is
    referenced — Phase 7's per-project generation, the protocol's extension
    points, and the project-role skill all target this same file.

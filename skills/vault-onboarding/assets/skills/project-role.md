@@ -59,8 +59,10 @@ Find the project's hub file — the single per-project instruction file whose
 name was resolved during onboarding:
 - Claude Code: project `CLAUDE.md` or `CLAUDE.local.md`
 - Cowork: the bound folder's `CLAUDE.md`
-- Other clients: the project's `AGENTS.md`, or its folder note if no
-  file-reading client was set up
+- Other clients: the project's `AGENTS.md` (the default for non-Claude
+  setups, including clients like Perplexity that read files without
+  auto-loading them), or the project's folder note if that was chosen
+  during onboarding
 
 Look for the `## Agent Role` stub (created by onboarding with an HTML comment
 placeholder). Replace the stub content with the composed role.
