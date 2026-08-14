@@ -63,7 +63,10 @@ jobs:
       - name: Build artifact
         run: |
           echo "Building vault-onboarding.zip..."
-          zip -r vault-onboarding.zip SKILL.md references/ assets/ README.md LICENSE
+          (cd skills/vault-onboarding && zip -r "$GITHUB_WORKSPACE/vault-onboarding.zip" SKILL.md references/ assets/)
+          zip vault-onboarding.zip README.md LICENSE
+          # zip ignores unmatched input paths with exit 0 — fail hard if the payload is missing
+          unzip -l vault-onboarding.zip SKILL.md
 
       - name: Create GitHub release
         env:
