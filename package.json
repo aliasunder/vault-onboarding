@@ -1,6 +1,6 @@
 {
   "name": "vault-onboarding",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "render:social-preview": "puppeteer browsers install chrome && node scripts/render-social-preview.ts",
