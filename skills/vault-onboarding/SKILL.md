@@ -40,6 +40,16 @@ ends — not a pile of homework. Three rules serve this:
    onboarding demonstrate the payoff (see Phase 8's live demo): the user
    watches continuity work once, and learns that from now on, starting a
    session takes one phrase.
+4. **Explain as you create.** Every file and folder gets a one-line,
+   plain-language purpose the moment it appears — and when a name exists
+   for mechanical reasons, say the reason: a Perplexity user about to dip
+   their toes into Cowork shouldn't wonder why a file is called `CLAUDE.md`
+   (it's the filename Claude Code and Cowork automatically read when
+   working in that folder), what `.obsidian/` is (Obsidian's own config —
+   how the app recognizes the folder as a vault), or why TASKS.md carries
+   `kanban-plugin: board` (the Kanban plugin renders any note with that
+   frontmatter as a visual board). A system whose parts the user can name
+   is one they'll trust and extend; unexplained artifacts read as clutter.
 
 ## How This Skill Works
 
@@ -269,7 +279,10 @@ project means **zero live task boards**. If yes:
      convention.
    Use the resolved name consistently everywhere a project hub file is
    referenced — Phase 7's per-project generation, the protocol's extension
-   points, and the project-role skill all target this same file.
+   points, and the project-role skill all target this same file. And tell
+   the user why the file got its name (North Star rule 4) — e.g. "it's
+   called CLAUDE.md because Claude Code and Cowork automatically read a
+   file with that exact name whenever they work in this folder."
 3. Create its TASKS.md — and **seed it with real first tasks**: the user
    just told you what they're working on, so capture 2–3 actual cards from
    their answer (with `➕` dates). An empty board is homework; a board that
@@ -619,7 +632,14 @@ not start Phase 8 until the file on disk shows Phase 7 complete.
 
 **Walk through what was created:**
 
-List every file and folder that was scaffolded, organized by category:
+List every file and folder that was scaffolded, organized by category, each
+with a one-line plain-language description of what it does — and, where the
+name is mechanical, why it's called that (per North Star rule 4: `CLAUDE.md`
+because Claude tools auto-read it, `AGENTS.md` as the cross-tool convention,
+`PROTOCOL.md` as the ritual agents follow, `About Me/` as what agents read
+to know the user). This is a recap — each item was already explained once at
+creation; here the user sees the whole system in one view they could
+re-explain to someone else:
 - Vault structure (folders, conventions)
 - Memory files (if enabled)
 - Task board (if enabled)
