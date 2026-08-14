@@ -357,7 +357,22 @@ project created" as a warning, not silence.
 - **Escape rules:** `\#` before numbers in note content, `\|` in wikilinks
   inside tables.
 
-Record all conventions — they go into generated instruction files.
+Record all conventions — they go into generated instruction files — and
+**write them into the vault as a note** (`Reference/Vault Conventions.md` if
+a Reference folder was created, vault root otherwise), so the user owns a
+copy independent of any instruction file.
+
+**Then give the user a short tour of that note — don't just plop it in.**
+The conventions note is the first file full of concepts a newcomer has
+never met, so walk through it briefly, calibrated to their comfort level
+(North Star rule 4): what frontmatter is ("the label section at the top of
+every note — it's how notes get found and sorted"), what a wikilink is
+("double brackets connect notes to each other — Obsidian shows the
+connections"), what task syntax looks like ("a checkbox line; the little
+symbols carry dates and priority so tasks can be searched"). Frame it as
+relief, not curriculum: "you don't need to memorize any of this — agents
+follow these rules automatically; this note is the cheat sheet if you're
+ever curious or want to change something."
 
 **Checkpoint gate:** rewrite the checkpoint with this phase's answers and
 read it back. Do not ask a Phase 4 question until the file on disk shows
