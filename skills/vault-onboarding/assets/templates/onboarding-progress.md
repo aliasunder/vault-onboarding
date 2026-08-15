@@ -59,6 +59,7 @@ Last updated: {{LAST_UPDATED}}
 ### Phase 3 Details
 
 - Projects: {{HAS_PROJECTS}}
+- Projects location: {{PROJECTS_LOCATION}}
 - People folder: {{HAS_PEOPLE}}
 - Reference folder: {{HAS_REFERENCE}}
 - Tag style: {{TAG_STYLE}}

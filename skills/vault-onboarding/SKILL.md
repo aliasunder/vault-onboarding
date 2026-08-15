@@ -271,9 +271,21 @@ organize where things will live in your vault."
 each gets its own folder with its own task board and session history — so
 work on one never gets tangled up with another.)"
 
-If yes: scaffold a project template folder structure. Explain the pattern —
-each project gets its own folder with subdirectories for sessions, reference
-material, research, task notes, and plans. Show an example:
+If yes, follow up: "Where should projects live — each project as its own
+folder at the vault root, or grouped under a Projects/ folder? (Root keeps
+nesting shallow and projects front and center; a Projects/ folder keeps the
+vault root tidier once you have many.)" A project is defined by its
+contents — a hub file, its TASKS.md, its sessions — not by a container
+folder, so both layouts work identically; this is purely the user's
+preference. Record the choice (`PROJECTS_LOCATION`) and use it consistently
+everywhere a project path appears: the template scaffold, Question 4's
+first project, structure maps in instruction files, and generated protocol
+paths.
+
+Then scaffold a project template folder structure at the chosen location.
+Explain the pattern — each project gets its own folder with subdirectories
+for sessions, reference material, research, task notes, and plans. Show an
+example (shown grouped; at root, `my-project/` sits directly in the vault):
 
 ```
 Projects/
@@ -313,7 +325,9 @@ Don't leave the user with only a template — a scaffold nobody instantiates
 is a system nobody uses, and if Phase 5 later chooses per-project boards, no
 project means **zero live task boards**. If yes:
 
-1. Copy the template structure to `Projects/<their name>/`.
+1. Copy the template structure to the project's folder at the location
+   chosen in Question 1 (`Projects/<their name>/`, or `<their name>/` at
+   the vault root).
 2. Create the project's **hub file** — the agent-facing note carrying the
    project's purpose, the extension-point stubs (Agent Role, Session
    Start/End Extensions, Response Style), and later the Last Session
@@ -944,6 +958,7 @@ Variables used across templates, listed for reference:
 | `{{PHASE_5_DECISION}}` | Phase 5 opt-in choice | Checkpoint |
 | `{{PHASE_6_DECISION}}` | Phase 6 opt-in choice | Checkpoint |
 | `{{HAS_PROJECTS}}` | Phase 3 | Checkpoint |
+| `{{PROJECTS_LOCATION}}` | Phase 3 (root folders vs Projects/ container) | Checkpoint |
 | `{{HAS_PEOPLE}}` | Phase 3 | Checkpoint |
 | `{{HAS_REFERENCE}}` | Phase 3 | Checkpoint |
 | `{{FILES_GENERATED}}` | Phases 4–7 output | Checkpoint |
