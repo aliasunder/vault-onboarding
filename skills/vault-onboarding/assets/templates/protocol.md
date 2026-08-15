@@ -230,7 +230,9 @@ All boards use 5 lanes: **Active / Up Next / Waiting On / Someday / Done**.
 {{#IF_FULL_PROTOCOL}}
 ## Extension Points
 
-Each project may define these sections in its instruction file:
+Each project may define these sections in its hub file — the project's
+`CLAUDE.md` / `AGENTS.md` / folder note, whichever was chosen during
+onboarding:
 
 | Section | When it runs |
 |---|---|
