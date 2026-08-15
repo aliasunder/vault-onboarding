@@ -149,8 +149,8 @@ Skip only for folder-only setups with no Obsidian.
 Walk the user through, in the Obsidian app:
 
 1. Open **Settings → Community plugins**. If Restricted mode is enabled,
-   turn it off (it's off by default in current Obsidian, so this step often
-   isn't needed).
+   turn it off (fresh installs have it on until community plugins are
+   enabled once — expect to need this step on a new vault).
 2. Click **Browse**, then install and enable:
    - **Kanban** — renders TASKS.md as a visual board with drag-and-drop
      lanes. Without it, boards are plain markdown headings and checkboxes

@@ -101,7 +101,8 @@ them, not after):
 - `references/progressive-adoption.md` — Adoption tiers, modular growth paths,
   what to add later, advanced features. **Read before Phase 8 (Verification).**
 - `references/setup-verification.md` — Per-client verification checklists,
-  common issues, troubleshooting steps. **Read during Phase 8 (Verification).**
+  common issues, troubleshooting steps. **Read during Phase 5 (plugin
+  walkthrough), Phase 7 (per-client checks), and Phase 8 (Verification).**
 
 **Asset templates** (read, substitute variables, write to the user's vault):
 
@@ -807,7 +808,10 @@ file; if boards were scaffolded, list the open tasks on their board (the
 real ones seeded in Phase 3); if memory was enabled, glance at the memory
 files seeded from their own interview answers; then produce the short
 session-start summary the protocol specifies. With no boards and no memory,
-the demo is just hub file + summary — it still lands. Close with the
+the demo is just hub file + summary — it still lands. If no protocol was
+enabled (Phase 6 = no), there is no session-start ritual to demonstrate —
+skip the demo and close with a plain one-line recap of what was set up and
+where it lives. Otherwise, close with the
 punchline: "That's what every session starts like now — you just say 'start
 session'." The user should watch continuity work once before the
 conversation ends; that moment, not the file list, is what makes the setup
@@ -947,7 +951,7 @@ Variables used across templates, listed for reference:
 | `{{LINK_STYLE}}` | Phase 3 | Checkpoint |
 | `{{VAULT_STRUCTURE_MAP}}` | Phases 2–3 | Instructions |
 | `{{PROTOCOL_BODY}}` | Phase 6 | Claude Code + Cowork instructions |
-| `{{KANBAN_FRONTMATTER}}` | Phase 5 (plugin detection) | Tasks board template |
+| `{{KANBAN_FRONTMATTER}}` | Phase 5 (Obsidian vault vs folder-only setup) | Tasks board template |
 | `{{PROJECT_NAME}}` | Per-project | Claude Code project template |
 | `{{PROJECT_DESCRIPTION}}` | Per-project | Claude Code project template |
 | `{{KEY_DOCS_LIST}}` | Per-project | Claude Code project template |
