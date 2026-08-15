@@ -1,6 +1,19 @@
 # Changelog
 
 
+## [0.1.2] — 2026-08-15
+
+### Bug Fixes
+
+- **skill:** Checkpoint gate, per-client delivery, and setup guidance from validation run 1 (#7)
+- **ci:** Build release zip from skills/vault-onboarding/ payload (#6)
+
+### CI / Infrastructure
+
+- Bump umm-actually to v0.3.6 and wire the request timeout (#9)
+- Add umm-actually PR review workflow (#8)
+
+
 ## [0.1.1] — 2026-08-14
 
 ### Features
