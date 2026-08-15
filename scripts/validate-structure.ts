@@ -146,6 +146,51 @@ for (const single of [
   check(`${single} exists`, isFile(join(SKILL_DIR, single)), "missing");
 }
 
+// 7. Heading cross-references: quoted heading names paired with a backtick-quoted
+//    reference-file path must resolve to an actual heading in the target file.
+//    Catches heading renames that silently break navigation aids for agents.
+const HEADING_XREF_A = /"([^"]+)"\s+(?:section\s+of|in)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g;
+const HEADING_XREF_B = /`(references\/[A-Za-z0-9_\-./]+\.md)`\s*→\s*"([^"]+)"/g;
+const xrefFiles = [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR, "references"))];
+for (const path of xrefFiles) {
+  // Collapse line continuations so multi-line references match.
+  const text = read(path).replace(/\s+/g, " ");
+  const mismatches: string[] = [];
+  // Pattern A: "Heading" section of / in `references/file.md`
+  for (const match of text.matchAll(new RegExp(HEADING_XREF_A))) {
+    const heading = match[1].replace(/\s+/g, " ").trim();
+    const refFile = match[2];
+    const targetPath = join(SKILL_DIR, refFile);
+    if (!isFile(targetPath)) continue; // already caught by check 4
+    const headings = read(targetPath)
+      .split("\n")
+      .filter((line) => /^#{1,6}\s/.test(line))
+      .map((line) => line.replace(/^#{1,6}\s+/, "").trim());
+    if (!headings.includes(heading)) {
+      mismatches.push(`"${heading}" not found in ${refFile}`);
+    }
+  }
+  // Pattern B: `references/file.md` → "Heading"
+  for (const match of text.matchAll(new RegExp(HEADING_XREF_B))) {
+    const refFile = match[1];
+    const heading = match[2].replace(/\s+/g, " ").trim();
+    const targetPath = join(SKILL_DIR, refFile);
+    if (!isFile(targetPath)) continue;
+    const headings = read(targetPath)
+      .split("\n")
+      .filter((line) => /^#{1,6}\s/.test(line))
+      .map((line) => line.replace(/^#{1,6}\s+/, "").trim());
+    if (!headings.includes(heading)) {
+      mismatches.push(`"${heading}" not found in ${refFile}`);
+    }
+  }
+  check(
+    `heading cross-refs resolve: ${rel(path)}`,
+    mismatches.length === 0,
+    mismatches.join("; "),
+  );
+}
+
 if (errors.length > 0) {
   console.log(`\n${errors.length} check(s) failed`);
   process.exit(1);

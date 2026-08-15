@@ -676,8 +676,8 @@ the vault as `Reference/<client>-instructions.md`** (frontmatter: `type:
 reference`, tags `[reference, agent-config, <client>]`, with a lead line
 naming exactly where it gets pasted, e.g. "Copy/paste source for Perplexity
 → Project Settings → Project Instructions"). The chat delivery is a
-convenience copy; the vault note is the record. See "Persisting paste
-blocks" in `references/client-instructions.md`.
+convenience copy; the vault note is the record. See "Persisting Paste
+Blocks" in `references/client-instructions.md`.
 
 **Deliver one client at a time, as guided live moments** — not a wall of
 paste blocks at the end. For each client: present its block, tell the user
