@@ -285,8 +285,10 @@ Projects/
     plans/          — implementation plans, specs
 ```
 
-If they'll have task boards (decided in Phase 5), per-project TASKS.md goes
-here too.
+A project's TASKS.md is just a markdown note — lanes as headings, tasks as
+checkbox lines — so it can exist before Phase 5. That phase decides how
+tasks are *rendered* (visual Kanban) and *managed* (agents reconciling the
+board), not whether the file may exist.
 
 **Question 2:** "Do you want a place for notes about people you work with?
 (Mention someone once — 'my manager Sam', 'the recruiter from Tuesday' — and
@@ -335,7 +337,11 @@ project means **zero live task boards**. If yes:
    the user why the file got its name (North Star rule 4) — e.g. "it's
    called CLAUDE.md because Claude Code and Cowork automatically read a
    file with that exact name whenever they work in this folder."
-3. Create its TASKS.md — and **seed it with real first tasks**: the user
+3. Create its TASKS.md — a plain markdown note (lanes as headings) that
+   works as a task list on its own; Phase 5 later decides whether it
+   renders as a visual Kanban and whether agents actively manage it (apply
+   the same Kanban-frontmatter rule as Phase 5: keep the marker unless the
+   user chose folder-only). **Seed it with real first tasks**: the user
    just told you what they're working on, so capture 2–3 actual cards from
    their answer (with `➕` dates). An empty board is homework; a board that
    already holds their real work is a burden lifted.
@@ -445,12 +451,17 @@ maintaining a list.)"
 If they work on projects (Phase 3): "Would you like one board for everything,
 or a board per project?"
 
+This phase governs how tasks are **rendered and managed** — a TASKS.md is
+just a markdown note (lanes as headings) and may already exist: Phase 3
+Question 4 creates one for the first project, seeded with real tasks.
+
 **If yes:**
 
 Read `assets/templates/tasks-board.md`. Create TASKS.md at the vault root
 (or per-project if chosen). If a TASKS.md already exists at the target
-location (from the pre-scan), don't create a new one — offer to add any
-missing lanes to the existing board instead.
+location (from the pre-scan, or created in Phase 3 Question 4), don't
+create a new one — it inherits this phase's choices (rendering, agent
+management); offer to add any missing lanes instead.
 
 The board uses 5 lanes: **Active / Up Next / Waiting On / Someday / Done**.
 Explain each briefly:
@@ -475,7 +486,10 @@ defer this to a footnote: without the Kanban plugin the board renders as
 plain markdown, and without Tasks the date/priority metadata isn't
 queryable. Skip only for folder-only setups.
 
-**If no:** skip. No task board, no board reconciliation in the protocol.
+**If no:** agents don't manage boards, and no board reconciliation enters
+the protocol. A TASKS.md already created in Phase 3 Question 4 stays — it's
+the user's plain task list, theirs to maintain by hand; tell them that's
+what it now is. Don't create any further boards.
 
 **Checkpoint gate:** rewrite the checkpoint with this phase's answers and
 read it back. Do not ask a Phase 6 question until the file on disk shows
