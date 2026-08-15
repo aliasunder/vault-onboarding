@@ -332,10 +332,13 @@ project means **zero live task boards**. If yes:
    project's purpose, the extension-point stubs (Agent Role, Session
    Start/End Extensions, Response Style), and later the Last Session
    pointer. **Resolve its name once, by what mechanically loads it:**
-   - Client mix includes Claude Code or Cowork → `CLAUDE.md` (auto-injected
-     when an agent lands in the folder — injection over fetch, for free.
-     Claude Code also auto-loads `AGENTS.md` natively, so with a mixed
-     agent lineup `AGENTS.md` covers everything with one file)
+   - Cowork in the client mix → `CLAUDE.md` (Cowork injects only the bound
+     folder's CLAUDE.md — it never loads AGENTS.md, so no other name works
+     for it; Claude Code reads CLAUDE.md too, so one file covers both)
+   - Claude Code in the mix, no Cowork → `CLAUDE.md` when Claude Code is
+     the only client; `AGENTS.md` when the lineup is mixed (Claude Code
+     auto-loads `AGENTS.md` natively, so one file covers Claude Code plus
+     Cursor/Copilot/Codex-style tools)
    - Otherwise → `AGENTS.md` (the cross-tool convention; auto-loaded by
      Cursor, Copilot, Codex-style tools and Claude Code alike). This
      includes clients with file access but no auto-load, like Perplexity —
@@ -582,7 +585,10 @@ For each applicable skill:
    re-deliver from.
 4. **Deliver to each client from Phase 0** per the Skill Placement table in
    `references/generated-skills-guide.md` (Claude Code: write to disk;
-   Perplexity: save to the user's skill library; claude.ai / Claude Desktop:
+   Perplexity: only an agent running inside Perplexity can save to the
+   user's skill library directly — from any other client, present the
+   library save as a user-driven step and record it in the checkpoint as
+   awaiting user action, not delivered; claude.ai / Claude Desktop:
    emit as uploadable skill files; clients with no skill mechanism: fold the
    trigger behavior into that client's instruction block in Phase 7).
 
@@ -775,7 +781,8 @@ Based on what they adopted, show what they can add later:
   - Perplexity: check the user's skill library; if missing, save it there
     (`npx skills add` does not apply — deliver via the client's own save
     path, or point at the release zip from the skill's GitHub releases).
-  - claude.ai / Claude Desktop: offer as an uploadable skill.
+  - claude.ai / Claude Desktop (unless recorded as skipped in Phase 7): offer
+    as an uploadable skill. A client skipped in Phase 7 stays skipped here.
   - Clients with no skill support: inline the formatting-safety essentials
     into that client's instruction block instead.
 

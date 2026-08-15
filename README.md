@@ -38,7 +38,7 @@ The skill runs a branching interview — it asks what you need and scaffolds onl
 8. **Client setup** — instruction files for each of your AI tools
 9. **Verification** — walk through everything, test it works
 
-The interview is resumable — stop mid-onboarding and pick up where you left off next session.
+The interview is resumable — stop mid-onboarding and pick up where you left off next session. Resumability begins once the vault checkpoint exists (after the vault-setup phase); answers given before that live only in the conversation.
 
 ## Standalone or with vault-cortex
 
