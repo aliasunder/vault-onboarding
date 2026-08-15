@@ -461,7 +461,11 @@ Read `assets/templates/tasks-board.md`. Create TASKS.md at the vault root
 (or per-project if chosen). If a TASKS.md already exists at the target
 location (from the pre-scan, or created in Phase 3 Question 4), don't
 create a new one — it inherits this phase's choices (rendering, agent
-management); offer to add any missing lanes instead.
+management); offer to add any missing lanes instead. If the user chose
+one board for everything and a per-project TASKS.md was created in
+Phase 3 Question 4, migrate its seeded tasks into the vault-root board
+and remove the per-project file — one board means one board, and the
+user's real tasks shouldn't be stranded in a file agents won't manage.
 
 The board uses 5 lanes: **Active / Up Next / Waiting On / Someday / Done**.
 Explain each briefly:
