@@ -470,7 +470,7 @@ setup with no Obsidian.
 
 **Plugin walkthrough:** if boards are enabled and the Kanban or Tasks plugin
 is not detected, walk the user through installing them now — see the
-"Obsidian app setup" section of `references/setup-verification.md`. Do not
+"Obsidian App Setup" section of `references/setup-verification.md`. Do not
 defer this to a footnote: without the Kanban plugin the board renders as
 plain markdown, and without Tasks the date/priority metadata isn't
 queryable. Skip only for folder-only setups.
@@ -676,10 +676,8 @@ the vault as `Reference/<client>-instructions.md`** (frontmatter: `type:
 reference`, tags `[reference, agent-config, <client>]`, with a lead line
 naming exactly where it gets pasted, e.g. "Copy/paste source for Perplexity
 → Project Settings → Project Instructions"). The chat delivery is a
-convenience copy; the vault note is the record — it gets versioning via
-Obsidian Sync, stays editable from any surface (including via vault-cortex),
-and is the source of truth to re-paste from when anything changes. See
-"Persisting paste blocks" in `references/client-instructions.md`.
+convenience copy; the vault note is the record. See "Persisting paste
+blocks" in `references/client-instructions.md`.
 
 **Deliver one client at a time, as guided live moments** — not a wall of
 paste blocks at the end. For each client: present its block, tell the user
@@ -759,7 +757,7 @@ Based on what they adopted, show what they can add later:
 
 **Obsidian app setup:** if boards or plugin-dependent features were
 scaffolded and the plugins aren't installed yet, run the walkthrough in
-`references/setup-verification.md` → "Obsidian app setup" now (Kanban,
+`references/setup-verification.md` → "Obsidian App Setup" now (Kanban,
 Tasks, optionally Dataview).
 
 **Run the system once — the live demo:**
