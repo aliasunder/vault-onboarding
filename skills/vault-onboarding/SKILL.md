@@ -798,7 +798,8 @@ Based on what they adopted, show what they can add later:
 **Obsidian app setup:** if boards or plugin-dependent features were
 scaffolded and the plugins aren't installed yet, run the walkthrough in
 `references/setup-verification.md` → "Obsidian App Setup" now (Kanban,
-Tasks, optionally Dataview).
+Tasks, optionally Dataview). Skip for folder-only setups with no Obsidian
+— same rule as Phase 5 and the walkthrough itself.
 
 **Run the system once — the live demo:**
 

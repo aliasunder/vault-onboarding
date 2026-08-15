@@ -151,17 +151,19 @@ for (const single of [
 //    Catches heading renames that silently break navigation aids for agents.
 const HEADING_XREF_A = /"([^"]+)"\s+(?:section\s+of|in)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g;
 const HEADING_XREF_B = /`(references\/[A-Za-z0-9_\-./]+\.md)`\s*→\s*"([^"]+)"/g;
+// Unquoted Title-Case heading named as a table/section/walkthrough of the file,
+// e.g. "per the Skill Placement table in `references/generated-skills-guide.md`".
+const HEADING_XREF_C =
+  /\b([A-Z][A-Za-z0-9'&-]*(?:\s+[A-Z][A-Za-z0-9'&-]*)*)\s+(?:table|section|walkthrough|list)\s+(?:in|of)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g;
 const xrefFiles = [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR, "references"))];
 for (const path of xrefFiles) {
   // Collapse line continuations so multi-line references match.
   const text = read(path).replace(/\s+/g, " ");
   const mismatches: string[] = [];
-  // Pattern A: "Heading" section of / in `references/file.md`
-  for (const match of text.matchAll(new RegExp(HEADING_XREF_A))) {
-    const heading = match[1].replace(/\s+/g, " ").trim();
-    const refFile = match[2];
+  const checkXref = (rawHeading: string, refFile: string): void => {
+    const heading = rawHeading.replace(/\s+/g, " ").trim();
     const targetPath = join(SKILL_DIR, refFile);
-    if (!isFile(targetPath)) continue; // already caught by check 4
+    if (!isFile(targetPath)) return; // already caught by check 4
     const headings = read(targetPath)
       .split("\n")
       .filter((line) => /^#{1,6}\s/.test(line))
@@ -169,20 +171,19 @@ for (const path of xrefFiles) {
     if (!headings.includes(heading)) {
       mismatches.push(`"${heading}" not found in ${refFile}`);
     }
+  };
+  // Pattern A: "Heading" section of / in `references/file.md`
+  for (const match of text.matchAll(new RegExp(HEADING_XREF_A))) {
+    checkXref(match[1], match[2]);
   }
   // Pattern B: `references/file.md` → "Heading"
   for (const match of text.matchAll(new RegExp(HEADING_XREF_B))) {
-    const refFile = match[1];
-    const heading = match[2].replace(/\s+/g, " ").trim();
-    const targetPath = join(SKILL_DIR, refFile);
-    if (!isFile(targetPath)) continue;
-    const headings = read(targetPath)
-      .split("\n")
-      .filter((line) => /^#{1,6}\s/.test(line))
-      .map((line) => line.replace(/^#{1,6}\s+/, "").trim());
-    if (!headings.includes(heading)) {
-      mismatches.push(`"${heading}" not found in ${refFile}`);
-    }
+    checkXref(match[2], match[1]);
+  }
+  // Pattern C: Skill Placement table in `references/file.md` (unquoted).
+  // A sentence-leading "The" is part of the prose, not the heading.
+  for (const match of text.matchAll(new RegExp(HEADING_XREF_C))) {
+    checkXref(match[1].replace(/^The\s+/, ""), match[2]);
   }
   check(
     `heading cross-refs resolve: ${rel(path)}`,
