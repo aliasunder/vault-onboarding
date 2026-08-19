@@ -131,7 +131,7 @@ components the user didn't adopt.
 Obsidian-native wikilinks with aliases for readability:
 
 ```markdown
-[[Projects/my-project|My Project]]
+[[Projects/My Project|My Project]]
 [[About Me/Principles|Principles]]
 [[People/Jane Smith|Jane]]
 ```
@@ -145,7 +145,7 @@ The `related:` frontmatter property creates explicit graph connections:
 
 ```yaml
 related:
-  - "[[Projects/my-project|My Project]]"
+  - "[[Projects/My Project|My Project]]"
   - "[[People/Jane Smith|Jane]]"
 ```
 
@@ -227,8 +227,8 @@ In markdown tables, `|` is the column separator. A wikilink with an alias
 inside a table breaks the table:
 
 ```markdown
-Wrong: | [[Projects/my-project|My Project]] | active |
-Right: | [[Projects/my-project\|My Project]] | active |
+Wrong: | [[Projects/My Project|My Project]] | active |
+Right: | [[Projects/My Project\|My Project]] | active |
 ```
 
 Use `\|` inside wikilinks when they appear in table cells. Outside tables, the

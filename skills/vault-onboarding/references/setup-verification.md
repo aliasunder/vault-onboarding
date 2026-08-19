@@ -11,7 +11,7 @@ Before checking individual clients, verify the vault structure:
 - [ ] About Me/ files exist (if memory enabled) and have correct frontmatter
 - [ ] TASKS.md exists (if boards enabled) with 5 lanes
 - [ ] PROTOCOL.md exists (if protocol enabled) with all relevant sections
-- [ ] sessions/ folder exists (if protocol enabled)
+- [ ] Sessions/ folder exists at the vault root (if protocol enabled)
 - [ ] Generated skills are in place (session skills if protocol enabled;
       remember if memory enabled)
 - [ ] Onboarding checkpoint file status is current

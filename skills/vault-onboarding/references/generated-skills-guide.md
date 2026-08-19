@@ -93,15 +93,18 @@ the complete set and understand each one before the first is created.
 ### Post-generation confirmation
 
 After all skills are generated and delivered, confirm with a trigger-phrase
-summary:
+summary. **List only the skills that were generated** — the set depends on
+what was scaffolded (session skills if protocol enabled, remember if memory
+enabled, project-role if full protocol):
 
 > "Those are set up. Here's the cheat sheet — these are the phrases you can
 > use from now on:
 >
-> - 'start a session' — picks up where you left off
-> - 'end session' — saves everything and writes the handoff
-> - 'remember that...' — saves a preference or fact
-> - 'set up this project' — defines a project's agent role
+> [Include only the lines for skills that were generated:]
+> - 'start a session' — picks up where you left off [if protocol]
+> - 'end session' — saves everything and writes the handoff [if protocol]
+> - 'remember that...' — saves a preference or fact [if memory]
+> - 'set up this project' — defines a project's agent role [if full protocol]
 >
 > You don't need to memorize these exactly — the AI recognizes natural
 > variations. 'Catch me up' works the same as 'start a session.'"

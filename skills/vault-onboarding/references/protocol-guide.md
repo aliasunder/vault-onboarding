@@ -71,7 +71,8 @@ When the user signals they're done, the agent follows these steps:
 
 ### 1. Write the session log
 
-Create a session log in the appropriate `sessions/` folder:
+Create a session log in the appropriate sessions folder (`Sessions/` at the
+vault root, or the project's `sessions/` subfolder for project-scoped logs):
 
 **Filename:** `YYYY-MM-DD-session-log-{letter}.md` (a, b, c for multiple
 sessions on the same day). Always check what exists immediately before writing

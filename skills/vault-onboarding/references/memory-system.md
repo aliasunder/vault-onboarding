@@ -10,7 +10,7 @@ The vault memory system has three layers, each serving a different purpose:
 | Layer | Role | Location | Persistence |
 |---|---|---|---|
 | **Semantic** — "who I am" | Durable facts, preferences, opinions, principles, agent directives | `About Me/` | Permanent (append-only or living) |
-| **Episodic** — "what happened" | Session logs — what was done, decided, left open | `sessions/` folders | Permanent (write-once) |
+| **Episodic** — "what happened" | Session logs — what was done, decided, left open | `Sessions/` (vault root) and project `sessions/` folders | Permanent (write-once) |
 | **Working** — "what's current" | Project state — instruction files, task boards, active plans | Project folders | Evolving |
 
 **Key principle:** know which layer you're reading from or writing to. Don't mix

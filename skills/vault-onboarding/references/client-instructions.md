@@ -130,8 +130,10 @@ everywhere), then the per-project block (project-specific). The global surface
 means identity and communication preferences only need to be set once, not
 duplicated into every project.
 
-Keep project instructions focused on project-specific context. Identity,
-timezone, and communication preferences live in Global Instructions.
+The project template intentionally repeats identity, timezone, and
+communication preferences for standalone robustness — if the user's
+Perplexity version lacks Global Instructions, the project block is
+self-contained. When both surfaces are available, the overlap is harmless.
 
 ### Cursor
 

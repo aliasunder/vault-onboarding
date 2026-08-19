@@ -443,11 +443,11 @@ Then cover three concepts briefly, calibrated to comfort level (rule 5):
 - What task syntax looks like — "a checkbox line; the little symbols carry
   dates and priority so tasks can be searched"
 
-End with how it connects to the system: "Your project's instruction file
-links to this note, so agents can look up the conventions whenever they
-need to. If you ever want to change how something works — different tag
-style, different link format — edit this note and the change applies
-everywhere."
+End with how it connects to the system: "This note is the upstream
+reference agents consult when working in your vault. If you ever want to
+change how something works — different tag style, different link format —
+edit this note, then update the matching instruction files in Reference/
+to match, and re-paste for any tools that use paste blocks."
 
 **Checkpoint gate:** rewrite the checkpoint with this phase's answers and
 read it back. Do not ask a Phase 4 question until the file on disk shows
@@ -596,7 +596,9 @@ time, review your tasks, and write a handoff log when they're done."
    - `{{CREATED_TIMESTAMP}}` — current ISO 8601 timestamp in the user's
      timezone
    - `{{MEMORY_FOLDER}}` — "About Me" (or skip memory sections if Phase 4 = no)
-   - `{{SESSION_LOG_FOLDER}}` — "sessions" (or per-project path)
+   - `{{SESSION_LOG_FOLDER}}` — "Sessions" at the vault root (Title Case per
+     the hybrid naming convention), or the per-project `sessions/` path
+     (lowercase) for project-scoped logs
    - `{{TASKS_PATH}}` — path to TASKS.md (or skip board sections if Phase 5 = no)
    - Step number variables (`{{MEMORY_STEP_NUMBER}}`,
      `{{EXTENSIONS_STEP_NUMBER}}`, `{{SUMMARY_STEP_NUMBER}}`,
@@ -908,7 +910,14 @@ Before the live demo, connect the user's Phase 0 frustrations to the system
 just built. This is the payoff moment — the point where setup stops feeling
 like configuration and starts feeling like relief. Use scripted language
 (per North Star rule 6), referencing the ACTUAL frustrations from the
-checkpoint:
+checkpoint.
+
+**Build the phrase list from what was actually scaffolded** — include "start
+a session" / "end session" only if protocol was enabled (Phase 6 = yes);
+include "remember that…" only if memory was enabled (Phase 4 = yes); include
+"set up this project" only if full protocol was chosen (Phase 6 = full). If
+fewer than four phrases apply, list only the ones that exist — never name a
+phrase that has no corresponding skill.
 
 > "Before we wrap up, let me show you what just changed.
 >
@@ -919,11 +928,11 @@ checkpoint:
 >
 > [If multiple frustrations, connect each one to its solution.]
 >
-> The whole system runs on four phrases:
-> - **'start a session'** — picks up where you left off
-> - **'end session'** — saves everything and writes the handoff
-> - **'remember that…'** — saves a preference or fact
-> - **'set up this project'** — defines a project's agent role
+> [List only the phrases that have corresponding skills:]
+> - **'start a session'** — picks up where you left off [if protocol]
+> - **'end session'** — saves everything and writes the handoff [if protocol]
+> - **'remember that…'** — saves a preference or fact [if memory]
+> - **'set up this project'** — defines a project's agent role [if full protocol]
 >
 > That's it. Let me show you what it looks like in practice."
 
@@ -940,28 +949,36 @@ Run an abbreviated session-start against the fresh vault, out loud: read the
 hub file; if boards were scaffolded, list the open tasks on their board (the
 real ones seeded in Phase 3); if memory was enabled, glance at the memory
 files seeded from their own interview answers; then produce the short
-session-start summary the protocol specifies. With no boards and no memory,
-the demo is just hub file + summary — it still lands. If no protocol was
-enabled (Phase 6 = no), there is no session-start ritual to demonstrate —
-skip the demo and close with a plain one-line recap of what was set up and
-where it lives. After the demo:
+session-start summary the protocol specifies. If no project was created
+(Phase 3 Question 4 was deferred), demonstrate against PROTOCOL.md and the
+About Me/ files alone — show that the agent can ground in memory and
+summarize what's current even without a project board, and note that
+creating a first project is the natural next step. With no boards and no
+memory, the demo is just hub file + summary — it still lands. If no
+protocol was enabled (Phase 6 = no), there is no session-start ritual to
+demonstrate — skip the demo and close with a plain one-line recap of what
+was set up and where it lives. After the demo:
 
 > "That took a few seconds. Every session starts like that now — you just
 > say 'start session' and your AI picks up where the last one left off."
 
 **Maintaining the system:**
 
-After the demo, briefly explain how the system stays current:
+After the demo, briefly explain how the system stays current. Include only
+the phrases that have corresponding skills (same gating as the narrative
+above — "remember that…" only if memory enabled, "set up this project" only
+if full protocol):
 
 > "The system maintains itself through normal use — you don't need to do
-> anything special. When you're done working, say 'end session' and the AI
-> writes the handoff for next time. When you want to save a preference,
-> say 'remember that…' and it's captured.
+> anything special. [If protocol:] When you're done working, say 'end
+> session' and the AI writes the handoff for next time. [If memory:] When
+> you want to save a preference, say 'remember that…' and it's captured.
 >
 > If you add a new AI tool later, re-run this setup and I'll configure just
-> that tool. If your conventions change, update the Vault Conventions note
-> and re-paste your instruction blocks from the Reference/ copies — they're
-> the source of truth."
+> that tool. If your conventions change, update the matching instruction
+> file in Reference/ (that's where the paste-ready text lives) and re-paste
+> it into your tools. The Vault Conventions note is the upstream reference
+> agents consult directly."
 
 **Clean up:**
 
@@ -1097,7 +1114,7 @@ Variables used across templates, listed for reference:
 | `{{VAULT_PATH}}` | Phase 2 | Instructions, checkpoint |
 | `{{CREATED_TIMESTAMP}}` | Current time | Memory files, protocol, tasks board, checkpoint |
 | `{{MEMORY_FOLDER}}` | "About Me" | Protocol, skills, instructions |
-| `{{SESSION_LOG_FOLDER}}` | "sessions" | Protocol |
+| `{{SESSION_LOG_FOLDER}}` | "Sessions" at vault root, "sessions" per project | Protocol |
 | `{{TASKS_PATH}}` | Vault root or per-project | Protocol, instructions |
 | `{{PROTOCOL_LEVEL}}` | Phase 6 choice | Checkpoint |
 | `{{MEMORY_STEP_NUMBER}}` | Computed (Phase 6) | Protocol template |
