@@ -27,7 +27,7 @@ say yes to.
 Setting up a task-management-and-memory system is normally exhausting, time
 consuming, and prone to failure. The person finishing this onboarding should
 feel the opposite: relief. The system is already working when the interview
-ends — not a pile of homework. Five rules serve this:
+ends — not a pile of homework. Six rules serve this:
 
 1. **Do, don't instruct.** Anything you can do yourself with the access you
    have — write files, create the project, seed memory, save skills — you do.
@@ -672,7 +672,7 @@ announced-but-undelivered skill is exactly the failure this rule exists to
 prevent: if you are interrupted mid-generation, the checkpoint tells the
 resumed session what still needs delivering.
 
-Create a `sessions/` folder at the vault root for session logs. If per-project
+Create a `Sessions/` folder at the vault root for session logs. If per-project
 folders were scaffolded (Phase 3), note that project-scoped logs go in each
 project's `sessions/` subfolder.
 
