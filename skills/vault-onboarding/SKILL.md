@@ -66,10 +66,32 @@ ends — not a pile of homework. Five rules serve this:
    later.
    **Calibrate every explanation to the technical comfort inferred in
    Phase 0.** For a non-technical user, the explanation itself must carry no
-   jargon: not "frontmatter" but "the label section at the top of the
-   note"; not "auto-injected" but "Claude reads this file automatically
-   when it works in this folder." The bar: someone who has never opened a
-   terminal should finish onboarding able to say what each piece is for.
+   jargon. Use this substitution table when addressing non-technical users:
+
+   | Instead of | Say |
+   |---|---|
+   | "vault root" | "the top-level folder of your vault" |
+   | "frontmatter" | "the label section at the top of a note" |
+   | "scaffold" / "scaffolded" | "create" / "set up" |
+   | "inject" / "auto-inject" | "reads automatically" / "loads automatically" |
+   | "hub file" | "the main instruction file for a project" |
+   | "wikilink" | "double-bracket link" (or: "double brackets connect notes") |
+   | "checkpoint" / "checkpoint gate" | "save point" |
+   | "reconcile" (boards) | "update" / "sync up" |
+
+   The bar: someone who has never opened a terminal should finish onboarding
+   able to say what each piece is for.
+6. **Script the critical moments.** When a specific phrase, narrative, or
+   framing must land for onboarding to succeed — the skill education
+   preamble, the "what changes now" narrative, the update-lifecycle
+   explanation — write the exact words the agent should say as a quoted
+   block in the phase text. A principle ("explain what skills are") is
+   interpreted differently by every model; a script ("say: 'A skill is like
+   a recipe…'") is delivered verbatim by all of them. The stronger the
+   model, the more it adapts around the script. The weaker the model, the
+   more it needs the script to be there. Scripted blocks are marked with `>`
+   blockquotes in the phase instructions — they are the floor, not the
+   ceiling.
 
 ## How This Skill Works
 
@@ -111,7 +133,7 @@ them, not after):
 - `assets/templates/protocol.md` — Genericized session protocol
 - `assets/templates/tasks-board.md` — 5-lane Kanban board
 - `assets/templates/onboarding-progress.md` — Checkpoint file for resume
-- `assets/templates/instructions/*.md` — 7 client-specific instruction file
+- `assets/templates/instructions/*.md` — 8 client-specific instruction file
   templates
 - `assets/skills/*.md` — 4 generated skill templates (session-start,
   session-end, remember, project-role)
@@ -145,25 +167,27 @@ them, not after):
 Ask these three questions. They determine which later phases run and how
 instruction files are generated.
 
-**Question 1:** "What AI tools do you currently use to work with your notes or
-projects?"
+**Question 1** (select all that apply): "What AI tools do you currently use to
+work with your notes or projects? (Pick all that apply — I'll generate an
+instruction file for each one you pick.)"
 
 Offer common options: Claude Code, Claude Desktop (Cowork), claude.ai chat,
 Perplexity, Cursor, GitHub Copilot. Let them add others. Record the full list —
 Phase 7 generates an instruction file for each.
 
-**Question 2:** "What kind of work do you primarily do? (This shapes what I
-suggest — folders, memory files, examples — so the setup fits your actual
-work.)"
+**Question 2** (select all that apply): "What kind of work do you do? (Pick
+all that apply — most people do more than one. This shapes which folders,
+memory files, and examples I suggest.)"
 
 Offer examples with the question: software or technical projects · writing
 or creative work · school or research · running a business · job searching ·
-just organizing my life. Listen for domain signals: engineering, creative,
-academic, business, personal knowledge management. This influences which
-memory file sections to suggest and what examples to use.
+just organizing my life · or a mix of these. Listen for domain signals:
+engineering, creative, academic, business, personal knowledge management.
+This influences which memory file sections to suggest and what examples to use.
 
-**Question 3:** "What frustrates you most about working with AI across
-sessions? (I'll aim each part of the setup at whatever you name here.)"
+**Question 3** (select all that apply): "What frustrates you about working
+with AI across sessions? (Pick everything that applies — I'll aim each part
+of the setup at whatever you name.)"
 
 Offer examples with the question: having to re-explain everything each time ·
 losing track of what I was working on · decisions and context disappearing ·
@@ -283,14 +307,28 @@ everywhere a project path appears: the template scaffold, Question 4's
 first project, structure maps in instruction files, and generated protocol
 paths.
 
+**Folder naming convention:** state the hybrid default — don't ask about it
+(see "Folder Naming Convention" in `references/vault-organization.md`):
+
+> "I'm using Title Case for the main folders and project names — that's what
+> you see in Obsidian's sidebar — and lowercase for the working folders
+> inside projects (sessions, plans, reference). Same convention most Obsidian
+> vaults use."
+
+Top-level vault folders: Title Case (About Me/, People/, Reference/,
+Sessions/). Project names: Title Case (Job Search/, not job-search/).
+Project sub-folders: lowercase (sessions/, plans/, reference/, task-notes/).
+If the user prefers something different, respect it and record the choice.
+
 Then scaffold a project template folder structure at the chosen location.
 Explain the pattern — each project gets its own folder with subdirectories
 for sessions, reference material, research, task notes, and plans. Show an
-example (shown grouped; at root, `my-project/` sits directly in the vault):
+example (shown grouped; at root, the project folder sits directly in the
+vault):
 
 ```
 Projects/
-  my-project/
+  My Project/
     sessions/       — session logs scoped to this project
     reference/      — project-specific reference docs
     research/       — research notes
@@ -388,15 +426,28 @@ copy independent of any instruction file.
 
 **Then give the user a short tour of that note — don't just plop it in.**
 The conventions note is the first file full of concepts a newcomer has
-never met, so walk through it briefly, calibrated to their comfort level
-(North Star rule 4): what frontmatter is ("the label section at the top of
-every note — it's how notes get found and sorted"), what a wikilink is
-("double brackets connect notes to each other — Obsidian shows the
-connections"), what task syntax looks like ("a checkbox line; the little
-symbols carry dates and priority so tasks can be searched"). Frame it as
-relief, not curriculum: "you don't need to memorize any of this — agents
-follow these rules automatically; this note is the cheat sheet if you're
-ever curious or want to change something."
+never met. Walk through it using this scripted introduction (per North
+Star rule 6), then briefly explain the key concepts:
+
+> "Here's the conventions note I just created. Think of it as a cheat
+> sheet for how your vault is organized — what goes where, how notes are
+> labeled, how links work. You don't need to memorize any of this; agents
+> follow these rules automatically. This note exists so you can look
+> things up or change a convention later."
+
+Then cover three concepts briefly, calibrated to comfort level (rule 5):
+- What the label section at the top of notes is (frontmatter) — "it's how
+  notes get found and sorted"
+- What double-bracket links are (wikilinks) — "they connect notes to each
+  other; Obsidian shows these connections in the graph view"
+- What task syntax looks like — "a checkbox line; the little symbols carry
+  dates and priority so tasks can be searched"
+
+End with how it connects to the system: "Your project's instruction file
+links to this note, so agents can look up the conventions whenever they
+need to. If you ever want to change how something works — different tag
+style, different link format — edit this note and the change applies
+everywhere."
 
 **Checkpoint gate:** rewrite the checkpoint with this phase's answers and
 read it back. Do not ask a Phase 4 question until the file on disk shows
@@ -568,6 +619,27 @@ time, review your tasks, and write a handoff log when they're done."
    (from the pre-scan), never overwrite — show the differences and merge with
    the user's approval.
 
+**Educate before generating:** Before writing any skill files, explain what
+skills are and what each one does. Read the "Skill Education" section of
+`references/generated-skills-guide.md` for the scripted explanations — it
+carries two comfort-level variants and a per-skill introduction template.
+
+The education has three parts delivered to the user:
+
+1. **What a skill IS** — use the scripted explanation from the reference file,
+   calibrated to technical comfort (non-technical: "a skill is like a recipe
+   card"; technical: "trigger-action scripts").
+2. **What you are about to create** — list each skill being generated with
+   its name, what it does in one sentence, and the trigger phrases that
+   activate it. Show the complete list before writing any files.
+3. **How to use them** — per-client invocation: "In Perplexity, just say
+   the trigger phrase in any conversation within this project. Some clients
+   also support typing /session-start as a shortcut."
+
+Only after the user has seen and understood the skill set do you generate the
+files. This is mandatory — a model that skips education and jumps to file
+generation has violated North Star rule 4.
+
 **Generate and DELIVER skills:**
 
 Skills to generate:
@@ -620,6 +692,14 @@ Do not start Phase 7 until the file on disk shows Phase 6 complete.
 
 **Read `references/client-instructions.md` before this phase.**
 
+**Explain before generating:** before generating each client's instruction
+file, explain what that client's instruction mechanism IS in plain language.
+See "Per-Client Concept Education" in `references/client-instructions.md`
+for scripted explanations per client. A user who understands what "Project
+Instructions" means in Perplexity, or what "Global Instructions" means in
+Cowork, will maintain the system confidently. A user who just pasted a block
+into an unknown field will not.
+
 For each AI client the user selected in Phase 0, generate the appropriate
 instruction file. The content adapts based on what was scaffolded in Phases 3–6.
 
@@ -646,7 +726,7 @@ Read the appropriate template from `assets/templates/instructions/`:
 | Claude Code | `claude-code-global.md` + `claude-code-project.md` | Local: `~/.claude/CLAUDE.md` (global) + per-project template. Cloud: repo-root `CLAUDE.md` (see surface check) | No — has local file access |
 | Cowork | `cowork-global.md` + `claude-code-project.md` (reused) | Paste block for Global Instructions + `CLAUDE.md` in each bound project folder | No — bound folder has file access |
 | claude.ai chat | `claude-chat.md` | Paste block for Custom Instructions | **Yes** — no file access without it |
-| Perplexity | `perplexity.md` | Paste block for Project Instructions | No — Perplexity Computer has local file access |
+| Perplexity | `perplexity-global.md` + `perplexity.md` | Paste block for Global Instructions + Project Instructions | No — Perplexity Computer has local file access |
 | Cursor | `cursor.md` | Project `.cursor/rules/` or `.cursorrules` | No — has local file access |
 | Copilot | `copilot.md` | `.github/copilot-instructions.md` | No — has local file access |
 
@@ -725,6 +805,18 @@ per-client checks in `references/setup-verification.md`) before moving to
 the next client. A stack of unpasted blocks is homework; a sequence of
 thirty-second guided steps, each confirmed working, is a burden lifted.
 
+**Explain the update lifecycle** for paste-only clients (Perplexity, Cowork,
+claude.ai). After pasting each block, tell the user how updates work:
+
+> "The original lives in your vault at `Reference/<client>-instructions.md`.
+> If you ever update your preferences, conventions, or protocol, edit that
+> vault note and re-paste from it — no regeneration needed. The vault note
+> is the source of truth; what you just pasted is a snapshot of it."
+
+For file-based clients (Claude Code, Cursor, Copilot), the file on disk IS
+the source of truth — edits take effect immediately. Mention this contrast
+so the user understands which clients auto-update and which need re-pasting.
+
 **Checkpoint gate:** rewrite the checkpoint with this phase's output —
 including the `Reference/` instruction notes written — and read it back. Do
 not start Phase 8 until the file on disk shows Phase 7 complete.
@@ -768,14 +860,23 @@ Based on what they adopted, show what they can add later:
 - Tier 2 (+ boards) → add protocol for full continuity
 - Tier 3 (full system) → add vault-cortex for remote access and search
 
-**Install companion tools:**
+**Install companion tools** (mandatory step — do not skip):
 
-- **obsidian-vault skill** (Obsidian formatting safety — frontmatter,
-  wikilinks, plugin syntax). The generated system writes Obsidian-flavored
-  markdown constantly, so treat this as part of setup, not an optional extra.
-  The check is **per client**: for EACH client selected in Phase 0, check
-  that client's own skill mechanism and offer the matching install path
-  (Skill Placement table in `references/generated-skills-guide.md`):
+Explain what the obsidian-vault skill does before installing it (per North
+Star rule 6):
+
+> "One more skill to set up — obsidian-vault. This teaches your AI tools
+> the formatting rules for your vault: how to write the label sections at
+> the top of notes correctly, how to format links, how to use plugin
+> syntax. Without it, agents might accidentally create notes that don't
+> display properly in Obsidian."
+
+Then install it **per client**:
+
+- **obsidian-vault skill** — the check is per client: for EACH client
+  selected in Phase 0, check that client's own skill mechanism and offer
+  the matching install path (Skill Placement table in
+  `references/generated-skills-guide.md`):
   - Claude Code: check `~/.claude/skills/obsidian-vault/` and
     `~/.agents/skills/obsidian-vault/`; if missing, offer to run
     `npx skills add aliasunder/obsidian-vault`.
@@ -801,22 +902,66 @@ scaffolded and the plugins aren't installed yet, run the walkthrough in
 Tasks, optionally Dataview). Skip for folder-only setups with no Obsidian
 — same rule as Phase 5 and the walkthrough itself.
 
+**What changes now — the before/after narrative:**
+
+Before the live demo, connect the user's Phase 0 frustrations to the system
+just built. This is the payoff moment — the point where setup stops feeling
+like configuration and starts feeling like relief. Use scripted language
+(per North Star rule 6), referencing the ACTUAL frustrations from the
+checkpoint:
+
+> "Before we wrap up, let me show you what just changed.
+>
+> [Reference their Phase 0 frustration — e.g.: 'You told me that having to
+> re-explain everything each session was frustrating.'] Starting now,
+> [connect to the solution — e.g.: 'agents read your memory files before
+> they say hello — you'll never explain your preferences again.']
+>
+> [If multiple frustrations, connect each one to its solution.]
+>
+> The whole system runs on four phrases:
+> - **'start a session'** — picks up where you left off
+> - **'end session'** — saves everything and writes the handoff
+> - **'remember that…'** — saves a preference or fact
+> - **'set up this project'** — defines a project's agent role
+>
+> That's it. Let me show you what it looks like in practice."
+
+Then transition directly into the live demo.
+
 **Run the system once — the live demo:**
 
-Before wrapping up, demonstrate the payoff instead of describing it. Run an
-abbreviated session-start against the fresh vault, out loud: read the hub
-file; if boards were scaffolded, list the open tasks on their board (the
+Demonstrate the payoff instead of describing it. Narrate as you go (per
+North Star rule 6):
+
+> "Watch this — I'm going to start a session the way any AI will from now on."
+
+Run an abbreviated session-start against the fresh vault, out loud: read the
+hub file; if boards were scaffolded, list the open tasks on their board (the
 real ones seeded in Phase 3); if memory was enabled, glance at the memory
 files seeded from their own interview answers; then produce the short
 session-start summary the protocol specifies. With no boards and no memory,
 the demo is just hub file + summary — it still lands. If no protocol was
 enabled (Phase 6 = no), there is no session-start ritual to demonstrate —
 skip the demo and close with a plain one-line recap of what was set up and
-where it lives. Otherwise, close with the
-punchline: "That's what every session starts like now — you just say 'start
-session'." The user should watch continuity work once before the
-conversation ends; that moment, not the file list, is what makes the setup
-feel like a burden lifted rather than a system to learn.
+where it lives. After the demo:
+
+> "That took a few seconds. Every session starts like that now — you just
+> say 'start session' and your AI picks up where the last one left off."
+
+**Maintaining the system:**
+
+After the demo, briefly explain how the system stays current:
+
+> "The system maintains itself through normal use — you don't need to do
+> anything special. When you're done working, say 'end session' and the AI
+> writes the handoff for next time. When you want to save a preference,
+> say 'remember that…' and it's captured.
+>
+> If you add a new AI tool later, re-run this setup and I'll configure just
+> that tool. If your conventions change, update the Vault Conventions note
+> and re-paste your instruction blocks from the Reference/ copies — they're
+> the source of truth."
 
 **Clean up:**
 
@@ -872,6 +1017,23 @@ answers on disk, not in a thread that may be compacted or lost.
 a vault or folder path exists. During Phases 0–1, hold answers in the
 conversation; the moment Phase 2 establishes the path, write the checkpoint
 — including the held Phase 0–1 answers — before asking any Phase 3 question.
+
+**Per-phase required fields:** each phase's checkpoint entry must include
+structured fields sufficient for a resumed session to skip that phase's
+questions entirely. The `onboarding-progress.md` template has per-phase
+Detail sections with named fields — populate every field for completed
+phases. A checkpoint entry with only the opt-in decision ("yes") but not the
+structural details (which files were created, which layout was chosen, which
+plugins were found) is insufficient for compaction recovery.
+
+**Compaction recovery:** the checkpoint must survive conversation
+compaction. If the client compacts the conversation mid-interview, the model
+loses all in-conversation answers. The checkpoint is the ONLY recovery
+mechanism. Litmus test: could a model that has never seen this conversation
+read the checkpoint and know exactly what was built, what choices were made,
+and what remains? If not, the checkpoint is too thin. After any suspected
+compaction (loss of earlier conversation context), re-read
+`onboarding-progress.md` before continuing the interview.
 
 **Resume logic:** When resuming, read the checkpoint, greet the user with a
 summary of where they left off, and continue from the next incomplete phase.
@@ -977,3 +1139,17 @@ Variables used across templates, listed for reference:
 | `{{SKILLS_DELIVERED}}` | Phase 6 delivery (skill × client destination, or skip reason) | Checkpoint |
 | `{{INSTRUCTIONS_PERSISTED}}` | Phase 7 (`Reference/<client>-instructions.md` paths) | Checkpoint |
 | `{{VAULT_CORTEX_CLIENTS}}` | Phase 7 (per-client connection status) | Checkpoint |
+| `{{FIRST_PROJECT}}` | Phase 3 Question 4 (project name or "deferred") | Checkpoint |
+| `{{PHASE_3_FILES}}` | Phase 3 (list of files/folders created) | Checkpoint |
+| `{{MEMORY_FILES_CREATED}}` | Phase 4 (list of About Me/ files written) | Checkpoint |
+| `{{DOMAIN_MEMORY_FILES}}` | Phase 4 (domain-specific file name or "none") | Checkpoint |
+| `{{MEMORY_SEEDS}}` | Phase 4 (which sections seeded from interview) | Checkpoint |
+| `{{BOARD_LAYOUT}}` | Phase 5 (vault-wide / per-project) | Checkpoint |
+| `{{BOARD_LOCATIONS}}` | Phase 5 (paths to TASKS.md files created) | Checkpoint |
+| `{{KANBAN_PLUGIN_STATUS}}` | Phase 5 (installed / walkthrough given / N/A) | Checkpoint |
+| `{{TASKS_PLUGIN_STATUS}}` | Phase 5 (installed / walkthrough given / N/A) | Checkpoint |
+| `{{SESSIONS_FOLDER_CREATED}}` | Phase 6 (yes / no) | Checkpoint |
+| `{{OBSIDIAN_VAULT_SKILL_STATUS}}` | Phase 8 (per-client: installed / delivered / skipped) | Checkpoint |
+| `{{OBSIDIAN_PLUGINS_STATUS}}` | Phase 8 (installed / walkthrough given / N/A) | Checkpoint |
+| `{{DEMO_COMPLETED}}` | Phase 8 (yes / skipped — no protocol) | Checkpoint |
+| `{{CHECKPOINT_KEPT}}` | Phase 8 (kept / removed) | Checkpoint |

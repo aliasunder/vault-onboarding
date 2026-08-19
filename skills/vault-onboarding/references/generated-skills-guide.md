@@ -34,6 +34,78 @@ The `description` field controls when the skill fires. Include:
 - Situations where it should activate automatically
 - Explicit exclusions to prevent false triggers
 
+## Skill Education
+
+Before generating skills in Phase 6, the model must explain what a skill IS
+and what each one does. This education block runs before any files are written
+— the user should understand the concept before seeing the artifacts.
+
+### What a skill is (scripted by comfort level)
+
+**Non-technical:**
+
+> "Before I create these tools, let me explain what they are. A **skill** is
+> like a recipe card for your AI. When you say a specific phrase — like 'start
+> a session' — the AI recognizes it and follows the recipe: it checks what
+> happened last time, looks at your tasks, and gives you a summary. You don't
+> need to remember the steps; you just say the phrase and the AI does the rest."
+
+**Technical:**
+
+> "Skills are trigger-action scripts — declarative instructions that fire when
+> you say a trigger phrase. They define what to do; the AI adapts the how
+> based on available tools. Think of them as named procedures the AI follows
+> instead of improvising."
+
+### Per-skill introduction
+
+After the general explanation, introduce each skill being generated. For each
+one, state:
+
+- **Name**: what it's called
+- **What it does**: one sentence, plain language
+- **Trigger phrases**: how the user activates it (primary phrase + alternatives)
+- **Example**: a concrete scenario
+
+Template:
+
+> "**session-start** — Catches you up at the beginning of a work session. Say
+> 'start a session', 'catch me up', or 'what's on deck'. The AI reads your
+> last session's handoff, checks your task board, and summarizes where you
+> left off."
+>
+> "**session-end** — Wraps up and saves a handoff for next time. Say 'end
+> session', 'wrap up', or 'close out'. The AI writes a session log, updates
+> your tasks, and saves anything worth remembering."
+>
+> "**remember** — Saves a preference or fact to your memory files. Say
+> 'remember that I prefer X' or 'save this for later'. The AI proposes an
+> entry, you approve it, and it's saved — you'll never need to explain it
+> again."
+>
+> "**project-role** — Defines how AI should behave in a specific project. Say
+> 'set up this project's role' or 'define the agent role'. The AI asks a few
+> questions and writes the role into the project's instruction file."
+
+List all skills being generated before writing any files. The user should see
+the complete set and understand each one before the first is created.
+
+### Post-generation confirmation
+
+After all skills are generated and delivered, confirm with a trigger-phrase
+summary:
+
+> "Those are set up. Here's the cheat sheet — these are the phrases you can
+> use from now on:
+>
+> - 'start a session' — picks up where you left off
+> - 'end session' — saves everything and writes the handoff
+> - 'remember that...' — saves a preference or fact
+> - 'set up this project' — defines a project's agent role
+>
+> You don't need to memorize these exactly — the AI recognizes natural
+> variations. 'Catch me up' works the same as 'start a session.'"
+
 ## Skill Parameterization
 
 Each generated skill adapts to what was scaffolded. Variables control which

@@ -14,7 +14,8 @@ what format to generate and where to place it.
 | Claude Code (cloud) | Repo `CLAUDE.md` | Physical markdown | Repo-relative only | Committed to repo |
 | Cowork (Claude Desktop) | Global Instructions field + project folder `CLAUDE.md` | Paste block + file | No (literal text) | Paste + write |
 | claude.ai / mobile chat | Custom Instructions | Paste block | No | Paste into settings |
-| Perplexity | Project Instructions | Paste block | No | Paste into project |
+| Perplexity (global) | Global Instructions (AI Profile) | Paste block | No | Paste into settings |
+| Perplexity (project) | Project Instructions | Paste block | No | Paste into project |
 | Cursor | `.cursor/rules/` or `.cursorrules` | Physical markdown | File-based | Write to disk |
 | GitHub Copilot | `.github/copilot-instructions.md` | Physical markdown | N/A | Write to repo |
 
@@ -112,13 +113,25 @@ protocol, read PROTOCOL.md in the vault."
 
 ### Perplexity
 
-**Project Instructions:** paste block in project settings
+Perplexity has two instruction surfaces:
 
-Combined file — protocol + identity + project context in one block. Perplexity
-has no global instruction surface, so each project carries everything.
+**Global Instructions:** accessible in Perplexity settings (Profile / AI
+Profile). Carries identity, timezone, communication preferences, and vault
+structure — everything that applies across all conversations, not just within a
+project. Generated from `assets/templates/instructions/perplexity-global.md`.
 
-Keep it focused — Perplexity sessions tend to be shorter and more research-
-oriented. Emphasize identity and communication preferences over full protocol.
+**Project Instructions:** per-project settings. Carries project-specific
+context, conventions, task board location, and protocol pointers. Combined with
+global instructions in project conversations. Generated from
+`assets/templates/instructions/perplexity.md`.
+
+Generate both: paste the global block first (settings-level, applies
+everywhere), then the per-project block (project-specific). The global surface
+means identity and communication preferences only need to be set once, not
+duplicated into every project.
+
+Keep project instructions focused on project-specific context. Identity,
+timezone, and communication preferences live in Global Instructions.
 
 ### Cursor
 
@@ -160,6 +173,60 @@ Instruction files are assembled from blocks that map to onboarding decisions:
 
 Blocks that aren't included are removed entirely — no empty sections or "not
 configured" placeholders.
+
+## Per-Client Concept Education
+
+Before generating each client's instruction file in Phase 7, explain what that
+client's instruction mechanism IS in plain language. A user who understands what
+they're configuring will maintain the system confidently. These scripts are
+calibrated for non-technical users; adjust to technical comfort.
+
+### Perplexity
+
+> "A Perplexity **project** is like a workspace — it groups conversations
+> around a topic and carries shared instructions. Any conversation you start
+> in a project automatically gets those instructions, so the AI already knows
+> who you are and what you're working on. You'll want to start vault-related
+> conversations from this project.
+>
+> Perplexity also has **Global Instructions** in your profile settings. Those
+> apply to every conversation, not just within a project — I'll put your
+> identity and communication preferences there so Perplexity always knows who
+> you are, even outside this project."
+
+### Cowork (Claude Desktop)
+
+> "Cowork has two instruction layers. **Global Instructions** are standing
+> orders that apply to every conversation — your identity, preferences, and
+> how you like to work. The **CLAUDE.md** file in a project folder carries
+> project-specific context — Cowork reads it automatically when you bind that
+> folder."
+
+### Claude Code
+
+> "Claude Code reads a file called **CLAUDE.md** automatically whenever it
+> works in a folder. The global one (at ~/.claude/CLAUDE.md) carries your
+> identity and preferences everywhere. A project's CLAUDE.md carries
+> project-specific context — what it's about, what's active, where things
+> are."
+
+### claude.ai / mobile chat
+
+> "Custom Instructions are your standing preferences — they apply to every
+> conversation on claude.ai. Think of them as your default briefing to the
+> AI."
+
+### Cursor
+
+> "Cursor reads rules files from your project directory automatically. They
+> tell Cursor what conventions to follow when working on that project's
+> code."
+
+### GitHub Copilot
+
+> "The copilot-instructions file lives in your repository and Copilot reads
+> it for project conventions. It's committed alongside your code so everyone
+> on the team gets the same instructions."
 
 ## Paste-Block Formatting
 

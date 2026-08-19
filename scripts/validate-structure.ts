@@ -131,7 +131,7 @@ check(
 // 6. Asset inventory matches the structure AGENTS.md and SKILL.md advertise.
 const EXPECTED_COUNTS: Record<string, number> = {
   "assets/templates/memory": 5,
-  "assets/templates/instructions": 7,
+  "assets/templates/instructions": 8,
   "assets/skills": 4,
 };
 for (const [folder, expected] of Object.entries(EXPECTED_COUNTS)) {

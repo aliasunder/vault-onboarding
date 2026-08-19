@@ -14,11 +14,31 @@ Vault/
   Projects/          — per-project folders (if user works on projects)
   People/            — notes about colleagues, contacts (optional)
   Reference/         — living reference docs, style guides (optional)
-  sessions/          — vault-wide session logs (if protocol enabled)
+  Sessions/          — vault-wide session logs (if protocol enabled)
   Daily Notes/       — Obsidian daily notes (if used)
   TASKS.md           — vault-wide task board (if enabled)
   PROTOCOL.md        — session protocol (if enabled)
 ```
+
+### Folder Naming Convention
+
+The vault uses a hybrid naming convention:
+
+- **Top-level folders**: Title Case — About Me/, Projects/, People/,
+  Reference/, Sessions/, Daily Notes/
+- **Project names**: Title Case — Job Search/, Career Next Steps/
+- **Project sub-folders**: lowercase — sessions/, reference/, research/,
+  task-notes/, plans/
+- **Special files**: ALL CAPS — TASKS.md, AGENTS.md, PROTOCOL.md
+
+Title Case at the vault root makes the sidebar readable at a glance.
+Lowercase in project sub-folders keeps them clean in file trees and terminal
+listings. This matches the convention most Obsidian vaults use.
+
+State this default to the user ("I'm using Title Case for the main folders
+and project names, lowercase for the working folders inside projects").
+If the user prefers a different style, record it and apply it consistently —
+the important thing is consistency, not the specific convention.
 
 ### Project folders
 
@@ -26,7 +46,7 @@ Each project gets its own folder with standardized subdirectories:
 
 ```
 Projects/
-  my-project/
+  My Project/
     TASKS.md          — project-scoped task board
     sessions/         — project-scoped session logs
     reference/        — project-specific reference docs
@@ -37,7 +57,7 @@ Projects/
 
 The pattern is: each project is self-contained. Session logs, tasks, and
 reference material scoped to a project live in its folder. Vault-wide items
-(cross-project tasks, general session logs) live at the root.
+(cross-project tasks, general session logs) live at the vault root.
 
 ### People folder
 
