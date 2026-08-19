@@ -192,6 +192,40 @@ for (const path of xrefFiles) {
   );
 }
 
+// 8. Template filenames in SKILL.md's client-mapping table resolve to actual
+//    files in assets/templates/instructions/, and every instruction template on
+//    disk is referenced by the table.  Catches renames that silently break the
+//    Phase 7 mapping without changing the overall folder count.
+const INSTRUCTION_DIR = join(SKILL_DIR, "assets", "templates", "instructions");
+const onDisk = new Set(readdirSync(INSTRUCTION_DIR).filter((name) => name.endsWith(".md")));
+const TEMPLATE_NAME = /`([A-Za-z0-9_-]+\.md)`/g;
+const tableSection = skillText.match(
+  /Read the appropriate template from `assets\/templates\/instructions\/`:\s*\n\n\|[^\n]+\n\|[^\n]+\n([\s\S]*?)(?:\n\n|\n(?=[A-Z*#]))/,
+);
+const inTable = new Set<string>();
+if (tableSection) {
+  for (const row of tableSection[1].split("\n").filter((line) => line.startsWith("|"))) {
+    // Split on | and take the Template column (index 2: empty, Client, Template, ...)
+    const columns = row.split("|");
+    const templateCol = columns[2] ?? "";
+    for (const match of templateCol.matchAll(TEMPLATE_NAME)) {
+      inTable.add(match[1]);
+    }
+  }
+}
+const onDiskNotInTable = [...onDisk].filter((name) => !inTable.has(name)).sort();
+const inTableNotOnDisk = [...inTable].filter((name) => !onDisk.has(name)).sort();
+check(
+  "instruction template table lists all files on disk",
+  onDiskNotInTable.length === 0,
+  `on disk but not in table: ${onDiskNotInTable.join(", ")}`,
+);
+check(
+  "instruction template table lists no missing files",
+  inTableNotOnDisk.length === 0,
+  `in table but not on disk: ${inTableNotOnDisk.join(", ")}`,
+);
+
 if (errors.length > 0) {
   console.log(`\n${errors.length} check(s) failed`);
   process.exit(1);
