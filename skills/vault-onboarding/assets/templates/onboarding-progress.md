@@ -83,7 +83,7 @@ Last updated: {{LAST_UPDATED}}
 ### Phase 6 Details
 
 - Protocol level: {{PROTOCOL_LEVEL}}
-- sessions/ folder: {{SESSIONS_FOLDER_CREATED}}
+- Sessions/ folder: {{SESSIONS_FOLDER_CREATED}}
 
 ### Phase 7 Details
 
