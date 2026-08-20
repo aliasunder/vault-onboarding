@@ -1,6 +1,19 @@
 # Changelog
 
 
+## [0.1.3] — 2026-08-20
+
+### Bug Fixes
+
+- **skill:** Audit fixes from Perplexity Computer validation run (#12)
+
+### Maintenance
+
+- Bump umm-actually to v0.3.10 (#14)
+- Bump umm-actually to v0.3.9 (#11)
+- Bump umm-actually to v0.3.7 (#10)
+
+
 ## [0.1.2] — 2026-08-15
 
 ### Bug Fixes
