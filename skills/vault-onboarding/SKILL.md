@@ -152,7 +152,7 @@ them, not after):
 3. **Detect existing structure.** If the vault exists, scan for:
    - `About Me/` folder (memory files)
    - `TASKS.md` or any Kanban boards
-   - `sessions/` folder
+   - `Sessions/` folder (or a legacy lowercase `sessions/` at the root)
    - `PROTOCOL.md` or protocol content in instruction files
    - `.obsidian/plugins/` for installed plugins (Kanban, Tasks, Dataview)
    - Existing `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md`
@@ -326,7 +326,7 @@ for sessions, reference material, research, task notes, and plans. Show an
 example (shown grouped; at root, the project folder sits directly in the
 vault):
 
-```
+```text
 Projects/
   My Project/
     sessions/       — session logs scoped to this project
@@ -634,9 +634,13 @@ The education has three parts delivered to the user:
 2. **What you are about to create** — list each skill being generated with
    its name, what it does in one sentence, and the trigger phrases that
    activate it. Show the complete list before writing any files.
-3. **How to use them** — per-client invocation: "In Perplexity, just say
-   the trigger phrase in any conversation within this project. Some clients
-   also support typing /session-start as a shortcut."
+3. **How to use them** — per-client invocation, conditioned on how the
+   skill arrives (delivery states below): where the skill is already saved,
+   "just say the trigger phrase in any conversation within this project";
+   where delivery awaits a user-side save, say the trigger works once
+   they've saved it; clients with no skill mechanism get the same behavior
+   from their instruction block in Phase 7. Some clients also support
+   typing /session-start as a shortcut.
 
 Only after the user has seen and understood the skill set do you generate the
 files. This is mandatory — a model that skips education and jumps to file
@@ -945,22 +949,22 @@ North Star rule 6):
 
 > "Watch this — I'm going to start a session the way any AI will from now on."
 
-Run an abbreviated session-start against the fresh vault, out loud: read the
-hub file; if boards were scaffolded, list the open tasks on their board (the
-real ones seeded in Phase 3); if memory was enabled, glance at the memory
-files seeded from their own interview answers; then produce the short
-session-start summary the protocol specifies. If no project was created
-(Phase 3 Question 4 was deferred), demonstrate against PROTOCOL.md and the
-About Me/ files alone — show that the agent can ground in memory and
-summarize what's current even without a project board, and note that
-creating a first project is the natural next step. With no boards and no
-memory, the demo is just hub file + summary — it still lands. If no
-protocol was enabled (Phase 6 = no), there is no session-start ritual to
-demonstrate — skip the demo and close with a plain one-line recap of what
-was set up and where it lives. After the demo:
+Run an abbreviated session-start against the fresh vault, out loud — gate
+every read on what the checkpoint says was actually scaffolded: if a
+project was created, read its hub file; if boards were scaffolded, list the
+open tasks on their board (the real ones seeded in Phase 3); if memory was
+enabled, glance at the memory files seeded from their own interview
+answers; then produce the short session-start summary the protocol
+specifies. Skip any read whose file was never created — with no project
+and no memory, the demo is PROTOCOL.md + summary alone, and it still
+lands: show that the agent can ground in the protocol and summarize what's
+current, and note that creating a first project is the natural next step.
+If no protocol was enabled (Phase 6 = no), there is no session-start
+ritual to demonstrate — skip the demo and close with a plain one-line
+recap of what was set up and where it lives. After the demo:
 
 > "That took a few seconds. Every session starts like that now — you just
-> say 'start session' and your AI picks up where the last one left off."
+> say 'start a session' and your AI picks up where the last one left off."
 
 **Maintaining the system:**
 

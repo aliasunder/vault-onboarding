@@ -10,7 +10,7 @@ The vault memory system has three layers, each serving a different purpose:
 | Layer | Role | Location | Persistence |
 |---|---|---|---|
 | **Semantic** — "who I am" | Durable facts, preferences, opinions, principles, agent directives | `About Me/` | Permanent (append-only or living) |
-| **Episodic** — "what happened" | Session logs — what was done, decided, left open | `Sessions/` (vault root) and project `sessions/` folders | Permanent (write-once) |
+| **Episodic** — "what happened" | Session logs — what was done, decided, left open | `Sessions/` (vault root) and project `sessions/` folders — both created only when the session protocol is enabled | Permanent (write-once) |
 | **Working** — "what's current" | Project state — instruction files, task boards, active plans | Project folders | Evolving |
 
 **Key principle:** know which layer you're reading from or writing to. Don't mix
@@ -23,7 +23,7 @@ Five core files, each with a distinct scope. The scope callout at the top of
 each file tells agents what belongs there and what doesn't — this prevents
 entries from landing in the wrong file.
 
-### Episodic memory (sessions/)
+### Episodic memory (session logs)
 
 Session logs are the narrative record. Each session writes one log with a
 standard structure: Summary, Changes Made, Key Decisions, Open Items, Next

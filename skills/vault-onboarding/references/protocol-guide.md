@@ -132,7 +132,7 @@ Confirm what was done so the user can verify:
 
 ```
 Session end complete:
-- Session log: sessions/2026-01-15-session-log-a.md
+- Session log: Sessions/2026-01-15-session-log-a.md
 - TASKS.md: 2 done, 1 added
 - Pointer updated, history row added
 - About Me/: 1 entry proposed and approved

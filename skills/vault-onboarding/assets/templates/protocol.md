@@ -137,6 +137,7 @@ tags: [session-log]
 Update the "Last Session" pointer to the new log. If the project maintains a
 session history table, add a row (keep the last 15 entries, newest first).
 
+{{#IF_FULL_PROTOCOL}}
 {{#IF_BOARDS}}
 ### 3. Reconcile task boards
 
@@ -151,6 +152,7 @@ Use `vault_update_task` for atomic completion (checkbox + date + lane move in
 one call).
 {{/IF_VAULT_CORTEX}}
 {{/IF_BOARDS}}
+{{/IF_FULL_PROTOCOL}}
 
 {{#IF_FULL_PROTOCOL}}
 ### {{END_EXTENSIONS_STEP}}. Run extensions
@@ -158,6 +160,7 @@ one call).
 If the project defines Session End Extensions, run them now.
 {{/IF_FULL_PROTOCOL}}
 
+{{#IF_FULL_PROTOCOL}}
 {{#IF_MEMORY}}
 ### {{MEMORY_REVIEW_STEP}}. Review memory
 
@@ -178,19 +181,24 @@ Show proposals to the user for approval. Write only on confirmation —
 append-with-dates, newest first. Frame inferred items as "it seems like..." so
 the user can correct.
 {{/IF_MEMORY}}
+{{/IF_FULL_PROTOCOL}}
 
 ### {{COMPLETION_STEP}}. Output completion summary
 
 ```text
 Session end complete:
 - Session log: {{SESSION_LOG_FOLDER}}/YYYY-MM-DD-session-log-X.md
+{{#IF_FULL_PROTOCOL}}
 {{#IF_BOARDS}}
 - TASKS.md: <N done, M added, stale [/] reset — or "no changes">
 {{/IF_BOARDS}}
+{{/IF_FULL_PROTOCOL}}
 - Pointer updated
+{{#IF_FULL_PROTOCOL}}
 {{#IF_MEMORY}}
 - {{MEMORY_FOLDER}}/: <proposals + outcomes, or "none">
 {{/IF_MEMORY}}
+{{/IF_FULL_PROTOCOL}}
 ```
 
 {{#IF_BOARDS}}

@@ -67,16 +67,18 @@ one, state:
 - **Trigger phrases**: how the user activates it (primary phrase + alternatives)
 - **Example**: a concrete scenario
 
-Template:
+Template (adapt each description to what was scaffolded — include the
+bracketed clauses only when that component was enabled):
 
 > "**session-start** — Catches you up at the beginning of a work session. Say
 > 'start a session', 'catch me up', or 'what's on deck'. The AI reads your
-> last session's handoff, checks your task board, and summarizes where you
-> left off."
+> last session's handoff, [if boards:] checks your task board, and summarizes
+> where you left off."
 >
 > "**session-end** — Wraps up and saves a handoff for next time. Say 'end
-> session', 'wrap up', or 'close out'. The AI writes a session log, updates
-> your tasks, and saves anything worth remembering."
+> session', 'wrap up', or 'close out'. The AI writes a session log[, if
+> boards + full protocol: updates your tasks][, if memory + full protocol:
+> and saves anything worth remembering]."
 >
 > "**remember** — Saves a preference or fact to your memory files. Say
 > 'remember that I prefer X' or 'save this for later'. The AI proposes an
@@ -84,7 +86,7 @@ Template:
 > again."
 >
 > "**project-role** — Defines how AI should behave in a specific project. Say
-> 'set up this project's role' or 'define the agent role'. The AI asks a few
+> 'set up this project' or 'define the agent role'. The AI asks a few
 > questions and writes the role into the project's instruction file."
 
 List all skills being generated before writing any files. The user should see

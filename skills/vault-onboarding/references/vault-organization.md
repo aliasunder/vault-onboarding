@@ -72,7 +72,7 @@ role: Engineering Manager
 org: Acme Corp
 created: 2026-01-15T10:00:00-05:00
 related:
-  - "[[Projects/acme-integration]]"
+  - "[[Projects/Acme Integration]]"
 ---
 ```
 
