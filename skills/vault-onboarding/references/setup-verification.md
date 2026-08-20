@@ -11,7 +11,7 @@ Before checking individual clients, verify the vault structure:
 - [ ] About Me/ files exist (if memory enabled) and have correct frontmatter
 - [ ] TASKS.md exists (if boards enabled) with 5 lanes
 - [ ] PROTOCOL.md exists (if protocol enabled) with all relevant sections
-- [ ] sessions/ folder exists (if protocol enabled)
+- [ ] Sessions/ folder exists at the vault root (if protocol enabled)
 - [ ] Generated skills are in place (session skills if protocol enabled;
       remember if memory enabled)
 - [ ] Onboarding checkpoint file status is current
@@ -121,6 +121,20 @@ If the full instruction content exceeds the character limit:
 4. Ask: "What's my name and timezone?"
    - Pass: agent responds correctly
    - Fail: check that instructions are in the project, not global settings
+
+### Perplexity Global Instructions
+
+1. Open Perplexity settings (Profile or AI Profile)
+2. Verify the instruction content is in Global Instructions
+3. Start a new conversation outside any project
+4. Ask: "What's my name and timezone?"
+   - Pass: agent responds correctly
+   - Fail: check that instructions are in the global settings, not just a
+     project's Project Instructions
+
+If Perplexity's version does not have a Global Instructions surface, fold the
+global content into each project's Project Instructions instead and skip this
+check.
 
 ## Cursor Verification
 

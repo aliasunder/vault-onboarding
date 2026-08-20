@@ -64,6 +64,26 @@ Last updated: {{LAST_UPDATED}}
 - Reference folder: {{HAS_REFERENCE}}
 - Tag style: {{TAG_STYLE}}
 - Link style: {{LINK_STYLE}}
+- First project: {{FIRST_PROJECT}}
+- Files created: {{PHASE_3_FILES}}
+
+### Phase 4 Details
+
+- Memory files created: {{MEMORY_FILES_CREATED}}
+- Domain-specific files: {{DOMAIN_MEMORY_FILES}}
+- Entries seeded: {{MEMORY_SEEDS}}
+
+### Phase 5 Details
+
+- Board layout: {{BOARD_LAYOUT}}
+- Board locations: {{BOARD_LOCATIONS}}
+- Kanban plugin: {{KANBAN_PLUGIN_STATUS}}
+- Tasks plugin: {{TASKS_PLUGIN_STATUS}}
+
+### Phase 6 Details
+
+- Protocol level: {{PROTOCOL_LEVEL}}
+- Sessions/ folder: {{SESSIONS_FOLDER_CREATED}}
 
 ### Phase 7 Details
 
@@ -71,3 +91,10 @@ Last updated: {{LAST_UPDATED}}
 - Skills delivered: {{SKILLS_DELIVERED}}
 - Instruction notes: {{INSTRUCTIONS_PERSISTED}}
 - vault-cortex per client: {{VAULT_CORTEX_CLIENTS}}
+
+### Phase 8 Details
+
+- obsidian-vault skill: {{OBSIDIAN_VAULT_SKILL_STATUS}}
+- Obsidian plugins: {{OBSIDIAN_PLUGINS_STATUS}}
+- Demo completed: {{DEMO_COMPLETED}}
+- Checkpoint file: {{CHECKPOINT_KEPT}}

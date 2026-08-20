@@ -52,7 +52,7 @@ vault-onboarding is in active development and not yet released. The full impleme
 
 - 9-phase branching interview with checkpoint/resume
 - 7 reference files loaded on demand (vault organization, memory system, protocol, client instructions, generated skills, progressive adoption, setup verification)
-- 19 asset templates — 5 memory files, 7 client instruction files, protocol, task board, checkpoint
+- 16 asset templates — 5 memory files, 8 client instruction files, protocol, task board, checkpoint
 - 4 generated trigger skills (session-start, session-end, remember, project-role)
 - Structural CI validation — marker balance, conditional nesting, path resolution, variable-table drift
 

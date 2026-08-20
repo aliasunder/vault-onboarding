@@ -72,7 +72,7 @@ maintaining a separate project management tool.
 Components (adds to Tier 2):
 - Session protocol (full or lightweight)
 - Session-start and session-end skills
-- Session logs in `sessions/` folders
+- Session logs in `Sessions/` (vault root) and per-project `sessions/` folders
 - Extension points for per-project customization
 - Project-role skill (full protocol)
 
@@ -108,7 +108,7 @@ Each component can be added independently after the initial onboarding.
 ### Adding protocol to an existing vault
 
 1. Create PROTOCOL.md at vault root
-2. Create `sessions/` folder
+2. Create `Sessions/` folder at the vault root
 3. Generate session-start and session-end skills
 4. Update instruction files to include protocol text
 5. Add Last Session pointer and Session History table to instruction files

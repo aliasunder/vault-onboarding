@@ -71,7 +71,8 @@ When the user signals they're done, the agent follows these steps:
 
 ### 1. Write the session log
 
-Create a session log in the appropriate `sessions/` folder:
+Create a session log in the appropriate sessions folder (`Sessions/` at the
+vault root, or the project's `sessions/` subfolder for project-scoped logs):
 
 **Filename:** `YYYY-MM-DD-session-log-{letter}.md` (a, b, c for multiple
 sessions on the same day). Always check what exists immediately before writing
@@ -131,7 +132,7 @@ Confirm what was done so the user can verify:
 
 ```
 Session end complete:
-- Session log: sessions/2026-01-15-session-log-a.md
+- Session log: Sessions/2026-01-15-session-log-a.md
 - TASKS.md: 2 done, 1 added
 - Pointer updated, history row added
 - About Me/: 1 entry proposed and approved
