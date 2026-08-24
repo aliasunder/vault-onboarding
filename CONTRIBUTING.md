@@ -1,5 +1,10 @@
 # Contributing
 
+**Windows:** this repo uses symlinks (`CLAUDE.md → AGENTS.md`). Run
+`git config core.symlinks true` before cloning, or re-clone after setting
+it — otherwise Git checks out symlinks as plain text files containing the
+target path.
+
 ## Releasing
 
 Cut a release from the GitHub UI:
