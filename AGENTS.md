@@ -83,3 +83,53 @@ tile, glow nodes) with an inverted violet-primary palette.
 1. Create `skills/vault-onboarding/references/my-reference.md`
 2. Add a pointer in SKILL.md's "How This Skill Works" section with path, description, and bold trigger condition
 3. Reference from the appropriate interview phase
+
+## Code standards
+
+<!-- distilled from vault Reference/code-standards-* on 2026-08-24; refresh: run the sync-code-standards skill -->
+
+This repo is primarily markdown (SKILL.md, references, templates) with TypeScript in `scripts/`. Docs standards apply everywhere; TS standards apply to `scripts/`.
+
+### Writing (all files)
+
+**Format decision at write time** — before committing any prose:
+1. Information (a setting's behavior, a list of options) → structured format (table, bullets, numbered steps). Narrative → PR description, not committed files.
+2. More than 3 sentences of prose? → wrong format. Pick what the reader absorbs quickest — table for lookups, bullets for parallel items, numbered list for steps. Multi-paragraph "breakdowns" are still prose.
+3. A section twice the length of its siblings is a blob even when each sentence is fine.
+4. One idea per sentence; one action per step.
+
+**Language:**
+- Plain-first — jargon with real signal stays with a one-line gloss; session shorthand never ships. Test: would the reader know what it means without looking anything up?
+- Factual claims match the implementation — capability lists verified against the code; conditional capabilities stated conditionally.
+- Mechanism language is earned — "caches", "batches" only when the code does that, not merely the outcome.
+- Describe what the feature does, not why someone would use it.
+- Concrete referents at the point of use — state the specific name where the reader is, not "the file" paragraphs away.
+- No blobs. No filler lead-ins.
+
+**Multi-path docs** — when offering multiple install/setup methods: every operational section serves every path or scopes itself explicitly. Never reference a path the doc doesn't offer. Resource identifiers compatible across methods.
+
+**Lockstep** — docs update in the same change that alters behavior. Sweep every surface that enumerates siblings when adding a concept.
+
+**Restructuring** — structural self-references ("shown below", "the section above") must resolve against the current document. Sibling docs are authored as a set.
+
+### Comments (TypeScript in scripts/)
+
+**Write-time decision:**
+1. Can a reader understand the function from name + params + return type? → **No comment.** Most functions.
+2. Something non-obvious? → One-line JSDoc stating the constraint the signature doesn't convey.
+3. Does the JSDoc restate the function name? → **Delete it.**
+4. More than 2 lines? → Pick the format the reader absorbs quickest (bullets, numbered steps) — never multi-paragraph prose.
+
+**Inline comments at the relevant line, not everything in the docstring.** The docstring states the outward contract; line-level concerns go above the line they explain.
+
+Durable rationale only — never transition history or operator internals. OSS boundary: no issue/PR numbers, incident dates, deployment names, or task-board IDs in any public artifact.
+
+### TypeScript (scripts/ only)
+
+- No semicolons. Arrow `const`s over `function` declarations.
+- `const` by default; no unjustified `let`. Readability gates all refactors.
+- Early return from the simpler branch; block bodies for multiline responses.
+- `type` over `interface`. Truthy/falsy checks over explicit comparisons unless 0/empty/false are valid.
+- `as` and `!` are the same sin — runtime guards instead.
+- Values named for what they ARE; functions named for their point.
+- Standalone scripts are `.ts`, erasable syntax (no enums/namespaces).
