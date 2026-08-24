@@ -1,5 +1,1 @@
-# CLAUDE.md
-
-@AGENTS.md
-
-## Claude-Specific Tips
+AGENTS.md
