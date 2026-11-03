@@ -1,6 +1,6 @@
 // Renders .github/social-preview.svg to .github/social-preview.png with
-// Puppeteer's pinned Chrome for Testing build. Setup and the install story:
-// AGENTS.md, "Social preview card".
+// Puppeteer's pinned Chrome for Testing build. The "Social preview card"
+// section of AGENTS.md covers setup and the browser install.
 //
 // Usage: bun run render:social-preview
 
