@@ -1,11 +1,11 @@
 // Renders .github/social-preview.svg to .github/social-preview.png using
-// Puppeteer's pinned Chrome for Testing build (installed on demand by the npm
-// script — `npm ci` skips the download via the `puppeteer.skipDownload` key in
-// package.json). Embeds JetBrains Mono SemiBold (wordmark) and DejaVu Sans
-// (body text) via @font-face for deterministic rendering regardless of host
-// system fonts. Ported from vault-cortex's scripts/render-social-preview.ts.
+// Puppeteer's pinned Chrome for Testing build. The package script installs the
+// browser on demand; the `puppeteer.skipDownload` key in package.json stops
+// the download at install time. Embeds JetBrains Mono SemiBold (wordmark) and
+// DejaVu Sans (body text) via @font-face for deterministic rendering
+// regardless of host system fonts.
 //
-// Usage: npm run render:social-preview
+// Usage: bun run render:social-preview
 
 import { execFileSync } from "node:child_process"
 import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs"

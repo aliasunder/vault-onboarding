@@ -119,7 +119,7 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 - No implicit contrasts or empty intensifiers — "not just developers" reads as a defense against a doubt nobody raised, and "**real** task management" implies a fake one. State the capability affirmatively.
 - Troubleshooting entries end in numbered steps the reader can take, with a safe fallback, never in a diagnosis alone.
 - A destructive-outcome claim pairs with its recovery path in the same sentence or table cell, on every surface that makes the claim.
-- Setting and variable references (a `{{VARIABLE}}` table, a README option) state the knob, its effect, and its limits, with `Valid values:` and `Default:` on their own labelled lines.
+- Setting references (a README option table, an env-file comment) state the knob, its effect, and its limits, with `Valid values:` and `Default:` on their own labelled lines. SKILL.md's Variable Reference table is not one: its rows are slots the agent fills, most with no default.
 - Defensive copy ("use at your own risk") enters a public doc only after the problem it guards against has occurred.
 - Reviewed copy usually has a job — before cutting a "redundant" line, check why it exists; replace only the clause a change made stale.
 - Prerequisites follow the reader — lead with the one install the audience needs, with a link; demote developer conveniences to an "already have it?" aside.
