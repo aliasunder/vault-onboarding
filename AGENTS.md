@@ -74,7 +74,7 @@ skill payload and must stay free of repo branding. Update the SVG when feature
 categories change (the feature line is rendered in the image), then
 regenerate the PNG.
 
-**Regenerating `social-preview.png`:** Run `bun run render:social-preview`.
+**To regenerate `social-preview.png`,** run `bun run render:social-preview`.
 That `package.json` script installs the Chrome for Testing build that the
 `puppeteer` version pinned in `package.json` expects, then runs
 `scripts/render-social-preview.ts` with `node`. The render embeds JetBrains
