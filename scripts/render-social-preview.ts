@@ -1,9 +1,6 @@
-// Renders .github/social-preview.svg to .github/social-preview.png using
-// Puppeteer's pinned Chrome for Testing build. The package script installs the
-// browser on demand; the `puppeteer.skipDownload` key in package.json stops
-// the download at install time. Embeds JetBrains Mono SemiBold (wordmark) and
-// DejaVu Sans (body text) via @font-face for deterministic rendering
-// regardless of host system fonts.
+// Renders .github/social-preview.svg to .github/social-preview.png with
+// Puppeteer's pinned Chrome for Testing build. Setup and the install story:
+// AGENTS.md, "Social preview card".
 //
 // Usage: bun run render:social-preview
 

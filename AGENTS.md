@@ -54,7 +54,7 @@ Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` marke
 ## Development Guidelines
 
 - No build step — the skill itself is pure markdown and installs with no dependencies; `devDependencies` cover repo tooling only (bun-managed, `bun.lock`)
-- `scripts/` holds TypeScript that runs directly under Bun or Node: `bun run validate` runs `scripts/validate-structure.ts` under Bun locally, and CI runs the same file with `node` on Node 24, which strips the types
+- `scripts/` holds TypeScript that runs directly under Bun or Node: `bun run validate` runs `scripts/validate-structure.ts` under Bun locally, while CI runs the same file with `node` on Node 24, which strips the types, and the `render:social-preview` package script runs `scripts/render-social-preview.ts` with `node`
 - All template files use `{{VARIABLE}}` markers for substitution
 - Generated skills are triggers, not copies — session-start and session-end each tell the agent to follow the session protocol in the client's instruction file (`CLAUDE.md`, Global Instructions, or the client's equivalent), so the protocol text lives in one place
 - The SKILL.md itself uses only the client's built-in file tools (Read, Write, Bash). Tools from the optional vault-cortex MCP server (`vault_*`, for remote vault access and search) appear only in GENERATED artifacts, and only when the user has vault-cortex connected
@@ -174,5 +174,5 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 - Values named for what they ARE (no single letters or abbreviations); functions named for their point; booleans named for the affirmative state.
 - Platform built-ins before hand-rolled parsing (`URL.parse`, `node:path`); exact-value comparison before regex; a doc-commented regex with named groups only when values genuinely vary.
 - Per-operation try/catch — each catch encloses one operation with one failure meaning; broad catch-alls are banned. Every catch logs or re-throws; a swallowed error is worse than an uncaught one. Throw on an unreachable null, never a `?? ""` sentinel.
-- File and process work uses Node built-ins (`node:fs`, `node:path`, `node:child_process`). The synchronous `node:fs` calls are the default; use `fs/promises` where file modes or an atomic rename matter. Never Bun-only APIs (`Bun.Glob`, `Bun.spawn`, `Bun.$`), because Node runs both scripts: CI runs `validate-structure.ts` with `node`, and the `render:social-preview` package script runs `render-social-preview.ts` with `node`.
+- File and process work uses Node built-ins (`node:fs`, `node:path`, `node:child_process`). The synchronous `node:fs` calls are the default; use `fs/promises` where file modes or an atomic rename matter. Never Bun-only APIs (`Bun.Glob`, `Bun.spawn`, `Bun.$`), because Node runs every script in `scripts/` (see Development Guidelines).
 - Scripts are `.ts` files with erasable syntax only (no enums or namespaces), because Node's type stripping deletes type annotations but cannot compile other TypeScript syntax.
