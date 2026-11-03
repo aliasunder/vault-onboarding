@@ -45,9 +45,9 @@ const isFile = (path: string): boolean => existsSync(path) && statSync(path).isF
 const assetFiles = mdFilesUnder(join(SKILL_DIR, "assets"))
 
 // 1. SKILL.md frontmatter carries the Agent Skills required keys.
-// A leading pair of --- fences; group 1 is the YAML between them.
+// Matches the leading pair of --- fences; group 1 captures the YAML between them.
 const FRONTMATTER_BLOCK = /^---\n([\s\S]*?)\n---\n/
-// A `name:` or `description:` key at the start of a frontmatter line.
+// Each matches its key at the start of a frontmatter line.
 const NAME_KEY = /^name:/m
 const DESCRIPTION_KEY = /^description:/m
 const skillText = read(join(SKILL_DIR, "SKILL.md"))
@@ -119,9 +119,9 @@ for (const path of [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR,
 }
 
 // 5. Variable Reference table matches actual {{VAR}} usage in assets, both ways.
-// A Variable Reference table row; group 1 is the documented variable name.
+// Matches a Variable Reference table row; group 1 captures the documented name.
 const DOCUMENTED_VARIABLE_ROW = /^\| `\{\{([A-Z][A-Z0-9_]*)\}\}`/gm
-// A {{VARIABLE}} marker in an asset; group 1 is the name (conditionals included).
+// Matches a {{VARIABLE}} marker in an asset; group 1 captures the name, conditionals included.
 const VARIABLE_MARKER = /\{\{([A-Z][A-Z0-9_]*)\}\}/g
 const documented = new Set(
   [...skillText.matchAll(DOCUMENTED_VARIABLE_ROW)].map((match) => match[1]),
@@ -168,11 +168,11 @@ for (const single of [
 //    Catches heading renames that silently break navigation aids for agents.
 const HEADING_XREF_A = /"([^"]+)"\s+(?:section\s+of|in)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g
 const HEADING_XREF_B = /`(references\/[A-Za-z0-9_\-./]+\.md)`\s*→\s*"([^"]+)"/g
-// Unquoted Title-Case heading named as a table/section/walkthrough of the file,
-// e.g. "per the Skill Placement table in `references/generated-skills-guide.md`".
+// Matches an unquoted Title-Case heading named as a table, section, walkthrough or
+// list of the file, e.g. "per the Skill Placement table in `references/generated-skills-guide.md`".
 const HEADING_XREF_C =
   /\b([A-Z][A-Za-z0-9'&-]*(?:\s+[A-Z][A-Za-z0-9'&-]*)*)\s+(?:table|section|walkthrough|list)\s+(?:in|of)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g
-// A markdown heading's leading hashes and the whitespace after them.
+// Matches a markdown heading's leading hashes and the whitespace after them.
 const HEADING_PREFIX = /^#{1,6}\s+/
 const xrefFiles = [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR, "references"))]
 for (const path of xrefFiles) {
@@ -219,8 +219,9 @@ for (const path of xrefFiles) {
 const INSTRUCTION_DIR = join(SKILL_DIR, "assets", "templates", "instructions")
 const onDisk = new Set(readdirSync(INSTRUCTION_DIR).filter((name) => name.endsWith(".md")))
 const TEMPLATE_NAME = /`([A-Za-z0-9_-]+\.md)`/g
-// The Phase 7 client-mapping table: its intro sentence, the header and separator
-// rows, then (group 1) the body rows up to the next blank line or prose line.
+// Matches the Phase 7 client-mapping table from its intro sentence through the
+// header and separator rows; group 1 captures the body rows up to the next blank
+// line or prose line.
 const CLIENT_TEMPLATE_TABLE =
   /Read the appropriate template from `assets\/templates\/instructions\/`:\s*\n\n\|[^\n]+\n\|[^\n]+\n([\s\S]*?)(?:\n\n|\n(?=[A-Z*#]))/
 const tableSection = skillText.match(CLIENT_TEMPLATE_TABLE)
