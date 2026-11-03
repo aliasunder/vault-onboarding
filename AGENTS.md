@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code), Codex CLI, and othe
 
 ## Project Overview
 
-`vault-onboarding` is an onboarding skill in the Agent Skills format (see Skill Architecture) that bootstraps an agent collaboration system into an Obsidian vault. It runs a branching conversational interview and scaffolds memory files, a session protocol (the steps an agent runs at the start and end of each work session), task boards, generated skills, and one instruction file for each AI client the user works in (Claude Code, Cursor, claude.ai, and others) — all tailored to the user's setup and needs.
+`vault-onboarding` is an onboarding skill in the Agent Skills format (see Skill Architecture) that bootstraps an agent collaboration system into an Obsidian vault. It runs a branching conversational interview and scaffolds memory files, a session protocol (the steps an agent runs at the start and end of each work session), task boards, generated skills, and instruction files for each AI client the user works in (Claude Code, Cursor, claude.ai, and others; Claude Code, Cowork and Perplexity each get a global file plus a per-project one) — all tailored to the user's setup and needs.
 
 Distribution: `npx skills add aliasunder/vault-onboarding`.
 
@@ -38,7 +38,11 @@ vault-onboarding/
   scripts/
     validate-structure.ts            # Structural coherence checks (run by CI)
     render-social-preview.ts         # Renders social-preview.svg → .png via Puppeteer
-  .github/workflows/validate.yml     # Runs the structural checks on PRs + pushes to main
+  .github/workflows/
+    validate.yml                     # Runs the structural checks on PRs + pushes to main
+    umm_review.yml                   # Runs the umm-actually PR review bot
+    manual_release.yml               # Releases: bump, tag, zip, GitHub release (see CONTRIBUTING.md)
+    auto_release.yml                 # Releases from a v* tag push (see CONTRIBUTING.md)
   .github/social-preview.svg + .png  # Repo social card (SVG source + committed render)
   .github/fonts/                     # Fonts embedded by the render script
 ```
