@@ -164,6 +164,8 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 
 ### TypeScript (scripts/ only)
 
+These rules govern new code. `scripts/validate-structure.ts` predates them (semicolons, `function` declarations); bring a file into line when a change already edits it, never in a sweep of its own.
+
 - No semicolons. Arrow `const`s over `function` declarations; leaf helpers before their callers.
 - `const` by default; no unjustified `let`. Never disguise mutation as a fold (`reduce` with `acc.push()`); a helper never mutates its inputs and types collection params as readonly views. Readability gates all refactors.
 - Early return from the simpler branch; block bodies for multiline responses. Never a chained ternary or a `let` assigned through if/else branches — one `if … return` per branch, or one named const per step.
