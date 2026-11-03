@@ -170,8 +170,6 @@ These rules are authoring guidance: apply them to the prose and code you write. 
 
 ### TypeScript (scripts/ only)
 
-`scripts/validate-structure.ts` predates these rules (semicolons, `function` declarations); the authoring-guidance boundary above applies.
-
 - No semicolons. Arrow `const`s over `function` declarations; leaf helpers before their callers.
 - `const` by default; no unjustified `let`. Never disguise mutation as a fold (`reduce` with `acc.push()`); a helper never mutates its inputs and types collection params as readonly views. Readability gates all refactors.
 - Early return from the simpler branch; block bodies for multiline responses. Never a chained ternary or a `let` assigned through if/else branches — one `if … return` per branch, or one named const per step.
