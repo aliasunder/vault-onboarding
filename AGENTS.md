@@ -161,5 +161,5 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 - Values named for what they ARE (no single letters or abbreviations); functions named for their point; booleans named for the affirmative state.
 - Platform built-ins before hand-rolled parsing (`URL.parse`, `node:path`); exact-value comparison before regex; a doc-commented regex with named groups only when values genuinely vary.
 - Per-operation try/catch — each catch encloses one operation with one failure meaning; broad catch-alls are banned. Every catch logs or re-throws; a swallowed error is worse than an uncaught one. Throw on an unreachable null, never a `?? ""` sentinel.
-- Bun builtins where they fit (`Bun.Glob`, `Bun.spawn`); `fs/promises` where file modes or an atomic rename matter; never `Bun.$`. Boundary: committed scripts stay Node-runnable (CI runs them under Node 24's type stripping).
+- File and process work uses Node built-ins (`node:fs`, `node:path`, `node:child_process`), with `fs/promises` where file modes or an atomic rename matter. Never Bun-only APIs (`Bun.Glob`, `Bun.spawn`, `Bun.$`), because CI and the `render:social-preview` npm script run these scripts under Node 24's type stripping.
 - Standalone scripts are `.ts`, erasable syntax (no enums/namespaces).
