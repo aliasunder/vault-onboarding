@@ -1,8 +1,7 @@
-// Renders .github/social-preview.svg to .github/social-preview.png with
-// Puppeteer's pinned Chrome for Testing build. The "Social preview card"
-// section of AGENTS.md covers setup and the browser install.
-//
-// Usage: bun run render:social-preview
+// This script renders .github/social-preview.svg to .github/social-preview.png
+// with Puppeteer's pinned Chrome for Testing build. Run it with
+// `bun run render:social-preview`; the "Social preview card" section of
+// AGENTS.md covers setup and the browser install.
 
 import { execFileSync } from "node:child_process"
 import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs"
