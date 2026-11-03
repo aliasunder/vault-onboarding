@@ -86,50 +86,80 @@ tile, glow nodes) with an inverted violet-primary palette.
 
 ## Code standards
 
-<!-- distilled from vault Reference/code-standards-* on 2026-08-24; refresh: run the sync-code-standards skill -->
+<!-- distilled from vault Reference/code-standards-* on 2026-11-03; refresh (merges, keeps hand edits): run the sync-code-standards skill -->
 
-This repo is primarily markdown (SKILL.md, references, templates) with TypeScript in `scripts/`. Docs standards apply everywhere; TS standards apply to `scripts/`.
+This repo is primarily markdown (SKILL.md, references, templates, README) with TypeScript in `scripts/`. Docs standards apply everywhere; TS and comment standards apply to `scripts/`. There is no test suite; CI runs `scripts/validate-structure.ts`.
 
 ### Writing (all files)
 
 **Format decision at write time** — before committing any prose:
 1. Information (a setting's behavior, a list of options) → structured format (table, bullets, numbered steps). Narrative → PR description, not committed files.
 2. More than 3 sentences of prose? → wrong format. Pick what the reader absorbs quickest — table for lookups, bullets for parallel items, numbered list for steps. Multi-paragraph "breakdowns" are still prose.
-3. A section twice the length of its siblings is a blob even when each sentence is fine.
-4. One idea per sentence; one action per step.
+3. A section far longer than its siblings is a blob even when each sentence is fine. Read the neighbors first.
+4. One idea per sentence; one action per step. A new requirement bolted onto an existing step becomes its own step.
+
+**The authoring test** — line-level fact-checking cannot validate a document. For each reader the doc serves (a non-technical vault owner, an agent following SKILL.md), walk the whole artifact: sentence, placement, format, sibling contradictions, purpose. After editing one section, re-read the whole document, not the diff.
 
 **Language:**
-- Plain-first — jargon with real signal stays with a one-line gloss; session shorthand never ships. Test: would the reader know what it means without looking anything up?
-- Factual claims match the implementation — capability lists verified against the code; conditional capabilities stated conditionally.
-- Mechanism language is earned — "caches", "batches" only when the code does that, not merely the outcome.
-- Describe what the feature does, not why someone would use it.
-- Concrete referents at the point of use — state the specific name where the reader is, not "the file" paragraphs away.
-- No blobs. No filler lead-ins.
+- Plain-first — jargon with real signal stays with a one-line gloss; plain words get no gloss; session shorthand and coined group names never ship. Test: would the reader know what it means without looking anything up?
+- Factual claims match the implementation — capability lists verified against the templates and scripts; conditional capabilities stated conditionally.
+- Mechanism language is earned — "caches", "batches", "switches automatically" only when the code does that, not merely the outcome.
+- Describe what the feature does, not why someone would use it. Procedure copy opens with the reader's motive ("To add a client, …"), not the operation's name.
+- Concrete referents at the point of use — state the specific name where the reader is (`onboarding-progress.md`, not "the checkpoint file" paragraphs away). A definite noun must have been introduced first.
+- No implicit contrasts or empty intensifiers — state the capability affirmatively.
+- Troubleshooting entries end in numbered steps the reader can take, with a safe fallback, never in a diagnosis alone.
+- A destructive-outcome claim pairs with its recovery path in the same sentence or table cell, on every surface that makes the claim.
+- Setting and variable references (a `{{VARIABLE}}` table, a README option) state the knob, its effect, and its limits, with `Valid values:` and `Default:` on their own labelled lines.
+- Defensive copy ("use at your own risk") enters a public doc only after the problem it guards against has occurred.
+- Reviewed copy usually has a job — before cutting a "redundant" line, check why it exists; replace only the clause a change made stale.
+- Prerequisites follow the reader — lead with the one install the audience needs, with a link; demote developer conveniences to an "already have it?" aside.
+- No blobs. No filler lead-ins. Configuration guidance is a lookup table (situation → setting → outcome).
 
-**Multi-path docs** — when offering multiple install/setup methods: every operational section serves every path or scopes itself explicitly. Never reference a path the doc doesn't offer. Resource identifiers compatible across methods.
+**Multi-path docs** — when a doc offers more than one install or client path:
+- Every operational section serves every path, or scopes itself explicitly.
+- Never reference a path the doc doesn't offer.
+- Resource identifiers stay compatible across methods, or the doc says the methods are not interchangeable.
+- A note that applies to all paths attaches to none of them.
 
-**Lockstep** — docs update in the same change that alters behavior. Sweep every surface that enumerates siblings when adding a concept.
+**Lockstep** — docs update in the same change that alters behavior:
+- Adding a reference, template, or client means sweeping every surface that enumerates its siblings: the structure tree above, SKILL.md's pointer list, the README.
+- A derived artifact (the social-preview PNG) is regenerated in the same change.
+- Generator guidance holds structure only; the claims live in the canonical doc the generator reads.
 
-**Restructuring** — structural self-references ("shown below", "the section above") must resolve against the current document. Sibling docs are authored as a set.
+**Restructuring:**
+- A structural self-reference ("shown below", "the section above") must resolve against the current document.
+- Sibling docs (the per-client instruction templates) are authored as a set, with the same lead method and section skeleton, diverging only where the client genuinely differs.
+- A feature spanning several docs gets one conceptual home; every other mention points to it.
 
 ### Comments (TypeScript in scripts/)
 
 **Write-time decision:**
 1. Can a reader understand the function from name + params + return type? → **No comment.** Most functions.
 2. Something non-obvious? → One-line JSDoc stating the constraint the signature doesn't convey.
-3. Does the JSDoc restate the function name? → **Delete it.**
+3. Does the JSDoc restate the function name? → **Delete it.** Explains *what* instead of *why*? → rewrite as the constraint.
 4. More than 2 lines? → Pick the format the reader absorbs quickest (bullets, numbered steps) — never multi-paragraph prose.
 
 **Inline comments at the relevant line, not everything in the docstring.** The docstring states the outward contract; line-level concerns go above the line they explain.
+- A guard or branch comment states the scenario, the mechanism, and what breaks without it.
+- A chosen number (a timeout, a pinned browser build, a cap) gets its why directly above it; a fixed fact needs none.
+- Regex constants get a comment.
 
-Durable rationale only — never transition history or operator internals. OSS boundary: no issue/PR numbers, incident dates, deployment names, or task-board IDs in any public artifact.
+**Comment content:**
+- Short complete sentences, with no colon-hinged labels and no verbless fragments.
+- Durable rationale only, never transition history, decision narrative, or operator internals. A genuine risk of retracing an abandoned error counts as rationale.
+- OSS boundary: no issue/PR numbers, incident dates, deployment names, or task-board IDs in any public artifact.
 
 ### TypeScript (scripts/ only)
 
-- No semicolons. Arrow `const`s over `function` declarations.
-- `const` by default; no unjustified `let`. Readability gates all refactors.
-- Early return from the simpler branch; block bodies for multiline responses.
-- `type` over `interface`. Truthy/falsy checks over explicit comparisons unless 0/empty/false are valid.
-- `as` and `!` are the same sin — runtime guards instead.
-- Values named for what they ARE; functions named for their point.
+- No semicolons. Arrow `const`s over `function` declarations; leaf helpers before their callers.
+- `const` by default; no unjustified `let`. Never disguise mutation as a fold (`reduce` with `acc.push()`); a helper never mutates its inputs and types collection params as readonly views. Readability gates all refactors.
+- Early return from the simpler branch; block bodies for multiline responses. Never a chained ternary or a `let` assigned through if/else branches — one `if … return` per branch, or one named const per step.
+- Named params when a positional call hides roles (an object above two args, adjacent same-typed args). A boolean mode param means the function does two things — split it.
+- Named constants over bare magic literals (modes, sizes, dimensions), with the one-line why at the definition, scoped to where they are used.
+- `type` over `interface`. Truthy/falsy checks over explicit comparisons unless 0/empty/false are valid. `Boolean(x)` over `!!x`.
+- `as` and `!` are the same sin — runtime guards or type-guard functions instead. Model states in the type system: a result with modes is a discriminated union, branched with an exhaustive `switch`, never an `if` plus a ternary whose fallback catches the rest unnamed.
+- Values named for what they ARE (no single letters or abbreviations); functions named for their point; booleans named for the affirmative state.
+- Platform built-ins before hand-rolled parsing (`URL.parse`, `node:path`); exact-value comparison before regex; a doc-commented regex with named groups only when values genuinely vary.
+- Per-operation try/catch — each catch encloses one operation with one failure meaning; broad catch-alls are banned. Every catch logs or re-throws; a swallowed error is worse than an uncaught one. Throw on an unreachable null, never a `?? ""` sentinel.
+- Bun builtins where they fit (`Bun.Glob`, `Bun.spawn`); `fs/promises` where file modes or an atomic rename matter; never `Bun.$`. Boundary: committed scripts stay Node-runnable (CI runs them under Node 24's type stripping).
 - Standalone scripts are `.ts`, erasable syntax (no enums/namespaces).
