@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code), Codex CLI, and othe
 
 ## Project Overview
 
-`vault-onboarding` is an Agent Skills-standard onboarding skill that bootstraps an agent collaboration system into an Obsidian vault. It runs a branching conversational interview and scaffolds memory files, session protocols, task boards, generated skills, and per-client instruction files — all tailored to the user's setup and needs.
+`vault-onboarding` is an onboarding skill in the Agent Skills format (see Skill Architecture) that bootstraps an agent collaboration system into an Obsidian vault. It runs a branching conversational interview and scaffolds memory files, a session protocol (the steps an agent runs at the start and end of each work session), task boards, generated skills, and one instruction file for each AI client the user works in (Claude Code, Cursor, claude.ai, and others) — all tailored to the user's setup and needs.
 
 Distribution: `npx skills add aliasunder/vault-onboarding`.
 
@@ -16,7 +16,7 @@ vault-onboarding/
   skills/vault-onboarding/             # The installable skill payload — everything under
                                        # here (and only this) ships via `npx skills add`
     SKILL.md                           # Interview flow + generation orchestration
-    references/                        # 7 best-practice reference files (loaded on demand)
+    references/                        # Best-practice reference files (loaded on demand)
       vault-organization.md            #   Folder taxonomy, tags, linking, schemas
       memory-system.md                 #   Three-layer model, entry policies, growth
       protocol-guide.md                #   Session protocol, board conventions
@@ -24,13 +24,13 @@ vault-onboarding/
       generated-skills-guide.md        #   Skill parameterization
       progressive-adoption.md          #   Adoption tiers, evolution paths
       setup-verification.md            #   Per-client verification
-    assets/                            # 20 asset files (16 templates + 4 skills)
+    assets/                            # Templates the agent fills in and writes to the vault
       templates/memory/                #   5 About Me/ templates
       templates/instructions/          #   8 client-specific instruction templates
       templates/protocol.md            #   Genericized session protocol
       templates/tasks-board.md         #   5-lane Kanban
       templates/onboarding-progress.md #   Checkpoint file
-      skills/                          #   4 generated skill templates
+      skills/                          #   Generated skill templates
         session-start.md
         session-end.md
         remember.md
@@ -49,14 +49,15 @@ The skill follows the Agent Skills standard (`agentskills.io`) and lives entirel
 
 Reference files (`references/*.md`) are loaded on demand — only when the agent enters a phase that needs them. This keeps the core SKILL.md lean while having deep guidance available.
 
-Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` markers. The agent reads, substitutes, writes.
+Asset templates (`assets/`) are literal markdown files with `{{VARIABLE}}` markers. The agent reads a template, replaces each marker with the user's interview answer or a computed value (SKILL.md's "Variable Reference" table names each variable's source), and writes the result into the user's vault.
 
 ## Development Guidelines
 
-- No build step — the skill itself is pure markdown and installs with no dependencies; `devDependencies` cover repo tooling only (bun-managed, `bun.lock`), and `scripts/` is runtime-agnostic TypeScript run directly (`bun run validate` locally; CI runs the same file with Node 24's type stripping)
+- No build step — the skill itself is pure markdown and installs with no dependencies; `devDependencies` cover repo tooling only (bun-managed, `bun.lock`)
+- `scripts/` holds TypeScript that runs directly under Bun or Node: `bun run validate` runs `scripts/validate-structure.ts` under Bun locally, and CI runs the same file with `node` on Node 24, which strips the types
 - All template files use `{{VARIABLE}}` markers for substitution
-- Generated skills are triggers, not copies — they say "follow the protocol in your instruction file"
-- The SKILL.md itself uses only native file tools (Read, Write, Bash) — vault-cortex MCP tools only appear in GENERATED artifacts
+- Generated skills are triggers, not copies — each one tells the agent to follow the session protocol in the client's instruction file (`CLAUDE.md`, Global Instructions, or the client's equivalent), so the protocol text lives in one place
+- The SKILL.md itself uses only the built-in tools every client has (Read, Write, Bash). Tools from the optional vault-cortex MCP server (`vault_*`, for remote vault access and search) appear only in GENERATED artifacts, and only when the user has vault-cortex connected
 - Interview questions use plain language accessible to non-technical users
 
 ## Social preview card
@@ -70,19 +71,26 @@ categories change (the feature line is rendered in the image), then
 regenerate the PNG.
 
 **Regenerating `social-preview.png`:** Run `bun run render:social-preview`.
-The script uses Puppeteer's pinned Chrome for Testing build with embedded
-JetBrains Mono SemiBold (wordmark) and DejaVu Sans (body text) `@font-face`
-for deterministic rendering regardless of host system fonts. No browser
-downloads at install time — `bun install` skips postinstall scripts and the
-`puppeteer.skipDownload` key covers npm installs; the script installs the
-pinned browser on demand. Design family: matches vault-cortex's card (dark
-tile, glow nodes) with an inverted violet-primary palette.
+That `package.json` script installs the Chrome for Testing build that the
+`puppeteer` version pinned in `package.json` expects, then runs
+`scripts/render-social-preview.ts` with `node`. The render embeds JetBrains
+Mono SemiBold (wordmark) and DejaVu Sans (body text) through `@font-face` for
+deterministic rendering regardless of host system fonts. No browser downloads
+at install time — `bun install` skips postinstall scripts, and the
+`puppeteer.skipDownload` key in `package.json` stops the download for package
+managers that run them, such as npm.
+
+**Design family:** the card follows the social card of the sibling repo
+[aliasunder/vault-cortex](https://github.com/aliasunder/vault-cortex) (a dark
+tile with glowing nodes) and swaps its colors, with violet as the primary
+color and cyan as the accent.
 
 ## Adding a reference file
 
 1. Create `skills/vault-onboarding/references/my-reference.md`
-2. Add a pointer in SKILL.md's "How This Skill Works" section with path, description, and bold trigger condition
-3. Reference from the appropriate interview phase
+2. Add a bullet to the **Reference files** list in SKILL.md's "How This Skill Works" section: the path, a one-line description, and a bold sentence saying when to read it (for example **Read before Phase 4 (Memory).**)
+3. In each SKILL.md interview phase whose questions or generation steps use the file, add a bold line at the top of the phase: **Read `references/my-reference.md` before this phase.**
+4. Add the file to the `references/` list in this file's Repository Structure tree, and update the reference-file count and list in README.md's Status section
 
 ## Code standards
 
@@ -93,20 +101,21 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 ### Writing (all files)
 
 **Format decision at write time** — before committing any prose:
-1. Information (a setting's behavior, a list of options) → structured format (table, bullets, numbered steps). Narrative → PR description, not committed files.
-2. More than 3 sentences of prose? → wrong format. Pick what the reader absorbs quickest — table for lookups, bullets for parallel items, numbered list for steps. Multi-paragraph "breakdowns" are still prose.
+1. Information (a setting's behavior, a list of options) → structured format (table, bullets, numbered steps). Narrative (why a design was chosen, what a change replaced) → PR description, not committed files.
+2. More than 3 sentences of prose? → probably the wrong format: past that length the reader cannot find their answer without reading the whole block. Pick what the reader absorbs quickest — table for lookups, bullets for parallel items, numbered list for steps. Splitting the prose into several short paragraphs does not change its format.
 3. A section far longer than its siblings is a blob even when each sentence is fine. Read the neighbors first.
 4. One idea per sentence; one action per step. A new requirement bolted onto an existing step becomes its own step.
 
 **The authoring test** — line-level fact-checking cannot validate a document. For each reader the doc serves (a non-technical vault owner, an agent following SKILL.md), walk the whole artifact: sentence, placement, format, sibling contradictions, purpose. After editing one section, re-read the whole document, not the diff.
 
 **Language:**
-- Plain-first — jargon with real signal stays with a one-line gloss; plain words get no gloss; session shorthand and coined group names never ship. Test: would the reader know what it means without looking anything up?
+- Plain-first — jargon with real signal stays with a one-line gloss; plain words get no gloss. Terms an author coins while working (shorthand, an invented name for a group of items) never ship; name what the items do instead. Test: would the reader know what it means without looking anything up?
 - Factual claims match the implementation — capability lists verified against the templates and scripts; conditional capabilities stated conditionally.
 - Mechanism language is earned — "caches", "batches", "switches automatically" only when the code does that, not merely the outcome.
-- Describe what the feature does, not why someone would use it. Procedure copy opens with the reader's motive ("To add a client, …"), not the operation's name.
+- Feature descriptions state what the feature does, not why someone would use it.
+- Procedure copy (steps the reader follows) opens with the reader's motive ("To add a client, …"), not the operation's name.
 - Concrete referents at the point of use — state the specific name where the reader is (`onboarding-progress.md`, not "the checkpoint file" paragraphs away). A definite noun must have been introduced first.
-- No implicit contrasts or empty intensifiers — state the capability affirmatively.
+- No implicit contrasts or empty intensifiers — "not just developers" reads as a defense against a doubt nobody raised, and "**real** task management" implies a fake one. State the capability affirmatively.
 - Troubleshooting entries end in numbered steps the reader can take, with a safe fallback, never in a diagnosis alone.
 - A destructive-outcome claim pairs with its recovery path in the same sentence or table cell, on every surface that makes the claim.
 - Setting and variable references (a `{{VARIABLE}}` table, a README option) state the knob, its effect, and its limits, with `Valid values:` and `Default:` on their own labelled lines.
@@ -115,20 +124,20 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 - Prerequisites follow the reader — lead with the one install the audience needs, with a link; demote developer conveniences to an "already have it?" aside.
 - No blobs. No filler lead-ins. Configuration guidance is a lookup table (situation → setting → outcome).
 
-**Multi-path docs** — when a doc offers more than one install or client path:
+**Multi-path docs** — when a doc offers more than one path to the same goal (setup steps that differ per client, or with and without vault-cortex):
 - Every operational section serves every path, or scopes itself explicitly.
 - Never reference a path the doc doesn't offer.
-- Resource identifiers stay compatible across methods, or the doc says the methods are not interchangeable.
-- A note that applies to all paths attaches to none of them.
+- Names that several paths create or read (vault folders, generated file paths) stay the same on every path, or the doc says the paths are not interchangeable.
+- A note that applies to every path sits outside all of them. Placed inside one path's steps, it stays invisible to readers of the other paths.
 
 **Lockstep** — docs update in the same change that alters behavior:
-- Adding a reference, template, or client means sweeping every surface that enumerates its siblings: the structure tree above, SKILL.md's pointer list, the README.
+- Adding a reference, template, or client means sweeping every surface that enumerates its siblings: the structure tree above, SKILL.md's **Reference files** list, the README.
 - A derived artifact (the social-preview PNG) is regenerated in the same change.
-- Generator guidance holds structure only; the claims live in the canonical doc the generator reads.
+- Instructions that tell an agent how to generate files (SKILL.md's generation steps) hold structure only. Capability claims and explanation text live in the `references/` file the agent reads during that phase, so each claim is written once.
 
 **Restructuring:**
 - A structural self-reference ("shown below", "the section above") must resolve against the current document.
-- Sibling docs (the per-client instruction templates) are authored as a set, with the same lead method and section skeleton, diverging only where the client genuinely differs.
+- Sibling docs (the per-client instruction templates) are authored as a set, with the same section order and the same recommended approach listed first, diverging only where the client genuinely differs.
 - A feature spanning several docs gets one conceptual home; every other mention points to it.
 
 ### Comments (TypeScript in scripts/)
@@ -141,12 +150,12 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 
 **Inline comments at the relevant line, not everything in the docstring.** The docstring states the outward contract; line-level concerns go above the line they explain.
 - A guard or branch comment states the scenario, the mechanism, and what breaks without it.
-- A chosen number (a timeout, a pinned browser build, a cap) gets its why directly above it; a fixed fact needs none.
+- A chosen number (a timeout, a pinned browser build, a cap) gets its why directly above it. A number an outside spec sets (the 1280×640 card size GitHub recommends) needs no comment.
 - Regex constants get a comment.
 
 **Comment content:**
-- Short complete sentences, with no colon-hinged labels and no verbless fragments.
-- Durable rationale only, never transition history, decision narrative, or operator internals. A genuine risk of retracing an abandoned error counts as rationale.
+- Short complete sentences. A comment never opens with a label and a colon (`// Fallback: cached copy`) and never uses verbless fragments.
+- Durable rationale only, never transition history ("renamed from X"), decision narrative, or details of the maintainer's own machine or setup. A comment that stops a future editor from reintroducing an approach that already failed counts as durable rationale.
 - OSS boundary: no issue/PR numbers, incident dates, deployment names, or task-board IDs in any public artifact.
 
 ### TypeScript (scripts/ only)
@@ -161,5 +170,5 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 - Values named for what they ARE (no single letters or abbreviations); functions named for their point; booleans named for the affirmative state.
 - Platform built-ins before hand-rolled parsing (`URL.parse`, `node:path`); exact-value comparison before regex; a doc-commented regex with named groups only when values genuinely vary.
 - Per-operation try/catch — each catch encloses one operation with one failure meaning; broad catch-alls are banned. Every catch logs or re-throws; a swallowed error is worse than an uncaught one. Throw on an unreachable null, never a `?? ""` sentinel.
-- File and process work uses Node built-ins (`node:fs`, `node:path`, `node:child_process`), with `fs/promises` where file modes or an atomic rename matter. Never Bun-only APIs (`Bun.Glob`, `Bun.spawn`, `Bun.$`), because CI and the `render:social-preview` npm script run these scripts under Node 24's type stripping.
-- Standalone scripts are `.ts`, erasable syntax (no enums/namespaces).
+- File and process work uses Node built-ins (`node:fs`, `node:path`, `node:child_process`). The synchronous `node:fs` calls are the default; use `fs/promises` where file modes or an atomic rename matter. Never Bun-only APIs (`Bun.Glob`, `Bun.spawn`, `Bun.$`), because Node runs both scripts: CI runs `validate-structure.ts` with `node`, and the `render:social-preview` package script runs `render-social-preview.ts` with `node`.
+- Scripts are `.ts` files with erasable syntax only (no enums or namespaces), because Node's type stripping deletes type annotations but cannot compile other TypeScript syntax.
