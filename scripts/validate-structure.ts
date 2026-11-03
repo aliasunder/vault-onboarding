@@ -58,7 +58,7 @@ check(
   "missing frontmatter block or required keys",
 )
 
-// 2. Marker well-formedness: every line's {{ and }} counts agree.
+// 2. Markers are well formed when every line's {{ and }} counts agree.
 const occurrences = (text: string, token: string): number => text.split(token).length - 1
 for (const path of [...assetFiles, join(SKILL_DIR, "SKILL.md")]) {
   const badLines = read(path)
@@ -73,8 +73,9 @@ for (const path of [...assetFiles, join(SKILL_DIR, "SKILL.md")]) {
   )
 }
 
-// 3. Conditional nesting: {{#IF_X}} / {{^IF_X}} open, {{/IF_X}} closes the
-//    innermost open block of the same name (block and inline forms alike).
+// 3. Conditionals nest correctly when {{#IF_X}} or {{^IF_X}} opens a block and
+//    {{/IF_X}} closes the innermost open block of the same name (block and
+//    inline forms alike).
 const CONDITIONAL = /\{\{([#^/])(IF_[A-Z0-9_]+)\}\}/g
 for (const path of assetFiles) {
   const stack: Array<{ name: string; line: number }> = []
@@ -163,9 +164,9 @@ for (const single of [
   check(`${single} exists`, isFile(join(SKILL_DIR, single)), "missing")
 }
 
-// 7. Heading cross-references: quoted heading names paired with a backtick-quoted
-//    reference-file path must resolve to an actual heading in the target file.
-//    Catches heading renames that silently break navigation aids for agents.
+// 7. Heading cross-references resolve when a quoted heading name paired with a
+//    backtick-quoted reference-file path names an actual heading in the target
+//    file. This catches heading renames that silently break navigation aids.
 const HEADING_XREF_A = /"([^"]+)"\s+(?:section\s+of|in)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g
 const HEADING_XREF_B = /`(references\/[A-Za-z0-9_\-./]+\.md)`\s*→\s*"([^"]+)"/g
 // Matches an unquoted Title-Case heading named as a table, section, walkthrough or
