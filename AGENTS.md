@@ -103,6 +103,8 @@ color and cyan as the accent.
 
 This repo is primarily markdown (SKILL.md, references, templates, README) with TypeScript in `scripts/`. Docs standards apply everywhere; TS and comment standards apply to `scripts/`. There is no test suite; CI runs `scripts/validate-structure.ts`.
 
+These rules are authoring guidance: apply them to the prose and code you write. An existing file that predates a rule is brought into line when a change already edits that passage, never in a sweep of its own.
+
 ### Writing (all files)
 
 **Format decision at write time** — before committing any prose:
@@ -168,7 +170,7 @@ This repo is primarily markdown (SKILL.md, references, templates, README) with T
 
 ### TypeScript (scripts/ only)
 
-These rules govern new code. `scripts/validate-structure.ts` predates them (semicolons, `function` declarations); bring a file into line when a change already edits it, never in a sweep of its own.
+`scripts/validate-structure.ts` predates these rules (semicolons, `function` declarations); the authoring-guidance boundary above applies.
 
 - No semicolons. Arrow `const`s over `function` declarations; leaf helpers before their callers.
 - `const` by default; no unjustified `let`. Never disguise mutation as a fold (`reduce` with `acc.push()`); a helper never mutates its inputs and types collection params as readonly views. Readability gates all refactors.
