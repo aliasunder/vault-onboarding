@@ -31,10 +31,11 @@ const mdFilesUnder = (dir: string): string[] => {
   const found: string[] = []
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name)
+
     if (entry.isDirectory()) found.push(...mdFilesUnder(full))
     else if (entry.name.endsWith(".md")) found.push(full)
   }
-  return found.sort()
+  return found.toSorted()
 }
 
 const read = (path: string): string => readFileSync(path, "utf8")
@@ -44,11 +45,16 @@ const isFile = (path: string): boolean => existsSync(path) && statSync(path).isF
 const assetFiles = mdFilesUnder(join(SKILL_DIR, "assets"))
 
 // 1. SKILL.md frontmatter carries the Agent Skills required keys.
+// A leading pair of --- fences; group 1 is the YAML between them.
+const FRONTMATTER_BLOCK = /^---\n([\s\S]*?)\n---\n/
+// A `name:` or `description:` key at the start of a frontmatter line.
+const NAME_KEY = /^name:/m
+const DESCRIPTION_KEY = /^description:/m
 const skillText = read(join(SKILL_DIR, "SKILL.md"))
-const frontmatter = skillText.match(/^---\n([\s\S]*?)\n---\n/)
+const frontmatter = skillText.match(FRONTMATTER_BLOCK)
 check(
   "SKILL.md frontmatter has name + description",
-  frontmatter !== null && /^name:/m.test(frontmatter[1]) && /^description:/m.test(frontmatter[1]),
+  frontmatter !== null && NAME_KEY.test(frontmatter[1]) && DESCRIPTION_KEY.test(frontmatter[1]),
   "missing frontmatter block or required keys",
 )
 
@@ -57,9 +63,9 @@ const occurrences = (text: string, token: string): number => text.split(token).l
 for (const path of [...assetFiles, join(SKILL_DIR, "SKILL.md")]) {
   const badLines = read(path)
     .split("\n")
-    .flatMap((line, index) =>
-      occurrences(line, "{{") !== occurrences(line, "}}") ? [String(index + 1)] : [],
-    )
+    .flatMap((line, index) => {
+      return occurrences(line, "{{") !== occurrences(line, "}}") ? [String(index + 1)] : []
+    })
   check(
     `balanced marker braces: ${rel(path)}`,
     badLines.length === 0,
@@ -79,6 +85,7 @@ for (const path of assetFiles) {
     for (const match of line.matchAll(CONDITIONAL)) {
       const kind = match[1]
       const name = match[2]
+
       if (kind === "#" || kind === "^") {
         stack.push({ name, line: index + 1 })
       } else if (stack.pop()?.name !== name) {
@@ -87,18 +94,23 @@ for (const path of assetFiles) {
       }
     }
   }
-  if (problem === null && stack.length > 0) {
-    const unclosed = stack[stack.length - 1]
+  const unclosed = stack.at(-1)
+
+  if (problem === null && unclosed) {
     problem = `unclosed ${unclosed.name} opened on line ${unclosed.line}`
   }
-  check(`conditional nesting: ${rel(path)}`, problem === null, problem ?? "")
+  if (problem === null) {
+    check(`conditional nesting: ${rel(path)}`, true)
+  } else {
+    check(`conditional nesting: ${rel(path)}`, false, problem)
+  }
 }
 
 // 4. Internal path references in SKILL.md and references/ resolve on disk.
 const PATH_REF = /`((?:references|assets)\/[A-Za-z0-9_\-./]+\.md)`/g
 for (const path of [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR, "references"))]) {
   const refs = [...read(path).matchAll(PATH_REF)].map((match) => match[1])
-  const missing = [...new Set(refs.filter((ref) => !isFile(join(SKILL_DIR, ref))))].sort()
+  const missing = [...new Set(refs.filter((ref) => !isFile(join(SKILL_DIR, ref))))].toSorted()
   check(
     `internal paths resolve: ${rel(path)}`,
     missing.length === 0,
@@ -107,17 +119,21 @@ for (const path of [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR,
 }
 
 // 5. Variable Reference table matches actual {{VAR}} usage in assets, both ways.
+// A Variable Reference table row; group 1 is the documented variable name.
+const DOCUMENTED_VARIABLE_ROW = /^\| `\{\{([A-Z][A-Z0-9_]*)\}\}`/gm
+// A {{VARIABLE}} marker in an asset; group 1 is the name (conditionals included).
+const VARIABLE_MARKER = /\{\{([A-Z][A-Z0-9_]*)\}\}/g
 const documented = new Set(
-  [...skillText.matchAll(/^\| `\{\{([A-Z][A-Z0-9_]*)\}\}`/gm)].map((match) => match[1]),
+  [...skillText.matchAll(DOCUMENTED_VARIABLE_ROW)].map((match) => match[1]),
 )
 const used = new Set<string>()
 for (const path of assetFiles) {
-  for (const match of read(path).matchAll(/\{\{([A-Z][A-Z0-9_]*)\}\}/g)) {
+  for (const match of read(path).matchAll(VARIABLE_MARKER)) {
     if (!match[1].startsWith("IF_")) used.add(match[1])
   }
 }
-const usedNotDocumented = [...used].filter((name) => !documented.has(name)).sort()
-const documentedNotUsed = [...documented].filter((name) => !used.has(name)).sort()
+const usedNotDocumented = [...used].filter((name) => !documented.has(name)).toSorted()
+const documentedNotUsed = [...documented].filter((name) => !used.has(name)).toSorted()
 check(
   "variable table covers all used variables",
   usedNotDocumented.length === 0,
@@ -156,6 +172,8 @@ const HEADING_XREF_B = /`(references\/[A-Za-z0-9_\-./]+\.md)`\s*→\s*"([^"]+)"/
 // e.g. "per the Skill Placement table in `references/generated-skills-guide.md`".
 const HEADING_XREF_C =
   /\b([A-Z][A-Za-z0-9'&-]*(?:\s+[A-Z][A-Za-z0-9'&-]*)*)\s+(?:table|section|walkthrough|list)\s+(?:in|of)\s+`(references\/[A-Za-z0-9_\-./]+\.md)`/g
+// A markdown heading's leading hashes and the whitespace after them.
+const HEADING_PREFIX = /^#{1,6}\s+/
 const xrefFiles = [join(SKILL_DIR, "SKILL.md"), ...mdFilesUnder(join(SKILL_DIR, "references"))]
 for (const path of xrefFiles) {
   // Collapse line continuations so multi-line references match.
@@ -164,11 +182,12 @@ for (const path of xrefFiles) {
   const checkXref = (rawHeading: string, refFile: string): void => {
     const heading = rawHeading.replace(/\s+/g, " ").trim()
     const targetPath = join(SKILL_DIR, refFile)
+
     if (!isFile(targetPath)) return // already caught by check 4
     const headings = read(targetPath)
       .split("\n")
-      .filter((line) => /^#{1,6}\s/.test(line))
-      .map((line) => line.replace(/^#{1,6}\s+/, "").trim())
+      .filter((line) => HEADING_PREFIX.test(line))
+      .map((line) => line.replace(HEADING_PREFIX, "").trim())
     if (!headings.includes(heading)) {
       mismatches.push(`"${heading}" not found in ${refFile}`)
     }
@@ -200,22 +219,26 @@ for (const path of xrefFiles) {
 const INSTRUCTION_DIR = join(SKILL_DIR, "assets", "templates", "instructions")
 const onDisk = new Set(readdirSync(INSTRUCTION_DIR).filter((name) => name.endsWith(".md")))
 const TEMPLATE_NAME = /`([A-Za-z0-9_-]+\.md)`/g
-const tableSection = skillText.match(
-  /Read the appropriate template from `assets\/templates\/instructions\/`:\s*\n\n\|[^\n]+\n\|[^\n]+\n([\s\S]*?)(?:\n\n|\n(?=[A-Z*#]))/,
-)
+// The Phase 7 client-mapping table: its intro sentence, the header and separator
+// rows, then (group 1) the body rows up to the next blank line or prose line.
+const CLIENT_TEMPLATE_TABLE =
+  /Read the appropriate template from `assets\/templates\/instructions\/`:\s*\n\n\|[^\n]+\n\|[^\n]+\n([\s\S]*?)(?:\n\n|\n(?=[A-Z*#]))/
+const tableSection = skillText.match(CLIENT_TEMPLATE_TABLE)
 const inTable = new Set<string>()
+
 if (tableSection) {
   for (const row of tableSection[1].split("\n").filter((line) => line.startsWith("|"))) {
     // Split on | and take the Template column (index 2: empty, Client, Template, ...)
-    const columns = row.split("|")
-    const templateCol = columns[2] ?? ""
+    const templateCol = row.split("|")[2]
+
+    if (!templateCol) continue
     for (const match of templateCol.matchAll(TEMPLATE_NAME)) {
       inTable.add(match[1])
     }
   }
 }
-const onDiskNotInTable = [...onDisk].filter((name) => !inTable.has(name)).sort()
-const inTableNotOnDisk = [...inTable].filter((name) => !onDisk.has(name)).sort()
+const onDiskNotInTable = [...onDisk].filter((name) => !inTable.has(name)).toSorted()
+const inTableNotOnDisk = [...inTable].filter((name) => !onDisk.has(name)).toSorted()
 check(
   "instruction template table lists all files on disk",
   onDiskNotInTable.length === 0,
