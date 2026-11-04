@@ -185,37 +185,57 @@ installation.
 
 ### Agent doesn't know my name
 
-- Verify the instruction file exists at the expected path
-- Check that it's not empty or malformed
-- For paste surfaces: re-paste, checking for truncation
-- For file surfaces: check file permissions and encoding (UTF-8)
+1. Check that the instruction file exists at the path the client reads (see
+   the client's checklist above).
+2. Open it and confirm it is not empty and its frontmatter or paste block is
+   intact.
+3. On a paste surface, re-paste the block and compare its last line with the
+   vault note; a truncated paste drops the end.
+4. On a file surface, confirm the file is readable and saved as UTF-8.
+5. If the agent still does not know your name, regenerate the file from its
+   template through the onboarding skill and re-run the client's checklist.
 
 ### Session-start skill doesn't activate
 
-- Verify the skill file exists at the expected path
-- Check the skill's `description` frontmatter — it controls trigger matching
-- Try explicit invocation: "/session-start" or ask "run the session-start skill"
-- Check that the skill directory is one Claude Code scans (`~/.claude/skills/`
-  or `~/.agents/skills/`)
+1. Check that the skill file exists in a directory the client scans (Claude
+   Code: `~/.claude/skills/` or `~/.agents/skills/`).
+2. Read its `description` frontmatter; it controls trigger matching, so it must
+   name the phrases you use.
+3. Invoke it explicitly: type `/session-start`, or ask "run the session-start
+   skill".
+4. If explicit invocation also fails, run the session-start steps from the
+   protocol in your instruction file by hand, then reinstall the skill from its
+   template.
 
 ### Memory entries going to wrong file
 
-- Read the scope callout at the top of each About Me/ file
-- The callout defines routing rules — "Contains" and "Does NOT contain"
-- If the remember skill is installed, it checks these rules before proposing
+1. Read the scope callout at the top of each About Me/ file; its "Contains" and
+   "Does NOT contain" lines are the routing rules.
+2. Move the misplaced entry to the file whose callout claims it, keeping its
+   date.
+3. If the remember skill is installed, confirm it is active; it checks these
+   callouts before proposing an entry.
+4. If entries keep landing in the wrong file, add the case that went astray to
+   that file's "Does NOT contain" line.
 
 ### Task board not rendering as Kanban
 
-- Check that the Obsidian Kanban plugin is installed and enabled — see
-  "Obsidian App Setup" above (new vaults never have it preinstalled)
-- Verify TASKS.md has `kanban-plugin: board` in its frontmatter — generated
-  boards keep it even before the plugin is installed; if it's missing, add it
-- The board renders as a visual Kanban only in Obsidian with the plugin
+1. Check that the Obsidian Kanban plugin is installed and enabled (see
+   "Obsidian App Setup" above; new vaults never have it preinstalled).
+2. Confirm TASKS.md has `kanban-plugin: board` in its frontmatter. Generated
+   boards keep it even before the plugin is installed, so add it if missing.
+3. Reopen the note; the board renders as a visual Kanban only in Obsidian with
+   the plugin enabled.
+4. If it still renders as plain markdown, keep working: the file is still a
+   valid task list that agents and the Tasks plugin read unchanged.
 
 ### Protocol seems incomplete
 
-- Check whether full or lightweight was selected during onboarding
-- Lightweight omits: extension points, board reconciliation at session end,
-  memory review at session end
-- To upgrade: see `references/progressive-adoption.md` → "Upgrading lightweight
-  to full protocol"
+1. Check which protocol was selected during onboarding. Lightweight omits the
+   extension points, board reconciliation at session end, and the memory review
+   at session end.
+2. To upgrade, follow "Upgrading lightweight to full protocol" in
+   `references/progressive-adoption.md`.
+3. If the full protocol was selected and steps are still missing, compare the
+   instruction file with `assets/templates/protocol.md` and re-paste the
+   missing sections.

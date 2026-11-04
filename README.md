@@ -46,7 +46,7 @@ Works without [vault-cortex](https://github.com/aliasunder/vault-cortex) using n
 
 ## Status
 
-vault-onboarding is in active development and not yet released. The full implementation — interview flow, reference files, asset templates, generated skills — is merged ([PR #1](https://github.com/aliasunder/vault-onboarding/pull/1)) and now in validation. The install command works, but treat it as pre-release until testing passes and a first GitHub release is cut.
+vault-onboarding is in active development and not yet released. The install command works, but treat it as pre-release until testing passes and a first GitHub release is cut.
 
 **Built**
 
