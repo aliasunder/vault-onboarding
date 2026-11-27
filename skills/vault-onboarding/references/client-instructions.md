@@ -10,7 +10,7 @@ what format to generate and where to place it.
 
 | Client | Instruction file | Format | @-imports | Placement |
 |---|---|---|---|---|
-| Claude Code (local) | `~/.claude/CLAUDE.md` (global) + project `CLAUDE.md` | Physical markdown | Yes (expand) | Write to disk |
+| Claude Code (local) | `~/.claude/CLAUDE.md` (global) + the project hub file from Phase 3 (`CLAUDE.md`, or `AGENTS.md` in a mixed lineup without Cowork) | Physical markdown | Yes (expand) | Write to disk |
 | Claude Code (cloud) | Repo `CLAUDE.md` | Physical markdown | Repo-relative only | Committed to repo |
 | Cowork (Claude Desktop) | Global Instructions field + project folder `CLAUDE.md` | Paste block + file | No (literal text) | Paste + write |
 | claude.ai / mobile chat | Custom Instructions | Paste block | No | Paste into settings |
@@ -53,7 +53,9 @@ carries:
 - Vault conventions
 - Memory system description (if enabled)
 
-**Project file:** `CLAUDE.md` or `CLAUDE.local.md` in the project root
+**Project file:** the hub file Phase 3 resolved, in the project root —
+`CLAUDE.md` (or `CLAUDE.local.md`) when Claude Code is the only client or
+Cowork is in the mix, and `AGENTS.md` for other mixed lineups
 
 Per-project files carry:
 - Last Session pointer
@@ -208,9 +210,10 @@ calibrated for non-technical users; adjust to technical comfort.
 
 > "Claude Code reads a file called **CLAUDE.md** automatically whenever it
 > works in a folder. The global one (at ~/.claude/CLAUDE.md) carries your
-> identity and preferences everywhere. A project's CLAUDE.md carries
+> identity and preferences everywhere. A project's own file carries
 > project-specific context — what it's about, what's active, where things
-> are."
+> are. It's CLAUDE.md, or AGENTS.md when you also use tools like Cursor or
+> Copilot."
 
 ### claude.ai / mobile chat
 
