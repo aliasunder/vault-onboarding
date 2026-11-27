@@ -73,16 +73,16 @@ Components (adds to Tier 2):
 - Session protocol (full or lightweight)
 - Session-start and session-end skills
 - Session logs in `Sessions/` (vault root) and per-project `sessions/` folders
-- Extension points for per-project customization
+- Extension points for per-project customization (full protocol)
 - Project-role skill (full protocol)
 
 **What agents can do (adds to Tier 2):**
 - Follow a structured start ritual (read last session, check tasks, load
   memory, summarize)
-- Follow a structured end ritual (write log, reconcile board, review memory,
-  update pointers)
+- Follow a structured end ritual (write log and update pointers; the full
+  protocol also reconciles the board and reviews memory)
 - Maintain continuity across sessions via handoff logs
-- Support per-project agent roles and custom behaviors
+- Support per-project agent roles and custom behaviors (full protocol)
 
 **When to move here:** You want agents that maintain full continuity — every
 session picks up where the last one left off, nothing falls through the cracks.
@@ -96,7 +96,8 @@ Each component can be added independently after the initial onboarding.
 1. Create `About Me/` folder
 2. Add the 5 core memory files (use the templates from this skill's assets)
 3. Update instruction files to include memory system description
-4. Install the remember skill (if using Claude Code)
+4. Install the remember skill in each client, per the Skill Placement table
+   in `references/generated-skills-guide.md`
 
 ### Adding boards to an existing vault
 
@@ -174,8 +175,11 @@ vault-cortex adds three capabilities to the base system:
    move in one call), memory recall across all files, typed task queries with
    filters
 
-The system works fully without vault-cortex. With it, operations that require
-grep and manual file parsing become single tool calls with structured output.
+The system needs vault-cortex only in clients with no local file access, such
+as claude.ai chat; Phase 7's vault-cortex gate skips claude.ai chat when
+vault-cortex isn't connected there. With vault-cortex,
+operations that require grep and manual file parsing become single tool calls
+with structured output.
 
 **Installation:** `npx vault-cortex` or see
 [github.com/aliasunder/vault-cortex](https://github.com/aliasunder/vault-cortex)

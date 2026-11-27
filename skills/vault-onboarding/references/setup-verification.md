@@ -13,7 +13,7 @@ Before checking individual clients, verify the vault structure:
 - [ ] PROTOCOL.md exists (if protocol enabled) with all relevant sections
 - [ ] Sessions/ folder exists at the vault root (if protocol enabled)
 - [ ] Generated skills are in place (session skills if protocol enabled;
-      remember if memory enabled)
+      remember if memory enabled; project-role if full protocol)
 - [ ] Onboarding checkpoint file status is current
 
 ## Claude Code Verification
@@ -34,7 +34,9 @@ by asking in a cloud session.
 ### Per-project template
 
 1. Check that the project instruction template was saved
-2. In a project directory with a CLAUDE.md using the template, start a session
+2. Local: in a project directory whose hub file from Phase 3 (`CLAUDE.md`, or
+   `AGENTS.md` in a mixed lineup without Cowork) uses the template, start a
+   session. Cloud: use the committed repository-root `CLAUDE.md` instead
 3. Ask: "What project am I working in?"
    - Pass: agent knows the project context
    - Fail: project file not loading — check path and parent-walk
@@ -52,7 +54,7 @@ by asking in a cloud session.
 4. Verify the agent:
    - Creates a session log in the correct folder
    - Updates the Last Session pointer
-   - Reconciles the task board (if boards enabled)
+   - Reconciles the task board (if boards enabled and full protocol)
    - Proposes memory entries (if memory enabled and full protocol)
 
 ### Skills
@@ -62,9 +64,10 @@ clients, verify per the placement contract in
 `references/generated-skills-guide.md` (e.g. uploaded or conversationally
 created skills on Perplexity) instead of checking these paths.
 
-1. Check that skills exist at `~/.claude/skills/` or `~/.agents/skills/`
-2. Start a new session and say "start a session" — the session-start skill
-   should activate
+1. Check that the generated skills exist at `~/.claude/skills/` or
+   `~/.agents/skills/`
+2. If the protocol is enabled, start a new session and say "start a session" —
+   the session-start skill should activate
 3. If memory is enabled, say "remember that I prefer concise responses" — the
    remember skill should activate
 
@@ -110,7 +113,7 @@ verify.
 
 If the full instruction content exceeds the character limit:
 - Prioritize identity, timezone, and communication preferences
-- Include a protocol pointer: "For full session protocol, read PROTOCOL.md"
+- Include a protocol pointer: "For the session protocol, read PROTOCOL.md"
 - Move detailed conventions to the vault and reference them
 
 ## Perplexity Verification

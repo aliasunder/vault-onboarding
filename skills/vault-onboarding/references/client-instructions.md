@@ -10,7 +10,7 @@ what format to generate and where to place it.
 
 | Client | Instruction file | Format | @-imports | Placement |
 |---|---|---|---|---|
-| Claude Code (local) | `~/.claude/CLAUDE.md` (global) + project `CLAUDE.md` | Physical markdown | Yes (expand) | Write to disk |
+| Claude Code (local) | `~/.claude/CLAUDE.md` (global) + the project hub file from Phase 3 (`CLAUDE.md`, or `AGENTS.md` in a mixed lineup without Cowork) | Physical markdown | Yes (expand) | Write to disk |
 | Claude Code (cloud) | Repo `CLAUDE.md` | Physical markdown | Repo-relative only | Committed to repo |
 | Cowork (Claude Desktop) | Global Instructions field + project folder `CLAUDE.md` | Paste block + file | No (literal text) | Paste + write |
 | claude.ai / mobile chat | Custom Instructions | Paste block | No | Paste into settings |
@@ -48,25 +48,31 @@ must be physical text in the instruction file, not an import reference.
 This loads in every Claude Code session regardless of working directory. It
 carries:
 - User identity and timezone
+- Communication preferences (from Phase 1)
 - Vault path and structure map
-- Session protocol (physical text)
-- Vault conventions
+- Session protocol (physical text, if enabled)
+- Vault conventions (if enabled)
 - Memory system description (if enabled)
+- Task board conventions (if enabled)
 
-**Project file:** `CLAUDE.md` or `CLAUDE.local.md` in the project root
+**Project file:** the hub file Phase 3 resolved, in the project root —
+`CLAUDE.md` when Claude Code is the only client or Cowork is in the mix, and
+`AGENTS.md` for other mixed lineups that include Claude Code
 
 Per-project files carry:
 - Last Session pointer
 - Session History table (last 15 entries)
 - File map (project-specific structure)
-- Extension point stubs (Agent Role, Session Start/End Extensions, Agent
-  Operations, Response Style)
+- Extension point stubs (full protocol: Agent Role, Session Start/End
+  Extensions, Agent Operations, Response Style)
 - Key Docs section
 
 **Template variables for Claude Code:**
 - `{{USER_NAME}}`, `{{USER_TIMEZONE}}` — identity
+- `{{COMM_PREFS}}` — communication preferences
 - `{{VAULT_PATH}}` — vault location
-- `{{PROTOCOL_BODY}}` — full protocol text (not a pointer)
+- `{{PROTOCOL_BODY}}` — the protocol's whole text from PROTOCOL.md, at either
+  protocol level (not a pointer)
 - `{{VAULT_CONVENTIONS}}` — tags, linking, frontmatter, escapes
 - `{{#IF_MEMORY}}` block — memory system description (kept only when memory
   is enabled)
@@ -84,7 +90,9 @@ self-contained paste block.
 **Project folder CLAUDE.md:** the project's CLAUDE.md in the bound folder
 
 Cowork injects the bound folder's CLAUDE.md automatically (verified behavior).
-This carries per-project content: role, extensions, session pointer, file map.
+This carries the per-project content listed above for Claude Code: the file
+map, key docs, Last Session pointer and Session History table, plus the role
+and extension stubs under the full protocol.
 
 **Important Cowork behaviors:**
 - `@`-imports do NOT expand — they appear as literal text
@@ -105,11 +113,12 @@ Single paste surface — everything in one block. Keep it concise (Custom
 Instructions has a character limit). Prioritize:
 1. Identity and timezone
 2. Communication preferences
-3. Protocol pointer (not full protocol — too long for this surface)
+3. Protocol pointer (if enabled; not the full protocol — too long for this
+   surface)
 4. Memory summary (if enabled)
 
-For sessions that need the full protocol, include a note: "For full session
-protocol, read PROTOCOL.md in the vault."
+When the protocol is enabled, include a note: "For the session protocol, read
+PROTOCOL.md in the vault."
 
 ### Perplexity
 
@@ -121,7 +130,8 @@ structure — everything that applies across all conversations, not just within 
 project. Generated from `assets/templates/instructions/perplexity-global.md`.
 
 **Project Instructions:** per-project settings. Carries project-specific
-context, conventions, task board location, and protocol pointers. Combined with
+context, plus conventions, memory, task board location and protocol pointers
+for the components that are enabled. Combined with
 global instructions in project conversations. Generated from
 `assets/templates/instructions/perplexity.md`.
 
@@ -208,9 +218,11 @@ calibrated for non-technical users; adjust to technical comfort.
 
 > "Claude Code reads a file called **CLAUDE.md** automatically whenever it
 > works in a folder. The global one (at ~/.claude/CLAUDE.md) carries your
-> identity and preferences everywhere. A project's CLAUDE.md carries
+> identity and preferences everywhere. A project's own file carries
 > project-specific context — what it's about, what's active, where things
-> are."
+> are. It's CLAUDE.md when Claude Code is your only tool or you also use
+> Cowork, and AGENTS.md when other tools join the lineup. In cloud sessions,
+> the repository's committed CLAUDE.md carries both."
 
 ### claude.ai / mobile chat
 

@@ -4,7 +4,7 @@ Bootstrap an agent collaboration system into an Obsidian vault — memory, proto
 
 > **In development — not yet released.** The implementation is merged and in validation; a first GitHub release follows once testing passes. See [Status](#status).
 
-Works with Claude Code, Cowork, claude.ai, Perplexity, Cursor, GitHub Copilot, and [many more](https://skills.sh).
+Works with Claude Code, Cowork, claude.ai (with vault-cortex), Perplexity, Cursor, GitHub Copilot, and [many more](https://skills.sh).
 
 ## Installing
 
@@ -19,8 +19,8 @@ A single conversational interview scaffolds everything you need for structured A
 - **Memory files** — About Me/ files that give agents persistent knowledge about who you are, what you prefer, and how you work
 - **Session protocol** — structured start and end rituals so agents maintain continuity across sessions
 - **Task boards** — 5-lane Kanban boards for tracking work with AI agents
-- **Generated skills** — session-start, session-end, remember, and project-role skills tailored to your actual vault structure
-- **Client instruction files** — generated for each AI tool you use, in the right format for each client's loading contract
+- **Generated skills** — session-start and session-end (with the session protocol), remember (with memory), and project-role (with the full protocol), each tailored to your actual vault structure
+- **Client instruction files** — generated for each AI tool you use, in the right format for each client's loading contract; claude.ai chat gets one only when vault-cortex is connected there
 
 Every component is optional. Start with just instruction files (agents know your name and preferences), add memory when you want persistence, add boards when you want task tracking, add the session protocol when you want full continuity.
 
@@ -42,7 +42,9 @@ The interview is resumable — stop mid-onboarding and pick up where you left of
 
 ## Standalone or with vault-cortex
 
-Works without [vault-cortex](https://github.com/aliasunder/vault-cortex) using native file tools. With vault-cortex connected, the generated skills unlock remote access, hybrid search, and semantic memory recall.
+- **Running the interview** — it uses native file tools, so run it in a client that can read and write local files, such as Claude Code or Cowork
+- **Without [vault-cortex](https://github.com/aliasunder/vault-cortex)** — clients with no file access, such as claude.ai chat or Perplexity without Computer, cannot reach your vault; onboarding sets up claude.ai chat only when vault-cortex is connected there
+- **With vault-cortex** — the generated skills unlock remote access, hybrid search, and semantic memory recall
 
 ## Status
 

@@ -1081,7 +1081,8 @@ vault-cortex availability:
 Detection: check whether the vault-cortex MCP server's tools appear in the
 current session's tool list. If they don't, ask the user: "Do you have vault-cortex installed? It adds
 remote access, search, and semantic memory recall to your vault. Everything
-works without it — vault-cortex enhances the experience."
+works without it except in clients with no file access, such as claude.ai
+chat, which need it to reach your vault."
 
 Detection here covers the CURRENT surface only. Connection status for the
 user's other clients is collected per client in Phase 7 — never generalize

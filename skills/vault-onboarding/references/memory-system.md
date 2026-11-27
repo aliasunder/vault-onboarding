@@ -165,11 +165,15 @@ not through dedicated "fill out your profile" sessions.
 
 1. **Explicit capture:** The user says "remember this" or "save this preference"
    → the remember skill (if generated) proposes an entry, gets approval, writes.
-2. **Session-end review:** At the end of each session, the protocol prompts the
-   agent to review the conversation for durable facts at three levels:
+2. **Session-end review (full protocol only):** At the end of each session, the
+   full protocol prompts the agent to review the conversation for durable facts
+   at three levels:
    - Stated — things the user directly said
    - Demonstrated — preferences revealed by choices made
    - Inferable — reasonable conclusions from the conversation's arc
+
+   The lightweight protocol has no review step, so its entries arrive through
+   explicit capture and organic observation, both handled by the remember skill.
 3. **Organic observation:** Over sessions, agents notice patterns and propose
    entries. "It seems like you prefer X" framing lets the user confirm, refine,
    or reject.

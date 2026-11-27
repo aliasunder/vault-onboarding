@@ -10,8 +10,10 @@ The session protocol is a structured ritual for starting and ending work with
 AI agents. It ensures:
 
 - **Continuity** — agents know what happened last time without being told
-- **Memory growth** — agents capture new preferences and facts every session
-- **Task tracking** — boards stay current, completed work gets recorded
+- **Memory growth** — agents capture new preferences and facts, with a memory
+  review at every session end under the full protocol
+- **Task tracking** — boards stay current, with finished work reconciled at
+  every session end under the full protocol
 - **Handoff quality** — session logs bridge one conversation to the next
 
 Without a protocol, each session starts cold. The user repeats context, agents
@@ -106,7 +108,7 @@ first.
 
 ### 3. Reconcile task boards
 
-If boards are enabled:
+If boards are enabled (full protocol only):
 - Complete finished tasks (checkbox + done date + move to Done lane)
 - Add tasks discovered during the session
 - Reset stale in-progress markers — anything marked in-progress but with no
@@ -119,7 +121,7 @@ If the project defines Session End Extensions (full protocol only), run them.
 
 ### 5. Review memory
 
-If memory is enabled:
+If memory is enabled (full protocol only):
 - Review the conversation for durable facts (stated, demonstrated, inferable)
 - Check for duplicates before proposing new entries
 - Show proposals to the user for approval
