@@ -90,8 +90,8 @@ self-contained paste block.
 
 Cowork injects the bound folder's CLAUDE.md automatically (verified behavior).
 This carries the per-project content listed above for Claude Code: the file
-map, key docs and session pointer, plus the role and extension stubs under the
-full protocol.
+map, key docs, Last Session pointer and Session History table, plus the role
+and extension stubs under the full protocol.
 
 **Important Cowork behaviors:**
 - `@`-imports do NOT expand — they appear as literal text
@@ -116,7 +116,7 @@ Instructions has a character limit). Prioritize:
    surface)
 4. Memory summary (if enabled)
 
-When the protocol is enabled, include a note: "For full session protocol, read
+When the protocol is enabled, include a note: "For the session protocol, read
 PROTOCOL.md in the vault."
 
 ### Perplexity
@@ -219,8 +219,8 @@ calibrated for non-technical users; adjust to technical comfort.
 > works in a folder. The global one (at ~/.claude/CLAUDE.md) carries your
 > identity and preferences everywhere. A project's own file carries
 > project-specific context — what it's about, what's active, where things
-> are. It's CLAUDE.md, or AGENTS.md when you also use tools like Cursor or
-> Copilot and not Cowork, which reads only CLAUDE.md."
+> are. It's CLAUDE.md when Claude Code is your only tool or you also use
+> Cowork, and AGENTS.md when other tools join the lineup."
 
 ### claude.ai / mobile chat
 

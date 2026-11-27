@@ -34,7 +34,9 @@ by asking in a cloud session.
 ### Per-project template
 
 1. Check that the project instruction template was saved
-2. In a project directory with a CLAUDE.md using the template, start a session
+2. In a project directory whose hub file from Phase 3 (`CLAUDE.md`, or
+   `AGENTS.md` in a mixed lineup without Cowork) uses the template, start a
+   session
 3. Ask: "What project am I working in?"
    - Pass: agent knows the project context
    - Fail: project file not loading — check path and parent-walk
