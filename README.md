@@ -20,7 +20,7 @@ A single conversational interview scaffolds everything you need for structured A
 - **Session protocol** — structured start and end rituals so agents maintain continuity across sessions
 - **Task boards** — 5-lane Kanban boards for tracking work with AI agents
 - **Generated skills** — session-start and session-end (with the session protocol), remember (with memory), and project-role (with the full protocol), each tailored to your actual vault structure
-- **Client instruction files** — generated for each AI tool you use, in the right format for each client's loading contract
+- **Client instruction files** — generated for each AI tool you use, in the right format for each client's loading contract; claude.ai chat gets one only when vault-cortex is connected there
 
 Every component is optional. Start with just instruction files (agents know your name and preferences), add memory when you want persistence, add boards when you want task tracking, add the session protocol when you want full continuity.
 
@@ -42,7 +42,10 @@ The interview is resumable — stop mid-onboarding and pick up where you left of
 
 ## Standalone or with vault-cortex
 
-The onboarding interview uses native file tools, so run it in a client that can read and write local files, such as Claude Code or Cowork. The setup it generates works without [vault-cortex](https://github.com/aliasunder/vault-cortex) in every client with local file access. claude.ai chat has no file access, so it needs vault-cortex to reach your vault, and onboarding sets it up only when vault-cortex is connected there. With vault-cortex connected, the generated skills unlock remote access, hybrid search, and semantic memory recall.
+- **Running the interview** — it uses native file tools, so run it in a client that can read and write local files, such as Claude Code or Cowork
+- **Without [vault-cortex](https://github.com/aliasunder/vault-cortex)** — the generated setup works in every client with local file access
+- **claude.ai chat** — has no file access, so it needs vault-cortex to reach your vault; onboarding sets it up only when vault-cortex is connected there
+- **With vault-cortex** — the generated skills unlock remote access, hybrid search, and semantic memory recall
 
 ## Status
 

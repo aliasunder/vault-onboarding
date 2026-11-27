@@ -52,7 +52,7 @@ by asking in a cloud session.
 4. Verify the agent:
    - Creates a session log in the correct folder
    - Updates the Last Session pointer
-   - Reconciles the task board (if boards enabled)
+   - Reconciles the task board (if boards enabled and full protocol)
    - Proposes memory entries (if memory enabled and full protocol)
 
 ### Skills

@@ -96,7 +96,8 @@ Each component can be added independently after the initial onboarding.
 1. Create `About Me/` folder
 2. Add the 5 core memory files (use the templates from this skill's assets)
 3. Update instruction files to include memory system description
-4. Install the remember skill (if using Claude Code)
+4. Install the remember skill in each client, per the Skill Placement table
+   in `references/generated-skills-guide.md`
 
 ### Adding boards to an existing vault
 
