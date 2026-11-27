@@ -174,7 +174,9 @@ vault-cortex adds three capabilities to the base system:
    move in one call), memory recall across all files, typed task queries with
    filters
 
-The system works fully without vault-cortex. With it, operations that require
+The system works fully without vault-cortex on clients with local file access.
+claude.ai chat has none, so it needs vault-cortex, and Phase 7 skips it when
+vault-cortex isn't connected there. With vault-cortex, operations that require
 grep and manual file parsing become single tool calls with structured output.
 
 **Installation:** `npx vault-cortex` or see

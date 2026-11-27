@@ -19,7 +19,7 @@ A single conversational interview scaffolds everything you need for structured A
 - **Memory files** — About Me/ files that give agents persistent knowledge about who you are, what you prefer, and how you work
 - **Session protocol** — structured start and end rituals so agents maintain continuity across sessions
 - **Task boards** — 5-lane Kanban boards for tracking work with AI agents
-- **Generated skills** — session-start, session-end, remember, and project-role skills tailored to your actual vault structure
+- **Generated skills** — session-start and session-end (with the session protocol), remember (with memory), and project-role (with the full protocol), each tailored to your actual vault structure
 - **Client instruction files** — generated for each AI tool you use, in the right format for each client's loading contract
 
 Every component is optional. Start with just instruction files (agents know your name and preferences), add memory when you want persistence, add boards when you want task tracking, add the session protocol when you want full continuity.
@@ -42,7 +42,7 @@ The interview is resumable — stop mid-onboarding and pick up where you left of
 
 ## Standalone or with vault-cortex
 
-Works without [vault-cortex](https://github.com/aliasunder/vault-cortex) using native file tools. With vault-cortex connected, the generated skills unlock remote access, hybrid search, and semantic memory recall.
+Works without [vault-cortex](https://github.com/aliasunder/vault-cortex) using native file tools on every client that can read local files. claude.ai chat has no file access, so it needs vault-cortex to read and write your vault, and onboarding skips it when vault-cortex isn't connected there. With vault-cortex connected, the generated skills unlock remote access, hybrid search, and semantic memory recall.
 
 ## Status
 
