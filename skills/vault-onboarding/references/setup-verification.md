@@ -62,9 +62,10 @@ clients, verify per the placement contract in
 `references/generated-skills-guide.md` (e.g. uploaded or conversationally
 created skills on Perplexity) instead of checking these paths.
 
-1. Check that skills exist at `~/.claude/skills/` or `~/.agents/skills/`
-2. Start a new session and say "start a session" — the session-start skill
-   should activate
+1. Check that the generated skills exist at `~/.claude/skills/` or
+   `~/.agents/skills/`
+2. If the protocol is enabled, start a new session and say "start a session" —
+   the session-start skill should activate
 3. If memory is enabled, say "remember that I prefer concise responses" — the
    remember skill should activate
 
