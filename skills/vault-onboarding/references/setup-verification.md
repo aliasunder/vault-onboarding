@@ -34,9 +34,9 @@ by asking in a cloud session.
 ### Per-project template
 
 1. Check that the project instruction template was saved
-2. In a project directory whose hub file from Phase 3 (`CLAUDE.md`, or
+2. Local: in a project directory whose hub file from Phase 3 (`CLAUDE.md`, or
    `AGENTS.md` in a mixed lineup without Cowork) uses the template, start a
-   session
+   session. Cloud: use the committed repository-root `CLAUDE.md` instead
 3. Ask: "What project am I working in?"
    - Pass: agent knows the project context
    - Fail: project file not loading — check path and parent-walk
@@ -113,7 +113,7 @@ verify.
 
 If the full instruction content exceeds the character limit:
 - Prioritize identity, timezone, and communication preferences
-- Include a protocol pointer: "For full session protocol, read PROTOCOL.md"
+- Include a protocol pointer: "For the session protocol, read PROTOCOL.md"
 - Move detailed conventions to the vault and reference them
 
 ## Perplexity Verification

@@ -71,7 +71,8 @@ Per-project files carry:
 - `{{USER_NAME}}`, `{{USER_TIMEZONE}}` — identity
 - `{{COMM_PREFS}}` — communication preferences
 - `{{VAULT_PATH}}` — vault location
-- `{{PROTOCOL_BODY}}` — full protocol text (not a pointer)
+- `{{PROTOCOL_BODY}}` — the protocol's whole text from PROTOCOL.md, at either
+  protocol level (not a pointer)
 - `{{VAULT_CONVENTIONS}}` — tags, linking, frontmatter, escapes
 - `{{#IF_MEMORY}}` block — memory system description (kept only when memory
   is enabled)
@@ -129,8 +130,8 @@ structure — everything that applies across all conversations, not just within 
 project. Generated from `assets/templates/instructions/perplexity-global.md`.
 
 **Project Instructions:** per-project settings. Carries project-specific
-context, plus conventions, task board location and protocol pointers for the
-components that are enabled. Combined with
+context, plus conventions, memory, task board location and protocol pointers
+for the components that are enabled. Combined with
 global instructions in project conversations. Generated from
 `assets/templates/instructions/perplexity.md`.
 
