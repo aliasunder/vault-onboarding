@@ -48,6 +48,7 @@ must be physical text in the instruction file, not an import reference.
 This loads in every Claude Code session regardless of working directory. It
 carries:
 - User identity and timezone
+- Communication preferences (from Phase 1)
 - Vault path and structure map
 - Session protocol (physical text, if enabled)
 - Vault conventions (if enabled)
@@ -68,6 +69,7 @@ Per-project files carry:
 
 **Template variables for Claude Code:**
 - `{{USER_NAME}}`, `{{USER_TIMEZONE}}` — identity
+- `{{COMM_PREFS}}` — communication preferences
 - `{{VAULT_PATH}}` — vault location
 - `{{PROTOCOL_BODY}}` — full protocol text (not a pointer)
 - `{{VAULT_CONVENTIONS}}` — tags, linking, frontmatter, escapes
@@ -87,7 +89,9 @@ self-contained paste block.
 **Project folder CLAUDE.md:** the project's CLAUDE.md in the bound folder
 
 Cowork injects the bound folder's CLAUDE.md automatically (verified behavior).
-This carries per-project content: role, extensions, session pointer, file map.
+This carries the per-project content listed above for Claude Code: the file
+map, key docs and session pointer, plus the role and extension stubs under the
+full protocol.
 
 **Important Cowork behaviors:**
 - `@`-imports do NOT expand — they appear as literal text
@@ -108,11 +112,12 @@ Single paste surface — everything in one block. Keep it concise (Custom
 Instructions has a character limit). Prioritize:
 1. Identity and timezone
 2. Communication preferences
-3. Protocol pointer (not full protocol — too long for this surface)
+3. Protocol pointer (if enabled; not the full protocol — too long for this
+   surface)
 4. Memory summary (if enabled)
 
-For sessions that need the full protocol, include a note: "For full session
-protocol, read PROTOCOL.md in the vault."
+When the protocol is enabled, include a note: "For full session protocol, read
+PROTOCOL.md in the vault."
 
 ### Perplexity
 
@@ -124,7 +129,8 @@ structure — everything that applies across all conversations, not just within 
 project. Generated from `assets/templates/instructions/perplexity-global.md`.
 
 **Project Instructions:** per-project settings. Carries project-specific
-context, conventions, task board location, and protocol pointers. Combined with
+context, plus conventions, task board location and protocol pointers for the
+components that are enabled. Combined with
 global instructions in project conversations. Generated from
 `assets/templates/instructions/perplexity.md`.
 
