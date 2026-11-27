@@ -218,11 +218,11 @@ calibrated for non-technical users; adjust to technical comfort.
 
 > "Claude Code reads a file called **CLAUDE.md** automatically whenever it
 > works in a folder. The global one (at ~/.claude/CLAUDE.md) carries your
-> identity and preferences everywhere; in cloud sessions, that content lives
-> in the repository's committed CLAUDE.md instead. A project's own file carries
+> identity and preferences everywhere. A project's own file carries
 > project-specific context — what it's about, what's active, where things
 > are. It's CLAUDE.md when Claude Code is your only tool or you also use
-> Cowork, and AGENTS.md when other tools join the lineup."
+> Cowork, and AGENTS.md when other tools join the lineup. In cloud sessions,
+> the repository's committed CLAUDE.md carries both."
 
 ### claude.ai / mobile chat
 
