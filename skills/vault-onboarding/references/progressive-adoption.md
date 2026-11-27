@@ -73,16 +73,16 @@ Components (adds to Tier 2):
 - Session protocol (full or lightweight)
 - Session-start and session-end skills
 - Session logs in `Sessions/` (vault root) and per-project `sessions/` folders
-- Extension points for per-project customization
+- Extension points for per-project customization (full protocol)
 - Project-role skill (full protocol)
 
 **What agents can do (adds to Tier 2):**
 - Follow a structured start ritual (read last session, check tasks, load
   memory, summarize)
-- Follow a structured end ritual (write log, reconcile board, review memory,
-  update pointers)
+- Follow a structured end ritual (write log and update pointers; the full
+  protocol also reconciles the board and reviews memory)
 - Maintain continuity across sessions via handoff logs
-- Support per-project agent roles and custom behaviors
+- Support per-project agent roles and custom behaviors (full protocol)
 
 **When to move here:** You want agents that maintain full continuity — every
 session picks up where the last one left off, nothing falls through the cracks.
@@ -175,9 +175,10 @@ vault-cortex adds three capabilities to the base system:
    filters
 
 The system works fully without vault-cortex on clients with local file access.
-claude.ai chat has none, so it needs vault-cortex, and Phase 7 skips it when
-vault-cortex isn't connected there. With vault-cortex, operations that require
-grep and manual file parsing become single tool calls with structured output.
+claude.ai chat has none, so it needs vault-cortex, and Phase 7's vault-cortex
+gate skips it when vault-cortex isn't connected there. With vault-cortex,
+operations that require grep and manual file parsing become single tool calls
+with structured output.
 
 **Installation:** `npx vault-cortex` or see
 [github.com/aliasunder/vault-cortex](https://github.com/aliasunder/vault-cortex)

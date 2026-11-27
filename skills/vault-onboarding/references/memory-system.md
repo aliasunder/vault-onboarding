@@ -173,7 +173,7 @@ not through dedicated "fill out your profile" sessions.
    - Inferable — reasonable conclusions from the conversation's arc
 
    The lightweight protocol has no review step, so its entries arrive through
-   explicit capture.
+   explicit capture and organic observation, both handled by the remember skill.
 3. **Organic observation:** Over sessions, agents notice patterns and propose
    entries. "It seems like you prefer X" framing lets the user confirm, refine,
    or reject.

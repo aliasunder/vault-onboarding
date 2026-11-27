@@ -13,7 +13,7 @@ Before checking individual clients, verify the vault structure:
 - [ ] PROTOCOL.md exists (if protocol enabled) with all relevant sections
 - [ ] Sessions/ folder exists at the vault root (if protocol enabled)
 - [ ] Generated skills are in place (session skills if protocol enabled;
-      remember if memory enabled)
+      remember if memory enabled; project-role if full protocol)
 - [ ] Onboarding checkpoint file status is current
 
 ## Claude Code Verification
