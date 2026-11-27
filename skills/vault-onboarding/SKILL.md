@@ -683,7 +683,7 @@ folders were scaffolded (Phase 3), note that project-scoped logs go in each
 project's `sessions/` subfolder.
 
 **If no:** skip the protocol, the session skills (session-start, session-end,
-project-role), and the sessions folder. The **remember** skill is
+project-role), and the vault-root `Sessions/` folder. The **remember** skill is
 memory-gated, not protocol-gated — if memory was enabled (Phase 4), still
 generate it here. Instruction files still carry identity and preferences —
 agents just won't follow a structured session ritual.
