@@ -49,20 +49,21 @@ This loads in every Claude Code session regardless of working directory. It
 carries:
 - User identity and timezone
 - Vault path and structure map
-- Session protocol (physical text)
-- Vault conventions
+- Session protocol (physical text, if enabled)
+- Vault conventions (if enabled)
 - Memory system description (if enabled)
+- Task board conventions (if enabled)
 
 **Project file:** the hub file Phase 3 resolved, in the project root —
-`CLAUDE.md` (or `CLAUDE.local.md`) when Claude Code is the only client or
-Cowork is in the mix, and `AGENTS.md` for other mixed lineups
+`CLAUDE.md` when Claude Code is the only client or Cowork is in the mix, and
+`AGENTS.md` for other mixed lineups that include Claude Code
 
 Per-project files carry:
 - Last Session pointer
 - Session History table (last 15 entries)
 - File map (project-specific structure)
-- Extension point stubs (Agent Role, Session Start/End Extensions, Agent
-  Operations, Response Style)
+- Extension point stubs (full protocol: Agent Role, Session Start/End
+  Extensions, Agent Operations, Response Style)
 - Key Docs section
 
 **Template variables for Claude Code:**
@@ -213,7 +214,7 @@ calibrated for non-technical users; adjust to technical comfort.
 > identity and preferences everywhere. A project's own file carries
 > project-specific context — what it's about, what's active, where things
 > are. It's CLAUDE.md, or AGENTS.md when you also use tools like Cursor or
-> Copilot."
+> Copilot and not Cowork, which reads only CLAUDE.md."
 
 ### claude.ai / mobile chat
 

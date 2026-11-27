@@ -4,7 +4,7 @@ Bootstrap an agent collaboration system into an Obsidian vault — memory, proto
 
 > **In development — not yet released.** The implementation is merged and in validation; a first GitHub release follows once testing passes. See [Status](#status).
 
-Works with Claude Code, Cowork, claude.ai (with vault-cortex), Perplexity (with Computer or vault-cortex), Cursor, GitHub Copilot, and [many more](https://skills.sh).
+Works with Claude Code, Cowork, claude.ai (with vault-cortex), Perplexity, Cursor, GitHub Copilot, and [many more](https://skills.sh).
 
 ## Installing
 
@@ -43,7 +43,7 @@ The interview is resumable — stop mid-onboarding and pick up where you left of
 ## Standalone or with vault-cortex
 
 - **Running the interview** — it uses native file tools, so run it in a client that can read and write local files, such as Claude Code or Cowork
-- **Without [vault-cortex](https://github.com/aliasunder/vault-cortex)** — the generated setup needs vault-cortex only in clients with no file access, such as claude.ai chat or Perplexity without Computer; onboarding sets up claude.ai chat only when vault-cortex is connected there
+- **Without [vault-cortex](https://github.com/aliasunder/vault-cortex)** — clients with no file access, such as claude.ai chat or Perplexity without Computer, cannot reach your vault; onboarding sets up claude.ai chat only when vault-cortex is connected there
 - **With vault-cortex** — the generated skills unlock remote access, hybrid search, and semantic memory recall
 
 ## Status
